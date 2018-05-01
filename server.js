@@ -4,13 +4,15 @@ const path = require('path');
 
 let bodyParse = require('body-parser')
 let session = require('express-session')
+let expressValidator = require('express-validator');
+let flash = require('connect-flash');
 
 
 // moteur de template express
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs')
 
-// Middleware
+// Middleware session
 app.use(express.static('public')) // pour acceder aux dossiers dans public prefix assets
 app.use(bodyParse.urlencoded({extended : false}))
 app.use(bodyParse.json())
@@ -20,10 +22,32 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-}))
+}));
 
-app.use(require('./Middlewares/flash'))
+// Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
 
+// Express Validator Middleware
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+            , root    = namespace.shift()
+            , formParam = root;
+
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
 
 // routes
 app.get('/',(request,response)=>{

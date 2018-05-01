@@ -1,8 +1,12 @@
 <% include header.ejs  %>
 <div class="container">
+<%- messages('message', locals) %>
+
     <div class="form-group col-md-offset-4 ajouter">
-    <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="button" value="Ajouter un role" data-toggle="modal" data-target="#Ajouter_cours">
+    <form action="roles/create" method="get">
+    <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="submit" value="Ajouter un role" data-toggle="modal">
     </div>
+    </form>
 <div class="row">
         <div class="col-md-12">
         <h4>Liste des roles</h4>
@@ -16,7 +20,6 @@
                    </thead>
     <tbody>
 
-<?php   foreach ($personnels as $p) {  ?>
  <%  for(role of roles) { %>
     <tr>
     <td></td>
@@ -73,31 +76,6 @@
   </div>
       <!-- /.modal-dialog -->
     </div>
-
-
-		<div class="modal fade" id="Ajouter_cours" tabindex="-1" role="dialog" aria-labelledby="Ajouter_cours" aria-hidden="true">
-		      <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-				        <h4 class="modal-title custom_align" id="Heading">Ajouter un role</h4>
-				      </div>
-			          <div class="modal-body">
-                   <form action="roles/Create" method="post">
-			          <div class="form-group">
-				        <input class="form-control " name="ROLENAME" type="text" placeholder="Nom du role">
-				        </div>
-				      </div>
-				          <div class="modal-footer ">
-                   
-    				        <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
-                    </form>
-				      </div>
-				        </div>
-				    <!-- /.modal-content -->
-				  </div>
-		      <!-- /.modal-dialog -->
-		    </div>
 
 
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

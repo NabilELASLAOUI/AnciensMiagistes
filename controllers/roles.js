@@ -5,18 +5,27 @@ let Role = require('../models/Role')
 
 
 
-
 router.get('/',(request,response)=>{
     Role.all(function (roles) {
         response.render('roles/roles',{roles:roles})
     })
 })
 
-router.post('/Create', (request,response)=>{
-    if (request.body.ROLENAME === undefined || request.body.ROLENAME === ''){
-        request.flash('error',"vous n'avez pas posté de role")
-        //   response.redirect('/')
-    }else{
+router.get('/create',(request,response)=>{
+        response.render('roles/create')
+})
+
+router.post('/create', (request,response)=>{
+
+    request.checkBody('ROLENAME','Saisissez un role').notEmpty();
+    // Get Errors
+    let errors = request.validationErrors();
+
+    if(errors){
+        Role.all(function (roles) {
+            response.render('roles/create',{roles:roles,errors:errors})
+        })
+    } else {
         Role.create(request.body.ROLENAME, function () {
             request.flash('success',"role bien ajouté !")
             response.redirect('/roles')

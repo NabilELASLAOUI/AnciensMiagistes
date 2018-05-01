@@ -13,7 +13,6 @@ class  Role {
         return this.row.ROLENAME
     }
     static create(roleName,cb){
-
         connection.query('INSERT INTO role SET ROLENAME=?',[roleName],(err,result)=>{
             if (err) throw err
             cb(result)
