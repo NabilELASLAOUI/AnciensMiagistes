@@ -6,7 +6,7 @@ let bodyParse = require('body-parser')
 let session = require('express-session')
 
 
-// moteur de template
+// moteur de template express
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine','ejs')
 
