@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
+    <head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 
@@ -14,7 +14,7 @@
 
 		<!-- Website Font style -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-		
+
 		<!-- Google Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
@@ -87,6 +87,13 @@
 	</head>
 	<body>
 		<div class="container">
+		<%- messages('message', locals) %>
+           <% if(locals.errors){  for(error of locals.errors) {  %>
+
+           <div class="alert alert-danger" >
+           <%= error.msg %>
+           </div>
+          <% }} %>
 			<div class="row main">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
@@ -151,7 +158,7 @@
 							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Inscription</button>
 						</div>
 						<div class="login-register">
-				            <a href="index.php">Connexion</a>
+				            <a href="/">Connexion</a>
 				         </div>
 					</form>
 				</div>

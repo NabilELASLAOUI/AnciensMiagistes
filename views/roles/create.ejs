@@ -1,4 +1,4 @@
-<% include header.ejs  %>
+<% include ../layout/header.ejs  %>
 <div class="container">
 <%- messages('message', locals) %>
    <% if(locals.errors){  for(error of locals.errors) {  %>
@@ -36,4 +36,4 @@
 
 		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
     </div>
-<% include footer  %>
+<% include ../layout/footer  %>

@@ -6,15 +6,15 @@ let moment = require('../config/moment')
 class  User {
 
     constructor(row){
-        this.row = row
+        this._row = row;
     }
     get USERLOGIN(){
-        return this.row.USERLOGIN
+        return this._row.USERLOGIN
     }
 
-    static create(User,cb){
+    static create(username,usersurname,useradress,userpwd,role,cb){
 
-        connection.query('INSERT INTO user SET content=?, created_at=?',[content,new Date()],(err,result)=>{
+        connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?, USERADDRESS=?, USERPWD=?,ROLEID=?',[username,username,useradress,userpwd,role],(err,result)=>{
             if (err) throw err
             cb(result)
         })
