@@ -1,9 +1,10 @@
 
 
-const express = require('express');
-const router = express.Router();
-
+let express = require('express');
+let router = express.Router();
+let config = require('../config/db');
 let User = require('../models/User')
+let passport = require('passport');
 
 
 
@@ -12,23 +13,21 @@ router.get('/register', function(req, res){
     res.render('users/register');
 });
 
-router.post('/login', (request,response)=>{
-    if (request.body.USERLOGIN === undefined || request.body.USERPWD === ''){
-        request.flash('error',"vous n'avez pas posté de login")
-        response.redirect('/')
-    }else{
-        var crypto = require('crypto')
-            , shasum = crypto.createHash('sha1');
-        shasum.update(request.body.USERPWD);
-        User.login(request.body.USERLOGIN,shasum.digest('hex'), function (user) {
-            if (user){
-                response.redirect('/roles')
-            }else{
-                response.redirect('/')
-            }
-        })
-    }
-})
+// Login Process
+router.post('/login', function(req, res, next){
+    passport.authenticate('local', {
+        successRedirect:'roles/roles',
+        failureRedirect:'/',
+        failureFlash: true
+    })(req, res, next);
+});
+
+// logout
+router.get('/logout', function(req, res){
+    req.logout();
+    req.flash('success', 'You are logged out');
+    res.redirect('/users/login');
+});
 
 // Register Proccess
 router.post('/register', function(req, res){
@@ -59,8 +58,6 @@ router.post('/register', function(req, res){
             req.flash('success',"user bien ajouté !")
             res.redirect('/roles')
         })
-
-
     }
 });
 

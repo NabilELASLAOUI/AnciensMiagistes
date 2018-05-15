@@ -32,6 +32,13 @@ class  User {
             cb(rows.map((row) => new User(row)))
         })
     }
+
+    static findById(id,cb){
+        connection.query('SELECT * FROM user WHERE USERID=?',[id],(err,rows)=>{
+            if (err) throw err
+            cb(rows.map((row) => new User(row)))
+        })
+    }
 }
 
 module.exports = User
