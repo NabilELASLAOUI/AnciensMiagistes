@@ -1,8 +1,8 @@
 
 
-const express = require('express');
-const router = express.Router();
-
+let express = require('express');
+let router = express.Router();
+let config = require('../config/db');
 let User = require('../models/User')
 let passport = require('passport');
 
