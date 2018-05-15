@@ -1,11 +1,12 @@
 let express =  require('express')
-let app =express() // moteur de template
+let app =express()
 const path = require('path');
 
 let bodyParse = require('body-parser')
 let session = require('express-session')
 let expressValidator = require('express-validator');
 let flash = require('connect-flash');
+let passport = require('passport');
 
 
 // moteur de template express
@@ -48,6 +49,17 @@ app.use(expressValidator({
         };
     }
 }));
+
+// Passport Config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function(req, res, next){
+    res.locals.user = req.user || null;
+    next();
+});
 
 // routes
 app.get('/',(request,response)=>{
