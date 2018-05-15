@@ -60,5 +60,7 @@ app.use('/users', users);
 let roles = require('./controllers/roles');
 app.use('/roles', roles);
 
+let category = require('./controllers/category');
+app.use('/category', category);
 
 app.listen(8080)
