@@ -1,5 +1,5 @@
 let express =  require('express')
-let app =express()
+let app = express()
 const path = require('path');
 
 let bodyParse = require('body-parser')
