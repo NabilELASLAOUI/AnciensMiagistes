@@ -51,7 +51,7 @@ app.use(expressValidator({
 }));
 
 // Passport Config
-require('./config/passport')(passport);
+require('./config/passport')(passport);;
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());

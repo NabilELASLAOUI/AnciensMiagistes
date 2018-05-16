@@ -39,6 +39,7 @@ class  User {
             cb(rows.map((row) => new User(row)))
         })
     }
+
 }
 
 module.exports = User
