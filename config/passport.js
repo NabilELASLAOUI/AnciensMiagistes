@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
-const config = require('../config/db');
+const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 module.exports = function(passport){
@@ -10,27 +10,25 @@ module.exports = function(passport){
             passwordField: 'USERPWD'
         },
         function(username, password, done) {
-            var crypto = require('crypto')
-                , shasum = crypto.createHash('sha1');
-            shasum.update(password);
-            User.login(username,shasum.digest('hex'), function (user) {
-                if(user === null){
-                    console.log('no user')
-                    return done(null, false, {message: 'No user found'});
+            db.query('SELECT USERPWD FROM user WHERE USERLOGIN=?',[username],(err,results,fields)=>{
+                if (err){done(err)}
+                if (results.length === 0){
+                    done(null,false);
                 }else {
-                    return done(null, user);
+                    return done(null,'user');
                 }
+
             })
+        console.log('/////////////////////////////')
         }
     ));
 
     passport.serializeUser(function(user, done) {
-        console.log(user
-        )
         done(null, user);
     });
 
     passport.deserializeUser(function(user, done) {
         done(null, user);
     });
+
 }
