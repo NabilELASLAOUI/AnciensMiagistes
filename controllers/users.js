@@ -5,6 +5,7 @@ let router = express.Router();
 let config = require('../config/db');
 let User = require('../models/User')
 let passport = require('passport');
+const bcrypt = require('bcrypt');
 
 
 
@@ -51,13 +52,14 @@ router.post('/register', function(req, res){
             errors:errors
         });
     } else {
-        var crypto = require('crypto')
-            , shasum = crypto.createHash('sha1');
-        shasum.update(USERPWD);
-        User.create(USERNAME,USERSURNAME,USERADDRESS,shasum.digest('hex'),ROLEID, function () {
-            req.flash('success',"user bien ajouté !")
-            res.redirect('/roles')
-        })
+        bcrypt.genSalt(10,function (err, salt) {
+            bcrypt.hash(USERPWD,salt,function (err, hash) {
+                User.create(USERNAME,USERSURNAME,USERADDRESS,hash,ROLEID, function () {
+                    req.flash('success',"user bien ajouté !")
+                    res.redirect('/roles')
+                })
+            })
+        });
     }
 });
 
