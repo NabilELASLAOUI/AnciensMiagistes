@@ -16,7 +16,7 @@ router.get('/register', function(req, res){
 // Login Process
 router.post('/login', function(req, res, next){
     passport.authenticate('local', {
-        successRedirect:'roles/roles',
+        successRedirect:'/roles',
         failureRedirect:'/',
         failureFlash: true
     })(req, res, next);
@@ -26,7 +26,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
     req.logout();
     req.flash('success', 'You are logged out');
-    res.redirect('/users/login');
+    res.redirect('/');
 });
 
 // Register Proccess
