@@ -42,7 +42,6 @@ router.post('/register', function(req, res){
     const USERLOGIN = req.body.USERLOGIN;
     const USERPWD = req.body.USERPWD;
     const USERPWD2 = req.body.USERPWD2;
-    const ROLEID = 1; // to do
 
     req.checkBody('USERNAME', 'Saisissez votre nom').notEmpty();
     req.checkBody('USERSURNAME', 'Saisissez votre Prénom').notEmpty();
