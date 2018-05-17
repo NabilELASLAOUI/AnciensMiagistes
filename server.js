@@ -56,6 +56,11 @@ require('./config/passport')(passport);;
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function (req,res,next) {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+})
+
 app.get('*', function(req, res, next){
     res.locals.user = req.user || null;
     next();

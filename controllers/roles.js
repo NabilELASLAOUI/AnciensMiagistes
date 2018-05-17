@@ -5,7 +5,7 @@ let Role = require('../models/Role')
 
 
 
-router.get('/',(request,response)=>{
+router.get('/',ensureAuthenticated,(request,response)=>{
     Role.all(function (roles) {
         response.render('roles/roles',{roles:roles})
     })
@@ -32,5 +32,15 @@ router.post('/create', (request,response)=>{
         })
     }
 })
+
+// Access Control
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        req.flash('danger', 'Please login');
+        res.redirect('/');
+    }
+}
 
 module.exports = router;

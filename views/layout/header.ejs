@@ -56,7 +56,10 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#">Bonjour<span class="glyphicon glyphicon-user"></span> </a></li>
-      <li><a href=""><span class="glyphicon glyphicon-log-in"></span> déconnexion</a></li>
+      <li><a href="users/logout">
+      <% if (isAuthenticated){ %>
+      <span class="glyphicon glyphicon-log-in"></span> déconnexion</a></li>
+      <% } %>
     </ul>
   </div>
 </nav>
