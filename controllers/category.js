@@ -5,17 +5,17 @@ let Category = require('../models/Category')
 
 
 
-router.get('/', (request, response) => {
+router.get('/', ensureAuthenticated,(request, response) => {
     Category.all(function (cat) {
         response.render('categories/categories', { cat: cat })
     })
 })
 
-router.get('/create', (request, response) => {
+router.get('/create', ensureAuthenticated, (request, response) => {
     response.render('categories/create')
 })
 
-router.post('/create', (request, response) => {
+router.post('/create', ensureAuthenticated, (request, response) => {
 
     request.checkBody('CATEGORYNAME', 'Saisissez une categorie').notEmpty();
     // Get Errors
@@ -33,7 +33,7 @@ router.post('/create', (request, response) => {
     }
 })
 
-router.get('/delete/:id',(request, response) => {
+router.get('/delete/:id', ensureAuthenticated,(request, response) => {
     if (request.params.id){
         Category.delete_(request.params.id, function(){
             request.flash('success', "Catégorie supprimée")
@@ -42,7 +42,7 @@ router.get('/delete/:id',(request, response) => {
     response.redirect('/category')
 })
 
-router.post('/update', (request, response) => {
+router.post('/update', ensureAuthenticated, (request, response) => {
     request.checkBody('CATEGORYNAME', 'Saisissez une categorie').notEmpty();
     // Get Errors
     let errors = request.validationErrors();
@@ -59,7 +59,7 @@ router.post('/update', (request, response) => {
     }
 })
 
-router.get('/edit/:id', (request, response) => {
+router.get('/edit/:id', ensureAuthenticated, (request, response) => {
     if (request.params.id) {
         Category.getOne(request.params.id, function(cat){
             response.render('categories/edit', { cat: cat })
@@ -67,6 +67,14 @@ router.get('/edit/:id', (request, response) => {
     }
 })
 
-
+// Access Control
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        req.flash('danger', 'Please login');
+        res.redirect('/');
+    }
+}
 
 module.exports = router;
