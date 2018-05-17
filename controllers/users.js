@@ -56,7 +56,7 @@ router.post('/register', function(req, res){
             bcrypt.hash(USERPWD,salt,function (err, hash) {
                 User.create(USERNAME,USERSURNAME,USERADDRESS,hash,ROLEID, function () {
                     req.flash('success',"user bien ajouté !")
-                    res.redirect('/roles')
+                    res.redirect('/')
                 })
             })
         });
