@@ -46,7 +46,8 @@
 
     <ul class="nav navbar-nav">
       <li class="active"><a href="">Accueil</a></li>
-      <li><a href="">Roles</a></li>
+       <li><a href="/articles">Articles</a></li>
+      <li><a href="/roles   ">Roles</a></li>
       <li><a href="/category">Categorie</a></li>
       <li><a href="">Offres de stage</a></li>
       <li><a href="">Offres d'alternance</a></li>
@@ -58,8 +59,11 @@
       <li><a href="#">Bonjour<span class="glyphicon glyphicon-user"></span> </a></li>
       <li><a href="users/logout">
       <% if (isAuthenticated){ %>
-      <span class="glyphicon glyphicon-log-in"></span> déconnexion</a></li>
+      <span class="glyphicon glyphicon-log-in"></span> déconnexion
+
       <% } %>
+      </a>
+      </li>
     </ul>
   </div>
 </nav>

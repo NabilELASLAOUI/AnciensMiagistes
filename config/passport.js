@@ -11,7 +11,7 @@ module.exports = function(passport){
         },
         function(username, password, done) {
             db.query('SELECT USERID, USERPWD FROM user WHERE USERLOGIN=?',[username],(err,results,fields)=>{
-                if (err){done(err)}
+                if (err){done(err);}
                 if (results.length === 0){
                     done(null,false);
                 }else {
