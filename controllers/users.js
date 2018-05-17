@@ -22,14 +22,18 @@ router.post('/login', function(req, res, next){
     passport.authenticate('local', {
         successRedirect:'/roles',
         failureRedirect:'/',
-        failureFlash: true
+        failureFlash: 'adresse email ou mot de passe incorrect'
     })(req, res, next);
 });
 
 // logout
 router.get('/logout', function(req, res){
     req.logout();
+<<<<<<< HEAD
     req.flash('success', 'vous avez connecté');
+=======
+    req.flash('success', 'Vous êtes déconnectés');
+>>>>>>> e420e350af74ba46cec658c74ff6d7d4eb7d03b4
     res.redirect('/roles');
 });
 
@@ -42,7 +46,11 @@ router.post('/register', function(req, res){
     const USERLOGIN = req.body.USERLOGIN;
     const USERPWD = req.body.USERPWD;
     const USERPWD2 = req.body.USERPWD2;
+<<<<<<< HEAD
     const ROLEID = req.body.ROLEID;
+=======
+
+>>>>>>> e420e350af74ba46cec658c74ff6d7d4eb7d03b4
     req.checkBody('USERNAME', 'Saisissez votre nom').notEmpty();
     req.checkBody('USERSURNAME', 'Saisissez votre Prénom').notEmpty();
     req.checkBody('USERPHONE', 'Saisissez votre numéro téléphone').notEmpty();
