@@ -11,7 +11,7 @@ router.get('/',ensureAuthenticated,(request,response)=>{
     })
 })
 
-router.get('/create',(request,response)=>{
+router.get('/create',ensureAuthenticated,(request,response)=>{
         response.render('roles/create')
 })
 
@@ -33,7 +33,7 @@ router.post('/create', (request,response)=>{
     }
 })
 
-router.get('/delete/:id',(request, response) => {
+router.get('/delete/:id',ensureAuthenticated,(request, response) => {
     if (request.params.id){
         Role.delete(request.params.id, function(){
             request.flash('success', "Role supprimée")
@@ -59,7 +59,7 @@ router.post('/update', (request, response) => {
     }
 })
 
-router.get('/edit/:id', (request, response) => {
+router.get('/edit/:id',ensureAuthenticated, (request, response) => {
     if (request.params.id) {
         Role.getOne(request.params.id, function(role){
             response.render('roles/edit', { role: role })
