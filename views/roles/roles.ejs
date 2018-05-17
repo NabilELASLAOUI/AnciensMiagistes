@@ -24,9 +24,9 @@
     <tr>
     <td></td>
     <td><%= role.ROLENAME %></td>
-     <td><a href=""><span class="glyphicon glyphicon-pencil"></span></span></a></td>
+     <td><a href="roles/edit/<%= role.ROLEID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
   <td>
-    <a onclick="return confirm('Voulez vous vraiment supprimer ?'); " href="#"><span class="glyphicon glyphicon-trash"></span></a>
+    <a href="roles/delete/<%= role.ROLEID %>" onclick="return confirm('Voulez vous vraiment supprimer ?');"><span class="glyphicon glyphicon-trash"></span></a>
   </td>
     </tr>
  <%  } %>
