@@ -33,6 +33,41 @@ router.post('/create', (request,response)=>{
     }
 })
 
+router.get('/delete/:id',(request, response) => {
+    if (request.params.id){
+        Role.delete(request.params.id, function(){
+            request.flash('success', "Role supprimée")
+        })
+    }
+    response.redirect('/roles')
+})
+
+router.post('/update', (request, response) => {
+    request.checkBody('ROLENAME', 'Saisissez un role').notEmpty();
+    // Get Errors
+    let errors = request.validationErrors();
+
+    if (errors) {
+        Role.all(function (role) {
+            response.render('roles/edit', { role: role, errors: errors })
+        })
+    } else {
+        Role.update(request.body.ROLENAME,request.body.ROLEID, function () {
+            request.flash('success', "role modifiée !")
+            response.redirect('/roles')
+        })
+    }
+})
+
+router.get('/edit/:id', (request, response) => {
+    if (request.params.id) {
+        Role.getOne(request.params.id, function(role){
+            response.render('roles/edit', { role: role })
+        })
+    }
+})
+
+
 // Access Control
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
