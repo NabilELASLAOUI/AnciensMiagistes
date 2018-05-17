@@ -4,8 +4,7 @@ const router = express.Router();
 let Category = require('../models/Category')
 
 
-
-router.get('/', ensureAuthenticated,(request, response) => {
+router.get('/', ensureAuthenticated, (request, response) => {
     Category.all(function (cat) {
         response.render('categories/categories', { cat: cat })
     })
@@ -33,7 +32,7 @@ router.post('/create', ensureAuthenticated, (request, response) => {
     }
 })
 
-router.get('/delete/:id', ensureAuthenticated,(request, response) => {
+router.get('/delete/:id', ensureAuthenticated, (request, response) => {
     if (request.params.id){
         Category.delete_(request.params.id, function(){
             request.flash('success', "Catégorie supprimée")

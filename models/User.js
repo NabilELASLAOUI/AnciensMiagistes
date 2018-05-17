@@ -17,7 +17,7 @@ class  User {
 
     static create(username,usersurname,userphone,useradress,userlogin,userpwd,role,cb){
 
-        connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?,USERPHONE=?, USERADDRESS=?,USERLOGIN=?, USERPWD=?,ROLEID=?',[username,username,userphone,useradress,userlogin,userpwd,role],(err,result)=>{
+        connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?,USERPHONE=?, USERADDRESS=?,USERLOGIN=?, USERPWD=?,ROLEID=?', [username, usersurname, userphone, useradress, userlogin, userpwd, role], (err, result) => {
             if (err) throw err
             cb(result)
         })
