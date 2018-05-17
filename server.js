@@ -1,5 +1,5 @@
 let express =  require('express')
-let app = express()
+let app =express() // moteur de template
 const path = require('path');
 
 let bodyParse = require('body-parser')
@@ -77,6 +77,8 @@ app.use('/users', users);
 let roles = require('./controllers/roles');
 app.use('/roles', roles);
 
+let articles = require('./controllers/articles');
+app.use('/articles', articles);
 let category = require('./controllers/category');
 app.use('/category', category);
 

@@ -118,31 +118,39 @@
 							<label for="email" class="cols-sm-2 control-label">Prénom</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
 									<input type="text" class="form-control" name="USERSURNAME" id="email"  placeholder="Votre prénom"/>
 								</div>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">Adresse</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="USERADDRESS" id="username"  placeholder="Votre Adresse"/>
-								</div>
-							</div>
-						</div>
-
                         <div class="form-group">
-                            <label for="email" class="cols-sm-2 control-label">Login</label>
+                            <label for="email" class="cols-sm-2 control-label">Téléphone</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="USERSURNAME" id="email"  placeholder="Votre Login"/>
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERPHONE" id=""  placeholder="Votre numéro téléphone"/>
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Adresse</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERADDRESS" id="username"  placeholder="Votre adresse"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+							<label for="username" class="cols-sm-2 control-label">Adresse mail</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+								    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="USERLOGIN" id="username"  placeholder="Votre Adresse mail"/>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Mot de passe</label>
 							<div class="cols-sm-10">
@@ -162,6 +170,19 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="form-group">
+                            <label for="confirm" class="cols-sm-2 control-label">Role</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                <select name="ROLEID">
+                                 <%  for(role of roles) { %>
+                                  <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
+                                   <%  } %>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
 
 						<div class="form-group ">
 							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Inscription</button>
