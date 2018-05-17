@@ -1,5 +1,5 @@
 let express =  require('express')
-let app = express()
+let app =express() // moteur de template
 const path = require('path');
 
 let bodyParse = require('body-parser')
@@ -56,6 +56,11 @@ require('./config/passport')(passport);;
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function (req,res,next) {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+})
+
 app.get('*', function(req, res, next){
     res.locals.user = req.user || null;
     next();
@@ -72,6 +77,8 @@ app.use('/users', users);
 let roles = require('./controllers/roles');
 app.use('/roles', roles);
 
+let articles = require('./controllers/articles');
+app.use('/articles', articles);
 let category = require('./controllers/category');
 app.use('/category', category);
 

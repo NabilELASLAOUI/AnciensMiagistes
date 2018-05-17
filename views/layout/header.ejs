@@ -46,7 +46,12 @@
 
     <ul class="nav navbar-nav">
       <li class="active"><a href="">Accueil</a></li>
-      <li><a href="">Roles</a></li>
+<<<<<<< HEAD
+      <li><a href="/roles">Roles</a></li>
+=======
+       <li><a href="/articles">Articles</a></li>
+      <li><a href="/roles   ">Roles</a></li>
+>>>>>>> e420e350af74ba46cec658c74ff6d7d4eb7d03b4
       <li><a href="/category">Categorie</a></li>
       <li><a href="">Offres de stage</a></li>
       <li><a href="">Offres d'alternance</a></li>
@@ -56,7 +61,13 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#">Bonjour<span class="glyphicon glyphicon-user"></span> </a></li>
-      <li><a href=""><span class="glyphicon glyphicon-log-in"></span> déconnexion</a></li>
+      <li><a href="users/logout">
+      <% if (isAuthenticated){ %>
+      <span class="glyphicon glyphicon-log-in"></span> déconnexion
+
+      <% } %>
+      </a>
+      </li>
     </ul>
   </div>
 </nav>

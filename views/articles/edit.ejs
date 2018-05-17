@@ -1,0 +1,92 @@
+<% include ../layout/header.ejs  %>
+<div class="container">
+<%- messages('message', locals) %>
+   <% if(locals.errors){  for(error of locals.errors) {  %>
+
+   <div class="alert alert-danger" >
+   <%= error.msg %>
+   </div>
+  <% }} %>
+			<div class="row main">
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Modification d'un Article</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+				<div class="main-login main-center">
+					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/articles/doEdit">
+                        <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.USERID %><%}} %>" name="USERID" id="user"/>
+                        <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.ARTICLEID %><%}} %>" name="ARTICLEID" id="idart"/>
+						<div class="form-group">
+							<label for="titre" class="cols-sm-2 control-label">Titre</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+									<input type="text" value="<% if(article){ for(elem of article){%><%= elem.ARTICLENAME %><% }} %>" class="form-control" name="ARTICLENAME" id="titre"  placeholder="Nom de l'article"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+                            <label for="cat" class="cols-sm-2 control-label">Categorie</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <select name="CATEGORYID" id="cat" required >
+                                     <option value="" >Choisir</option>
+                                      <% if(article){for(elem of article){ %>
+                                        <%  if(cat){for(c of cat) { %>
+
+                                         <option value="<%= c.CATEGORYID %>" <% if(elem.CATEGORYID ===c.CATEGORYID ){%> <%= 'selected' %> <% } %>  ><%= c.CATEGORYNAME %></option>
+
+                                        <%  }}}} %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content" class="cols-sm-2 control-label">Contenu</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <textarea class="form-control" name="ARTICLEDESC" id="content"  rows="15" cols="50"><% if(article){for(elem of article){ %><%= elem.ARTICLEDESC %><% }} %></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc" class="cols-sm-2 control-label">Fichier</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="file" class="form-control" name="ARTICLEDOC" id="doc" />
+                                     <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.ARTICLEDOC %><%}} %>" name="ARTICLEDOCNAME" id="idart"/>
+                                </div>
+                            </div>
+                        </div>
+                        <% if(article){for(elem of article){
+                          var y=new Date(elem.ARTICLEDATE).getFullYear();
+                          var m=new Date(elem.ARTICLEDATE).getMonth()<10 ?'0'+ (new Date(elem.ARTICLEDATE).getMonth()+1):new Date(elem.ARTICLEDATE).getMonth()+1;
+                          var d=new Date(elem.ARTICLEDATE).getDate()<10 ?'0'+(new Date(elem.ARTICLEDATE).getDate()):new Date(elem.ARTICLEDATE).getDate();
+                           }} %>
+                        <div class="form-group">
+                            <label for="titre" class="cols-sm-2 control-label">Date</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="date" value="<%= y+'-'+m+'-'+d %>" class="form-control" name="ARTICLEDATE" id="titre"  placeholder="Date de publication"/>
+                                </div>
+                            </div>
+                        </div>
+						<div class="form-group ">
+							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Ajouter</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    </div>
+<% include ../layout/footer  %>

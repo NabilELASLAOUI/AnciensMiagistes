@@ -15,9 +15,9 @@ class  User {
         return this._row.USERID
     }
 
-    static create(username,usersurname,useradress,userpwd,role,cb){
+    static create(username,usersurname,userphone,useradress,userlogin,userpwd,role,cb){
 
-        connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?, USERADDRESS=?, USERPWD=?,ROLEID=?',[username,username,useradress,userpwd,role],(err,result)=>{
+        connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?,USERPHONE=?, USERADDRESS=?,USERLOGIN=?, USERPWD=?,ROLEID=?',[username,username,userphone,useradress,userlogin,userpwd,role],(err,result)=>{
             if (err) throw err
             cb(result)
         })
@@ -31,12 +31,6 @@ class  User {
 
     static all(cb){
         connection.query('SELECT * FROM messages',(err,rows)=>{
-            if (err) throw err
-            cb(rows.map((row) => new User(row)))
-        })
-    }
-    static login(log,mdp,cb){
-        connection.query('SELECT * FROM user WHERE USERLOGIN=? and USERPWD=?',[log,mdp],(err,rows)=>{
             if (err) throw err
             cb(rows.map((row) => new User(row)))
         })
