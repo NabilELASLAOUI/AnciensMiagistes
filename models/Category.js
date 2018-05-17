@@ -38,7 +38,7 @@ class Category {
 
 
     static update(categoryName,categoryid , cb){
-        connection.query('UPDATE Category SET CATEGORYNAME= ? WHERE CATEGORYID = ?', [categoryName,categoryid], (err, result) => {
+        connection.query('UPDATE Category SET CATEGORYNAME = ? WHERE CATEGORYID = ?', [categoryName,categoryid], (err, result) => {
             if(err) throw err
             cb(result);
         })

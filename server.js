@@ -75,4 +75,7 @@ app.use('/roles', roles);
 let category = require('./controllers/category');
 app.use('/category', category);
 
+let company = require('./controllers/company');
+app.use('/company', company);
+
 app.listen(8080)

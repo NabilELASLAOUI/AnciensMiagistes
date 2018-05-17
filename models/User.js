@@ -11,12 +11,21 @@ class  User {
     get USERLOGIN(){
         return this._row.USERLOGIN
     }
+	get USERID(){
+        return this._row.USERID
+    }
 
     static create(username,usersurname,useradress,userpwd,role,cb){
 
         connection.query('INSERT INTO user SET USERNAME=?, USERSURNAME=?, USERADDRESS=?, USERPWD=?,ROLEID=?',[username,username,useradress,userpwd,role],(err,result)=>{
             if (err) throw err
             cb(result)
+        })
+    }
+	static allUsers(cb) {
+        connection.query('SELECT * FROM user', (err, rows) => {
+            if (err) throw err
+            cb(rows.map((row) => new User(row)))
         })
     }
 

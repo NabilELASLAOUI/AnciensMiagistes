@@ -1,0 +1,143 @@
+<% include ../layout/header.ejs  %>
+    <div class="container">
+        <%- messages('message', locals) %>
+
+            <div class="form-group col-md-offset-4 ajouter">
+                <form action="company/create" method="get">
+                    <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="submit" value="Ajouter une compagnie" data-toggle="modal">
+            </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Liste des compagnies</h4>
+                    <div class="table-responsive">
+                        <table id="mytable" class="table table-bordred table-striped">
+                            <thead>
+                                <th>
+                                    <input type="checkbox" id="checkall" />
+                                </th>
+                                <th>Nom de la compagnie</th>
+                                <th>Description de la compagnie</th>
+								<th>Modifier</th>
+                                <th>Supprimer</th>
+                            </thead>
+                            <tbody>
+
+                                <%  for(comp of comp) { %>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <%= comp.COMPANYNAME %>
+                                        </td>
+										<td>
+                                            <%= comp.COMPANYDESC %>
+                                        </td>
+                                        <td>
+                                            <a href="/company/edit/<%= comp.USERID %>">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a onclick="return confirm('Voulez vous vraiment supprimer ?'); " href="company/delete/<%= comp.USERID %>">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <%  } %>
+                            </tbody>
+
+                        </table>
+
+                        <div class="clearfix"></div>
+                        <ul class="pagination pull-right">
+                            <li class="disabled">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="#">1</a>
+                            </li>
+                            <li>
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                            <li>
+                                <a href="#">4</a>
+                            </li>
+                            <li>
+                                <a href="#">5</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <h4 class="modal-title custom_align" id="Heading">Modifier </h4>
+                </div>
+                <div class="modal-body">
+                    <form action="<?php echo Router::url('personnels/edit/'.$id); ?>" method="post">
+                        <div class="form-group">
+                            <input class="form-control " name="ROLENAME" type="text" placeholder="nom du role">
+                        </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;">
+                        <span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+                </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+
+
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                    <h4 class="modal-title custom_align" id="Heading">Supprimer</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-warning-sign"></span> Voulez-vous vraiment supprimer ?</div>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>Non</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <% include ../layout/footer  %>
