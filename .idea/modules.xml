@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LivreOr.iml" filepath="$PROJECT_DIR$/.idea/LivreOr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NodeProject.iml" filepath="$PROJECT_DIR$/NodeProject.iml" />
     </modules>
   </component>
 </project>
