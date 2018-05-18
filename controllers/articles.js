@@ -23,11 +23,11 @@ router.get('/add',ensureAuthenticated, function (req, res) {
 
 });
 
-router.get('/edit/:articleid',ensureAuthenticated, function (req, res) {
+router.get('/edit.ejs/:articleid',ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.articleid, function (elem) {
         //console.log(elem);
         Category.all(function(cat){
-            res.render('articles/edit', {article: elem,cat:cat});
+            res.render('articles/edit.ejs', {article: elem,cat:cat});
             console.log(elem)
         });
 
@@ -69,7 +69,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
     form.keepExtensions = true
     form.uploadDir = uploadDir
     form.parse(req, function(err, fields, files) {
-        if(err) res.render('articles/edit', { errors: err})
+        if(err) res.render('articles/edit.ejs', { errors: err})
         var doc = files.ARTICLEDOC.name!=='' ? files.ARTICLEDOC.name : fields.ARTICLEDOCNAME;
         console.log(doc);
         Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDATE, fields.ARTICLEDESC, doc, function () {

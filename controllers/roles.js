@@ -49,7 +49,7 @@ router.post('/update', (request, response) => {
 
     if (errors) {
         Role.all(function (role) {
-            response.render('roles/edit', { role: role, errors: errors })
+            response.render('roles/edit.ejs', { role: role, errors: errors })
         })
     } else {
         Role.update(request.body.ROLENAME,request.body.ROLEID, function () {
@@ -62,7 +62,7 @@ router.post('/update', (request, response) => {
 router.get('/edit/:id',ensureAuthenticated, (request, response) => {
     if (request.params.id) {
         Role.getOne(request.params.id, function(role){
-            response.render('roles/edit', { role: role })
+            response.render('roles/edit.ejs', { role: role })
         })
     }
 })

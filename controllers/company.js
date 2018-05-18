@@ -52,7 +52,7 @@ router.post('/update', (request, response) => {
 
     if (errors) {
         Company.all(function (comp) {
-            response.render('companies/edit', { comp: comp, errors: errors })
+            response.render('companies/edit.ejs', { comp: comp, errors: errors })
         })
     } else {
         Company.update(request.body.COMPANYNAME,request.body.COMPANYDESC, request.body.USERID, function () {
@@ -62,10 +62,10 @@ router.post('/update', (request, response) => {
     }
 })
 
-router.get('/edit/:id', (request, response) => {
+router.get('/edit.ejs/:id', (request, response) => {
     if (request.params.id) {
         Company.getOne(request.params.id, function(comp){
-            response.render('companies/edit', { comp: comp })
+            response.render('companies/edit.ejs', { comp: comp })
         })
     }
 })

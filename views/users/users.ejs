@@ -34,7 +34,7 @@
     <td><%= user.USERLOGIN %></td>
     <td><%= user.ROLEID %></td>
     <td><% if(user.USERSTATUS===0){ %>
-    <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');" href=""><span class="glyphicon glyphicon-remove"></span></a>
+    <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');" href="users/valide/<%= user.USERID %>"><span class="glyphicon glyphicon-remove"></span></a>
      <% }else{ %>
      <span class="glyphicon glyphicon-ok"></span>
     <% } %>

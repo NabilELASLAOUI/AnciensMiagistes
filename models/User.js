@@ -23,6 +23,9 @@ class  User {
     get USERPHONE(){
         return this._row.USERPHONE
     }
+    get USERADDRESS(){
+        return this._row.USERADDRESS
+    }
     get USERSTATUS(){
         return this._row.USERSTATUS
     }
@@ -60,8 +63,14 @@ class  User {
         })
     }
 
-    static update(roleName,id , cb){
-        connection.query('UPDATE role SET ROLENAME= ? WHERE ROLEID = ?', [roleName,id], (err, result) => {
+    static update(username,usersurname,userphone,useraddress,userlogin,roleid,userid , cb){
+        connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=?, ROLEID=? WHERE USERID = ?', [username,usersurname,userphone,useraddress,userlogin,roleid,userid], (err, result) => {
+            if(err) throw err
+            cb(result);
+    })
+    }
+    static Valide(id, cb){
+        connection.query('UPDATE user SET USERSTATUS=1 WHERE USERID = ?', [id], (err, result) => {
             if(err) throw err
             cb(result);
     })
@@ -75,9 +84,9 @@ class  User {
     }
 
     static getOne(id, cb) {
-        connection.query('SELECT * FROM role WHERE USERID = ?',[id], (err, rows) => {
+        connection.query('SELECT * FROM user WHERE USERID = ? LIMIT 1',[id], (err, rows) => {
             if (err) throw err
-            cb(rows.map((row) => new Role(row)))
+            cb(rows.map((row) => new User(row)))
     })
     }
 
