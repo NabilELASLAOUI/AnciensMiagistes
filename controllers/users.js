@@ -76,6 +76,14 @@ router.post('/register', function(req, res){
                 User.create(USERNAME,USERSURNAME,USERPHONE,USERADDRESS,USERLOGIN, hash,ROLEID, function () {
                     req.flash('success',"user bien ajouté !")
                     res.redirect('/')
+                    let MonUser = [
+                        {
+                            username: USERNAME,
+                            usersurname: USERSURNAME,
+                            email: USERLOGIN,
+                        }
+                    ]
+                    require('../config/emailing')('welcome',MonUser);
                 })
             })
         });
@@ -138,6 +146,17 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
         User.allUsers(function (users) {
             res.render('users/users',{users:users})
         })
+    })
+    User.getOne(req.params.id, function(users) {
+        for(user of users);
+        let MonUser = [
+            {
+                username: user.USERNAME,
+                usersurname: user.USERSURNAME,
+                email: user.USERLOGIN,
+            },
+        ]
+        require('../config/emailing')('validation', MonUser);
     })
 });
 
