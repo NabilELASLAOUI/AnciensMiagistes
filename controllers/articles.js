@@ -26,7 +26,8 @@ router.get('/add',ensureAuthenticated, function (req, res) {
 
 });
 
-router.get('/edit.ejs/:articleid', ensureAuthenticated, function (req, res) {
+
+router.get('/edit/:articleid',ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.articleid, function (elem) {
         //console.log(elem);
         Category.all(function (cat) {
