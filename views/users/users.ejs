@@ -1,117 +1,133 @@
-<% include ../layout/header.ejs  %>
+<% include ../layout/header.ejs %>
 <div class="container">
-<%- messages('message', locals) %>
+    <%- messages('message', locals) %>
 
     <div class="form-group col-md-offset-4 ajouter">
-    <form action="users/register" method="get">
-    <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="submit" value="Ajouter un utilisateur" data-toggle="modal">
+        <form action="users/register" method="get">
+            <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="submit"
+                   value="Ajouter un utilisateur" data-toggle="modal">
     </div>
     </form>
-<div class="row">
+    <div class="row">
         <div class="col-md-12">
-        <h4>Liste des utilisateurs</h4>
-        <div class="table-responsive">
-              <table id="mytable" class="table table-bordred table-striped">
-                  <thead>
-                   <th><input type="checkbox" id="checkall" /></th>
-                   <th>Nom</th>
-                   <th>Prénom</th>
-                   <th>Numéro Téléphone</th>
-                   <th>Email</th>
-                   <th>Role</th>
-                   <th>état</th>
-                      <th>Modifier</th>
-                       <th>Supprimer</th>
-                   </thead>
-    <tbody>
+            <h4>Liste des utilisateurs</h4>
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                    <th><input type="checkbox" id="checkall"/></th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Numéro Téléphone</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>état</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                    </thead>
+                    <tbody>
 
- <%  for(user of users) { %>
-    <tr>
-    <td></td>
-    <td><%= user.USERNAME %></td>
-    <td><%= user.USERSURNAME %></td>
-    <td><%= user.USERPHONE %></td>
-    <td><%= user.USERLOGIN %></td>
-    <td><%= user.ROLENAME %></td>
-    <td><% if(user.USERSTATUS===0){ %>
-    <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');" href="users/valide/<%= user.USERID %>"><span class="glyphicon glyphicon-remove"></span></a>
-     <% }else{ %>
-     <span class="glyphicon glyphicon-ok"></span>
-    <% } %>
-    </td>
-     <td><a href="users/edit/<%= user.USERID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
-  <td>
-    <a href="users/delete/<%= user.USERID %>" onclick="return confirm('Voulez vous vraiment supprimer ?');"><span class="glyphicon glyphicon-trash"></span></a>
-  </td>
-    </tr>
- <%  } %>
-    </tbody>
+                    <% for(user of users) { %>
+                    <tr>
+                        <td></td>
+                        <td><%= user.USERNAME %></td>
+                        <td><%= user.USERSURNAME %></td>
+                        <td><%= user.USERPHONE %></td>
+                        <td><%= user.USERLOGIN %></td>
+                        <td><%= user.ROLENAME %></td>
+                        <td>
+                            <% if(user.USERSTATUS === 0){ %>
+                            <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');"
+                               href="users/valide/<%= user.USERID %>"><span
+                                        class="glyphicon glyphicon-remove"></span></a>
+                            <% }else{ %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <% } %>
+                        </td>
+                        <td><a href="users/edit/<%= user.USERID %>"><span
+                                        class="glyphicon glyphicon-pencil"></span></span></a></td>
+                        <td>
+                            <a href="users/delete/<%= user.USERID %>"
+                               onclick="return confirm('Voulez vous vraiment supprimer ?');"><span
+                                        class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                    <% } %>
+                    </tbody>
 
-</table>
+                </table>
 
-<div class="clearfix"></div>
-<ul class="pagination pull-right">
-  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
+                <div class="clearfix"></div>
+                <ul class="pagination pull-right">
+                    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                </ul>
 
             </div>
 
         </div>
-	</div>
+    </div>
 </div>
 
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Modifier </h4>
-      </div>
-          <div class="modal-body">
-          <form action="<?php echo Router::url('personnels/edit/'.$id); ?>" method="post">
-                <div class="form-group">
-                <input class="form-control " name="ROLENAME" type="text" placeholder="nom du role">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Modifier </h4>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo Router::url('personnels/edit/'.$id); ?>" method="post">
+                    <div class="form-group">
+                        <input class="form-control " name="ROLENAME" type="text" placeholder="nom du role">
+                    </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span
+                            class="glyphicon glyphicon-ok-sign"></span>Modifier
+                </button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Supprimer</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Voulez-vous
+                    vraiment supprimer ?
                 </div>
-              </div> 
-           <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
-      </div>                 
-           </form>
-      </div>
-          
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span>Oui
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove"></span>Non
+                </button>
+            </div>
         </div>
-    <!-- /.modal-content -->
-  </div>
-      <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-
-
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer</h4>
-      </div>
-          <div class="modal-body">
-
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Voulez-vous vraiment supprimer ?</div>
-
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
-      </div>
-        </div>
-    <!-- /.modal-content -->
-  </div>
-      <!-- /.modal-dialog -->
-    </div>
-<% include ../layout/footer  %>
+    <!-- /.modal-dialog -->
+</div>
+<% include ../layout/footer %>

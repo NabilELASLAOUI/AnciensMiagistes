@@ -8,31 +8,40 @@ class  User {
     constructor(row){
         this._row = row;
     }
-    get USERID(){
+
+    get USERID() {
         return this._row.USERID
     }
-    get USERLOGIN(){
+
+    get USERLOGIN() {
         return this._row.USERLOGIN
     }
-    get USERNAME(){
+
+    get USERNAME() {
         return this._row.USERNAME
     }
-    get USERSURNAME(){
+
+    get USERSURNAME() {
         return this._row.USERSURNAME
     }
-    get USERPHONE(){
+
+    get USERPHONE() {
         return this._row.USERPHONE
     }
-    get USERADDRESS(){
+
+    get USERADDRESS() {
         return this._row.USERADDRESS
     }
-    get USERSTATUS(){
+
+    get USERSTATUS() {
         return this._row.USERSTATUS
     }
-    get ROLEID(){
+
+    get ROLEID() {
         return this._row.ROLEID
     }
-    get ROLENAME(){
+
+    get ROLENAME() {
         return this._row.ROLENAME
     }
 
@@ -66,36 +75,41 @@ class  User {
         })
     }
 
-    static update(username,usersurname,userphone,useraddress,userlogin,roleid,userid , cb){
-        connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=?, ROLEID=? WHERE USERID = ?', [username,usersurname,userphone,useraddress,userlogin,roleid,userid], (err, result) => {
+    static update(username, usersurname, userphone, useraddress, userlogin, roleid, userid, cb) {
+        connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=?, ROLEID=? WHERE USERID = ?', [username, usersurname, userphone, useraddress, userlogin, roleid, userid], (err, result) => {
             if(err) throw err
             cb(result);
     })
     }
-    static Valide(id, cb){
+
+    static Valide(id, cb) {
         connection.query('UPDATE user SET USERSTATUS=1 WHERE USERID = ?', [id], (err, result) => {
             if(err) throw err
             cb(result);
     })
     }
 
-    static delete(id, cb){
+    static delete(id, cb) {
         connection.query('DELETE FROM user WHERE USERID = ? ', [id], (err, result) => {
             if(err) throw err
             cb(result)
-        })
+        }
+    )
     }
 
     static getOne(id, cb) {
-        connection.query('SELECT * FROM user WHERE USERID = ? LIMIT 1',[id], (err, rows) => {
-            if (err) throw err
-            cb(rows.map((row) => new User(row)))
+        connection.query('SELECT * FROM user WHERE USERID = ? LIMIT 1', [id], (err, rows) => {
+            if(err) throw err
+            cb(rows.map((row) => new User(row)
+    ))
     })
     }
+
     static Allu(cb) {
         connection.query('SELECT role.ROLENAME,user.USERID,user.USERNAME,user.USERSURNAME,user.USERPHONE,user.USERLOGIN,user.USERSTATUS FROM user,role WHERE user.ROLEID=role.ROLEID ', (err, rows) => {
-            if (err) throw err
-            cb(rows.map((row) => new User(row)))
+            if(err) throw err
+            cb(rows.map((row) => new User(row)
+    ))
     })
     }
 

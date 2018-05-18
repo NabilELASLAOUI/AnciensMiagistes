@@ -26,7 +26,16 @@ router.get('/add',ensureAuthenticated, function (req, res) {
 
 });
 
+router.get('/edit.ejs/:articleid', ensureAuthenticated, function (req, res) {
+    Article.getOne(req.params.articleid, function (elem) {
+        //console.log(elem);
+        Category.all(function (cat) {
+            res.render('articles/edit.ejs', {article: elem, cat: cat});
+            console.log(elem)
+        });
 
+    })
+});
 
 router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
@@ -92,7 +101,6 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
     form.keepExtensions = true
     form.uploadDir = uploadDir
     form.parse(req, function(err, fields, files) {
-
         if(err) res.render('articles/edit', { errors: err});
         if( files.ARTICLEDOC.name!=='') {
             var cheminFichier = files.ARTICLEDOC.path.split('\\');
@@ -110,7 +118,8 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
             }
         }
         var doc = files.ARTICLEDOC.name!=='' ? nomFichier : fields.ARTICLEDOCNAME;
-         //console.log(doc);
+        if (err) res.render('articles/edit.ejs', {errors: err})
+        var doc = files.ARTICLEDOC.name !== '' ? files.ARTICLEDOC.name : fields.ARTICLEDOCNAME;
         Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDATE, fields.ARTICLEDESC, doc, function () {
             req.flash('success', "Article modifié avec succès !")
             res.redirect('/articles')
