@@ -1,6 +1,7 @@
 let express =  require('express')
 let app =express() // moteur de template
 const path = require('path');
+let Role = require('./models/Role')
 
 let bodyParse = require('body-parser')
 let session = require('express-session')
@@ -60,6 +61,9 @@ app.use(function (req,res,next) {
     res.locals.isAuthenticated = req.isAuthenticated();
     if (req.user != undefined){
         res.locals.nom = req.user.user.USERNAME
+        Role.getOne(req.user.user.ROLEID,function (role) {
+            res.locals.role = role[0].ROLENAME
+        })
     }
     next();
 })

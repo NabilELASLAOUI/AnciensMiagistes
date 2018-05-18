@@ -46,21 +46,22 @@
 
     <ul class="nav navbar-nav">
       <li class="active"><a href="">Accueil</a></li>
+       <% if (isAuthenticated){ %>
+       <% if(role === 'ADMIN'){ %>
       <li><a href="/users">Utilisateurs</a></li>
        <li><a href="/articles">Articles</a></li>
       <li><a href="/roles   ">Roles</a></li>
       <li><a href="/category">Categorie</a></li>
       <li><a href="/company">Entreprise</a></li>
+      <% } %>
       <li><a href="">Offres d'alternance</a></li>
       <li><a href="">Rapports de stages</a></li>
-      <li><a href="">Documents</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-    <% if (isAuthenticated){ %>
-      <li><a href="#">Bonjour <%= nom  %><span class="glyphicon glyphicon-user"></span> </a></li>
+      <li><a href="#">Bonjour <%= nom  %></a></li>
+      <li><a href="#">Mon Profile<span class="glyphicon glyphicon-user"></span> </a></li>
       <li><a href="users/logout">
       <span class="glyphicon glyphicon-log-in"></span> déconnexion
-
       <% } %>
       </a>
       </li>

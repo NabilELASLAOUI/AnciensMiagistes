@@ -9,10 +9,17 @@ const bcrypt = require('bcrypt');
 
 // Liste users
 router.get('/',ensureAuthenticated, function(req, res){
-    console.log(req.user.user.USERSTATUS)
-    User.Allu(function (users) {
-        res.render('users/users',{users:users})
+    Role.getOne(req.user.user.ROLEID,function (role) {
+       if(role[0].ROLENAME === 'ADMIN'){
+           User.Allu(function (users) {
+               res.render('users/users',{users:users})
+           })
+       }else{
+           res.redirect('/roles')
+       }
+
     })
+
 });
 
 // Register Form
