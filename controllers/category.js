@@ -58,7 +58,7 @@ router.post('/update', ensureAuthenticated, (request, response) => {
     }
 })
 
-router.get('/edit.ejs/:id', ensureAuthenticated, (request, response) => {
+router.get('/edit/:id', ensureAuthenticated, (request, response) => {
     if (request.params.id) {
         Category.getOne(request.params.id, function(cat){
             response.render('categories/edit.ejs', { cat: cat })
