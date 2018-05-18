@@ -1,5 +1,3 @@
-
-
 let express = require('express');
 let router = express.Router();
 let config = require('../config/db');
@@ -9,6 +7,12 @@ let passport = require('passport');
 const bcrypt = require('bcrypt');
 
 
+// Liste users
+router.get('/',ensureAuthenticated, function(req, res){
+    User.Allu(function (users) {
+        res.render('users/users',{users:users})
+    })
+});
 
 // Register Form
 router.get('/register', function(req, res){
@@ -20,7 +24,7 @@ router.get('/register', function(req, res){
 // Login Process
 router.post('/login', function(req, res, next){
     passport.authenticate('local', {
-        successRedirect:'/roles',
+        successRedirect:'/users',
         failureRedirect:'/',
         failureFlash: 'adresse email ou mot de passe incorrect'
     })(req, res, next);
@@ -69,5 +73,75 @@ router.post('/register', function(req, res){
         });
     }
 });
+
+
+router.get('/delete/:id',ensureAuthenticated,(request, response) => {
+    if (request.params.id){
+
+    User.delete(request.params.id, function(){
+        request.flash('success', "User supprimé")
+    })
+}
+response.redirect('/users')
+});
+
+router.post('/update', (req, res) => {
+    const USERNAME = req.body.USERNAME;
+    const USERSURNAME = req.body.USERSURNAME;
+    const USERPHONE = req.body.USERPHONE;
+    const USERADDRESS = req.body.USERADDRESS;
+    const USERLOGIN = req.body.USERLOGIN;
+    const ROLEID = req.body.ROLEID;
+    const USERID = req.body.USERID;
+    req.checkBody('USERNAME', 'Saisissez votre nom').notEmpty();
+    req.checkBody('USERSURNAME', 'Saisissez votre Prénom').notEmpty();
+    req.checkBody('USERPHONE', 'Saisissez votre numéro téléphone').notEmpty();
+    req.checkBody('USERADDRESS', 'Saisissez votre Adress').notEmpty();
+    req.checkBody('USERLOGIN', 'Saisissez votre Adress mail').isEmail();
+// Get Errors
+let errors = req.validationErrors();
+
+if (errors) {
+    Role.all(function (roles) {
+        res.render('users/edit', { roles: roles, errors: errors })
+    })
+} else {
+    User.update(USERNAME,USERSURNAME,USERPHONE,USERADDRESS,USERLOGIN,ROLEID,USERID, function () {
+        req.flash('success', "user modifiée !")
+        res.redirect('/users')
+    })
+}
+})
+
+router.get('/edit/:id',ensureAuthenticated, (request, response) => {
+    if (request.params.id) {
+    User.getOne(request.params.id, function(user){
+        Role.all(function (roles) {
+            response.render('users/edit.ejs', { user: user,roles : roles })
+        })
+
+    })
+}
+})
+
+// valide une inscription
+router.get('/valide/:id',ensureAuthenticated, function(req, res){
+    User.Valide(req.params.id,function (users) {
+        User.allUsers(function (users) {
+            res.render('users/users',{users:users})
+        })
+    })
+});
+
+
+// Access Control
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        req.flash('danger', "vous n'etes pas connecter");
+        res.redirect('/');
+    }
+}
 
 module.exports = router;
