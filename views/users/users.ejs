@@ -32,7 +32,7 @@
     <td><%= user.USERSURNAME %></td>
     <td><%= user.USERPHONE %></td>
     <td><%= user.USERLOGIN %></td>
-    <td><%= user.ROLEID %></td>
+    <td><%= user.ROLENAME %></td>
     <td><% if(user.USERSTATUS===0){ %>
     <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');" href="users/valide/<%= user.USERID %>"><span class="glyphicon glyphicon-remove"></span></a>
      <% }else{ %>

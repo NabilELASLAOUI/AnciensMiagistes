@@ -32,6 +32,9 @@ class  User {
     get ROLEID(){
         return this._row.ROLEID
     }
+    get ROLENAME(){
+        return this._row.ROLENAME
+    }
 
 
 
@@ -85,6 +88,12 @@ class  User {
 
     static getOne(id, cb) {
         connection.query('SELECT * FROM user WHERE USERID = ? LIMIT 1',[id], (err, rows) => {
+            if (err) throw err
+            cb(rows.map((row) => new User(row)))
+    })
+    }
+    static Allu(cb) {
+        connection.query('SELECT role.ROLENAME,user.USERID,user.USERNAME,user.USERSURNAME,user.USERPHONE,user.USERLOGIN,user.USERSTATUS FROM user,role WHERE user.ROLEID=role.ROLEID ', (err, rows) => {
             if (err) throw err
             cb(rows.map((row) => new User(row)))
     })

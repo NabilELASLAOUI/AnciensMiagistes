@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 // Liste users
 router.get('/',ensureAuthenticated, function(req, res){
-    User.allUsers(function (users) {
+    User.Allu(function (users) {
         res.render('users/users',{users:users})
     })
 });
@@ -127,7 +127,7 @@ router.get('/edit/:id',ensureAuthenticated, (request, response) => {
 // valide une inscription
 router.get('/valide/:id',ensureAuthenticated, function(req, res){
     User.Valide(req.params.id,function (users) {
-        User.all(function (users) {
+        User.allUsers(function (users) {
             res.render('users/users',{users:users})
         })
     })
