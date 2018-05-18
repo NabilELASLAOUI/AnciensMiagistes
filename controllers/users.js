@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 
 // Liste users
 router.get('/',ensureAuthenticated, function(req, res){
+    console.log(req.user.user.USERSTATUS)
     User.Allu(function (users) {
         res.render('users/users',{users:users})
     })
