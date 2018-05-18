@@ -10,7 +10,7 @@ module.exports = function(passport){
             passwordField: 'USERPWD'
         },
         function(username, password, done) {
-            db.query('SELECT USERID, USERPWD FROM user WHERE USERLOGIN=?',[username],(err,results,fields)=>{
+            db.query('SELECT * FROM user WHERE USERLOGIN=?',[username],(err,results,fields)=>{
                 if (err){done(err);}
                 if (results.length === 0){
                     done(null,false);
@@ -18,7 +18,7 @@ module.exports = function(passport){
                     const hash = results[0].USERPWD.toString();
                     bcrypt.compare(password, hash, function(err, response){
                         if (response === true){
-                            return done(null,{user_id:results[0].USERID});
+                            return done(null,{user:results[0]});
                         }else {
                             return done(null,false);
                         }

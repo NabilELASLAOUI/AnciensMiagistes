@@ -56,9 +56,9 @@
       <li><a href="">Documents</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Bonjour<span class="glyphicon glyphicon-user"></span> </a></li>
+    <% if (isAuthenticated){ %>
+      <li><a href="#">Bonjour <%= nom  %><span class="glyphicon glyphicon-user"></span> </a></li>
       <li><a href="users/logout">
-      <% if (isAuthenticated){ %>
       <span class="glyphicon glyphicon-log-in"></span> déconnexion
 
       <% } %>
