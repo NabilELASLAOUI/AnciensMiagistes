@@ -26,7 +26,8 @@
                         <td><%= article.ARTICLENAME %></td>
                          <td><a href="/articles/edit/<%= article.ARTICLEID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
                       <td>
-                        <a onclick="deleteArticle(<%= article.ARTICLEID %>)" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                          <% var doc=article.ARTICLEDOC.toString().length===0 ? 'sansFichier':article.ARTICLEDOC%>
+                        <a onclick="deleteArticle(<%= article.ARTICLEID %>,'<%= doc %>')" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                       </td>
                         </tr>
                      <%  } %>
@@ -101,10 +102,12 @@
     </div>
 
     <script type="text/javascript">
-        function deleteArticle(id){
+        function deleteArticle(id,doc){
+            console.log("/articles/delete/"+id+"/"+doc);
             if(confirm('Voulez vous vraiment supprimer cet article ?')){
 
-               window.location.href="/articles/delete/"+id;
+               window.location.href="/articles/delete/"+id+"/"+doc;
+
             }
 
         }
