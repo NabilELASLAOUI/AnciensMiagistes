@@ -26,7 +26,7 @@
                         <td><%= article.ARTICLENAME %></td>
                          <td><a href="/articles/edit/<%= article.ARTICLEID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
                       <td>
-                          <% var doc=article.ARTICLEDOC.toString().length===0 ? 'sansFichier':article.ARTICLEDOC%>
+                          <% var doc=article.ARTICLEDOC.toString().length===0 ? 'sansFichier':article.ARTICLEDOC %>
                         <a onclick="deleteArticle(<%= article.ARTICLEID %>,'<%= doc %>')" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                       </td>
                         </tr>
