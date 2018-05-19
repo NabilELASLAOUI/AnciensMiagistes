@@ -59,8 +59,8 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#">Bonjour <%= nom  %></a></li>
-      <li><a href="#">Mon Profile<span class="glyphicon glyphicon-user"></span> </a></li>
-      <li><a href="users/logout">
+      <li><a href="/users/monProfile/<%= idUser  %>">Mon Profile<span class="glyphicon glyphicon-user"></span> </a></li>
+      <li><a href="/users/logout">
       <span class="glyphicon glyphicon-log-in"></span> déconnexion
       <% } %>
       </a>

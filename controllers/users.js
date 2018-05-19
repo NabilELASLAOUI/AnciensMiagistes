@@ -133,11 +133,9 @@ router.get('/edit/:id',ensureAuthenticated, (request, response) => {
     if (request.params.id) {
     User.getOne(request.params.id, function(user){
         Role.all(function (roles) {
-            response.render('users/edit.ejs', { user: user,roles : roles })
+            response.render('users/edit', { user: user,roles : roles })
         })
-
-    })
-}
+    })}
 })
 
 // valide une inscription
@@ -158,6 +156,16 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
         ]
         require('../config/emailing')('validation', MonUser);
     })
+});
+
+// mon Profile
+router.get('/monProfile/:id', function(req, res){
+    if (req.params.id) {
+        User.getOne(req.params.id, function(user){
+            Role.getOne(user[0].ROLEID,function (role) {
+                res.render('users/monProfile', { user: user,role : role[0] })
+            })
+        })}
 });
 
 
