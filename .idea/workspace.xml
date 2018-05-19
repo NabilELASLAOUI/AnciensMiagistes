@@ -2,11 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8a86e00d-5aa1-4c4c-a981-50d4af3234ad" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/passport.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/passport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/articles/add.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/articles/add.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/12_ge15_tabfinanciers_automne_2005.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/2012-2013_-_brevet_blanc_2_-_sujet.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/20180513_202130.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/20180513_213636.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/29027491_10211833056918680_1701761051646754816_n.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/Ajout Salle.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/Ajout de groupe d_étudiants.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/Ajout utilisateur.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/ajout-batiment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/bioubacar_sow_seance_5.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/upload_74c16e983dbd29e0b83350a300e3f0cb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/upload_91be025a1f02b95ccf1ecd4fd5eadf3d" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -169,6 +176,11 @@
               <item name="Projet Node Js" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Projet Node Js" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Projet Node Js" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -303,16 +315,15 @@
       <workItem from="1526548091971" duration="11727000" />
       <workItem from="1526593117763" duration="12859000" />
       <workItem from="1526630417223" duration="13601000" />
-      <workItem from="1526686444283" duration="1521000" />
+      <workItem from="1526686444283" duration="1967000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="121064000" />
+    <option name="totallyTimeSpent" value="121510000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -323,11 +334,11 @@
       <window_info anchor="right" id="Maven Projects" order="6" weight="0.32980332" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22937293" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22937293" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49848714" weight="0.22112212" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14447807" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29727685" />
       <window_info anchor="right" id="Database" order="7" weight="0.32980332" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.24962178" />
