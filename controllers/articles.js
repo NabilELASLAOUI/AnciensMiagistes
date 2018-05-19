@@ -106,13 +106,15 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
         if (files.ARTICLEDOC.size !== 0) {
             var cheminFichier = files.ARTICLEDOC.path.split('\\');
             nomFichier = cheminFichier[cheminFichier.length - 1];
-            fs.unlink('public/uploads/' + fields.ARTICLEDOCNAME, function (err) {
-                if (err) {
-                    console.error(err.toString());
-                } else {
-                    console.warn('le fichier ' + fields.ARTICLEDOCNAME + ' a été supprimé');
-                }
-            });
+            if(fields.ARTICLEDOCNAME.toString().length!==0) {
+                fs.unlink('public/uploads/' + fields.ARTICLEDOCNAME, function (err) {
+                    if (err) {
+                        console.error(err.toString());
+                    } else {
+                        console.warn('le fichier ' + fields.ARTICLEDOCNAME + ' a été supprimé');
+                    }
+                });
+            }
 
         } else {
             var cheminFichier = files.ARTICLEDOC.path.split('\\');

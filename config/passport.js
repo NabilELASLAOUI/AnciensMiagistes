@@ -13,22 +13,24 @@ module.exports = function(passport){
             db.query('SELECT * FROM user WHERE USERLOGIN=?',[username],(err,results,fields)=>{
                 if (err){done(err);}
                 if (results.length === 0){
-                    done(null,false);
-                }else {
-                    const hash = results[0].USERPWD.toString();
-                    bcrypt.compare(password, hash, function(err, response){
-                        if (response === true){
-                            if(results[0].USERSTATUS === 1){
-                                return done(null,{user:results[0]});
-                            }else {
-                                return done(null,false);
-                            }
+                done(null,false);
+            }else {
+                const hash = results[0].USERPWD.toString();
+                console.log(hash);
+                console.log(password)
+                bcrypt.compare(password, hash, function(err, response){
+                    if (response === true){
+                        if(results[0].USERSTATUS === 1){
+                            return done(null,{user:results[0]});
                         }else {
                             return done(null,false);
                         }
-                    });
-                }
-            })
+                    }else {
+                        return done(null,false);
+                    }
+                });
+            }
+        })
         }
     ));
 
