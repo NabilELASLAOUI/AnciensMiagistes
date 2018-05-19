@@ -16,7 +16,9 @@
 	            </div>
 				<div class="main-login main-center">
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="doAdd">
-					 <input type="hidden" class="form-control" value="1" name="USERID" id="user"/>
+					<% if(isAuthenticated){ %>
+					 <input type="hidden" class="form-control" value="<%= idUser  %>" name="USERID" id="user"/>
+                    <% } %>
 						<div class="form-group">
 							<label for="titre" class="cols-sm-2 control-label">Titre</label>
 							<div class="cols-sm-10">
@@ -31,7 +33,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <select name="CATEGORYID" id="cat" required >
+                                    <select  class="form-control" name="CATEGORYID" id="cat" required >
                                      <option value="" selected>Choisir</option>
                                     <%  if(cat){for(c of cat) { %>
 

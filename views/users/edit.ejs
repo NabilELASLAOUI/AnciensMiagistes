@@ -201,19 +201,69 @@
 	               	</div>
 	            </div>
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" action="/roles/create">
+					<form class="form-horizontal" method="post" action="/users/update">
 
 						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">Role</label>
+							<label for="name" class="cols-sm-2 control-label">Nom</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="ROLENAME" id="name"  placeholder="Nom du role"/>
+									<input type="text" class="form-control" name="USERNAME" id="name" value="<%= user[0].USERNAME %>" />
+									<input type="hidden"name="USERID" id="id"  value="<%= user[0].USERID %>"/>
 								</div>
 							</div>
 						</div>
+						<div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Prénom</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERSURNAME" id="name" value="<%= user[0].USERSURNAME %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Numéro Téléphone</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERPHONE" id="name" value="<%= user[0].USERPHONE %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Adresse</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERADDRESS" id="name" value="<%= user[0].USERADDRESS %>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="USERLOGIN" id="name" value="<%= user[0].USERLOGIN %>" />
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Role</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <select class="form-control" name="ROLEID">
+                                        <% for(role of roles){ %>
+                                            <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 						<div class="form-group ">
-							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Ajouter</button>
+							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Modifier</button>
 						</div>
 					</form>
 				</div>
