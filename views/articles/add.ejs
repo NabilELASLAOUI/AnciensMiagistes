@@ -16,7 +16,9 @@
 	            </div>
 				<div class="main-login main-center">
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="doAdd">
-					 <input type="hidden" class="form-control" value="3" name="USERID" id="user"/>
+					<% if(isAuthenticated){ %>
+					 <input type="hidden" class="form-control" value="<%= idUser  %>" name="USERID" id="user"/>
+                    <% } %>
 						<div class="form-group">
 							<label for="titre" class="cols-sm-2 control-label">Titre</label>
 							<div class="cols-sm-10">
