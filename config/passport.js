@@ -16,8 +16,6 @@ module.exports = function(passport){
                 done(null,false);
             }else {
                 const hash = results[0].USERPWD.toString();
-                console.log(hash);
-                console.log(password)
                 bcrypt.compare(password, hash, function(err, response){
                     if (response === true){
                         if(results[0].USERSTATUS === 1){

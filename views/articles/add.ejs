@@ -62,17 +62,13 @@
                                 </div>
                             </div>
                         </div>
-                        <%
-                            var y=new Date().getFullYear();
-                            var m=new Date().getMonth()<10 ?'0'+ (new Date().getMonth()+1):new Date().getMonth()+1;
-                            var d=new Date().getDate()<10 ?'0'+(new Date().getDate()):new Date().getDate();
-                         %>
+                        
                         <div class="form-group">
                             <label for="titre" class="cols-sm-2 control-label">Date</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="date" value="<%= y+'-'+m+'-'+d %>" class="form-control" name="ARTICLEDATE" required id="titre"  placeholder="Date de publication"/>
+                                    <input type="date" value="<% if(dateDay){%><%=dateDay%><% }%>" class="form-control" name="ARTICLEDATE" required id="titre"  placeholder="Date de publication"/>
                                 </div>
                             </div>
                         </div>

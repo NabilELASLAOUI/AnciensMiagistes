@@ -21,7 +21,11 @@ router.get('/', ensureAuthenticated, function (req, res) {
 
 router.get('/add', ensureAuthenticated, function (req, res) {
     Category.all(function (cat) {
-        res.render('articles/add', {cat: cat});
+        var y=new Date().getFullYear();
+        var m=new Date().getMonth()<10 ?'0'+ (new Date().getMonth()+1):new Date().getMonth()+1;
+        var d=new Date().getDate()<10 ?'0'+(new Date().getDate()):new Date().getDate();
+        var dateDay=y+'-'+m+'-'+d;
+        res.render('articles/add', {cat: cat,dateDay:dateDay});
     });
 
 });
