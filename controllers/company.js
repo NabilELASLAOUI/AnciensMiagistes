@@ -5,7 +5,6 @@ let Company = require('../models/Company')
 let User = require('../models/User')
 
 
-
 router.get('/', (request, response) => {
     Company.all(function (comp) {
         response.render('companies/companies', { comp: comp })
