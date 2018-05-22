@@ -162,9 +162,9 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     if (req.params.id) {
         User.getOne(req.params.id, function(user){
-            if (user[0].ROLEID) {
+            if (user[0].ROLEID != undefined) {
                 Role.getOne(user[0].ROLEID,function (role) {
-                    res.render('users/monProfile', { user: user,role : role[0] })
+                    res.render('users/monProfile', { user: user,role : role[0].ROLENAME })
                 })
             }
         })}
