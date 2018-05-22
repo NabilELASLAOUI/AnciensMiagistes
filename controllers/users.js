@@ -67,8 +67,8 @@ router.post('/register', function(req, res){
     let errors = req.validationErrors();
 
     if(errors){
-        res.render('users/register', {
-            errors:errors
+        Role.all(function (roles) {
+            res.render('users/register',{roles:roles,errors:errors})
         });
     } else {
         bcrypt.genSalt(10,function (err, salt) {
@@ -162,9 +162,11 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     if (req.params.id) {
         User.getOne(req.params.id, function(user){
-            Role.getOne(user[0].ROLEID,function (role) {
-                res.render('users/monProfile', { user: user,role : role[0] })
-            })
+            if (user[0].ROLEID) {
+                Role.getOne(user[0].ROLEID,function (role) {
+                    res.render('users/monProfile', { user: user,role : role[0] })
+                })
+            }
         })}
 });
 

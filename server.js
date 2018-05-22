@@ -63,6 +63,9 @@ app.use(function (req,res,next) {
         res.locals.nom = req.user.user.USERNAME;
         res.locals.prenom = req.user.user.USERSURNAME;
         res.locals.idUser = req.user.user.USERID;
+        res.locals.adresse = req.user.user.USERADDRESS;
+        res.locals.phone = req.user.user.USERPHONE;
+        res.locals.email = req.user.user.USERLOGIN;
         Role.getOne(req.user.user.ROLEID,function (role) {
             app.locals.role= role[0].ROLENAME
         })
