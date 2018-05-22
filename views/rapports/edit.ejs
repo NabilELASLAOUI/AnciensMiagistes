@@ -62,20 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <% if(rapport){for(elem of rapport){
-                          var y=new Date(elem.RAPPORTDATE).getFullYear();
-                          var m=new Date(elem.RAPPORTDATE).getMonth()<10 ?'0'+ (new Date(elem.RAPPORTDATE).getMonth()+1):new Date(elem.RAPPORTDATE).getMonth()+1;
-                          var d=new Date(elem.RAPPORTDATE).getDate()<10 ?'0'+(new Date(elem.RAPPORTDATE).getDate()):new Date(elem.RAPPORTDATE).getDate();
-                           }} %>
-                        <div class="form-group">
-                            <label for="titre" class="cols-sm-2 control-label">Date</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="date" value="<%= y+'-'+m+'-'+d %>" class="form-control" name="RAPPORTDATE" id="titre"  placeholder="Date de publication"/>
-                                </div>
-                            </div>
-                        </div>
+
 						<div class="form-group ">
 							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Modifier</button>
 						</div>

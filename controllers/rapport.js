@@ -21,11 +21,8 @@ router.get('/', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/add', ensureAuthenticated, function (req, res) {
-    var y = new Date().getFullYear();
-    var m = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
-    var d = new Date().getDate() < 10 ? '0' + (new Date().getDate()) : new Date().getDate();
-    var dateDay = y + '-' + m + '-' + d;
-    res.render('rapports/add', {dateDay: dateDay});
+
+    res.render('rapports/add');
 
 });
 
@@ -49,10 +46,6 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
             var email = fields.USEREMAIL.toString().split('@');
             if (email[1].toLocaleLowerCase() === 'uha.fr') {
-                var y = new Date().getFullYear();
-                var m = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
-                var d = new Date().getDate() < 10 ? '0' + (new Date().getDate()) : new Date().getDate();
-                var dateDay = y + '-' + m + '-' + d;
                 var msg = "l\'adresse email ne doit pas être une adresse UHA";
                 var cheminFichier = files.RAPPORTDOC.path.split('\\');
                 fs.unlink('public/uploads/' + cheminFichier[cheminFichier.length - 1], function (err) {
@@ -63,7 +56,7 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
                     }
                 });
 
-                res.render('rapports/add', {dateDay: dateDay, msg_err: msg})
+                res.render('rapports/add', {msg_err: msg})
             } else {
                 var nomFichier = '';
                 if (files.RAPPORTDOC.size !== 0) {
@@ -83,7 +76,7 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
                     }
                 }
                 if (err) res.render('rapports/add', {errors: err})
-                Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, fields.RAPPORTDATE, fields.RAPPORTDESC, nomFichier, function () {
+                Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), fields.RAPPORTDESC, nomFichier, function () {
                     req.flash('success', "Rapport ajouté avec succès !")
                     res.redirect('/rapports')
                 })
@@ -124,13 +117,9 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
     form.parse(req, function (err, fields, files) {
         var email = fields.USEREMAIL.toString().split('@');
         if (email[1].toLocaleLowerCase() === 'uha.fr') {
-            var y = new Date().getFullYear();
-            var m = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
-            var d = new Date().getDate() < 10 ? '0' + (new Date().getDate()) : new Date().getDate();
-            var dateDay = y + '-' + m + '-' + d;
             var msg = "l\'adresse email ne doit pas être une adresse UHA";
             Rapport.getOne(fields.RAPPORTID, function (elem) {
-                res.render('rapports/edit', {dateDay: dateDay, msg_err: msg, rapport: elem})
+                res.render('rapports/edit', {msg_err: msg, rapport: elem})
             });
 
         } else {
@@ -163,7 +152,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
             }
             if (err) res.render('rapports/edit.ejs', {errors: err})
             var doc = files.RAPPORTDOC.size !== 0 ? nomFichier : fields.RAPPORTDOCNAME;
-            Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, fields.RAPPORTDATE, fields.RAPPORTDESC, doc, function () {
+            Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, fields.RAPPORTDESC, doc, function () {
                 req.flash('success', "Rapport modifié avec succès !")
                 res.redirect('/rapports')
             })

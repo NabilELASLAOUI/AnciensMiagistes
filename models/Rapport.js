@@ -20,9 +20,7 @@ class  Rapport {
     get RAPPORTNAME(){
         return this._row.RAPPORTNAME
     }
-    get RAPPORTDATE(){
-        return this._row.RAPPORTDATE
-    }
+
     get RAPPORTDESC(){
         return this._row.RAPPORTDESC
     }
@@ -36,8 +34,8 @@ class  Rapport {
             cb(result)
         })
     }
-    static update(rapportid,userid,useremail,rapportname,rapportdate,rapportdesc,rapportdoc,cb){
-        connection.query('UPDATE rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?, RAPPORTDATE=? ,RAPPORTDESC=?,RAPPORTDOC=? WHERE RAPPORTID=?',[userid,useremail,rapportname,rapportdate,rapportdesc,rapportdoc,rapportid],(err,result)=>{
+    static update(rapportid,userid,useremail,rapportname,rapportdesc,rapportdoc,cb){
+        connection.query('UPDATE rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?, RAPPORTDESC=?,RAPPORTDOC=? WHERE RAPPORTID=?',[userid,useremail,rapportname,rapportdesc,rapportdoc,rapportid],(err,result)=>{
             if (err) throw err
             cb(result)
         })

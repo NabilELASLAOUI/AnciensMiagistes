@@ -17,9 +17,7 @@ class  Article {
     get ARTICLENAME(){
         return this._row.ARTICLENAME
     }
-    get ARTICLEDATE(){
-        return this._row.ARTICLEDATE
-    }
+
     get ARTICLEDESC(){
         return this._row.ARTICLEDESC
     }
@@ -36,9 +34,9 @@ class  Article {
             cb(result)
         })
     }
-    static update(articleid,userid,categoryid,articlename,articledate,articledesc,articledoc,cb){
+    static update(articleid,userid,categoryid,articlename,articledesc,articledoc,cb){
 
-        connection.query('UPDATE article SET USERID=?, CATEGORYID=?, ARTICLENAME=?, ARTICLEDATE=? ,ARTICLEDESC=?,ARTICLEDOC=? WHERE ARTICLEID=?',[userid,categoryid,articlename,articledate,articledesc,articledoc,articleid],(err,result)=>{
+        connection.query('UPDATE article SET USERID=?, CATEGORYID=?, ARTICLENAME=?,ARTICLEDESC=?,ARTICLEDOC=? WHERE ARTICLEID=?',[userid,categoryid,articlename,articledesc,articledoc,articleid],(err,result)=>{
             if (err) throw err
             cb(result)
         })

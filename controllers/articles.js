@@ -21,11 +21,8 @@ router.get('/', ensureAuthenticated, function (req, res) {
 
 router.get('/add', ensureAuthenticated, function (req, res) {
     Category.all(function (cat) {
-        var y=new Date().getFullYear();
-        var m=new Date().getMonth()<10 ?'0'+ (new Date().getMonth()+1):new Date().getMonth()+1;
-        var d=new Date().getDate()<10 ?'0'+(new Date().getDate()):new Date().getDate();
-        var dateDay=y+'-'+m+'-'+d;
-        res.render('articles/add', {cat: cat,dateDay:dateDay});
+
+        res.render('articles/add', {cat: cat});
     });
 
 });
@@ -66,7 +63,7 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
             }
         }
         if (err) res.render('articles/add', {errors: err})
-        Article.create(fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDATE, fields.ARTICLEDESC, nomFichier, function () {
+        Article.create(fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, new Date(), fields.ARTICLEDESC, nomFichier, function () {
             req.flash('success', "Article ajouté avec succès !")
             res.redirect('/articles')
         })
@@ -134,7 +131,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
         }
         if (err) res.render('articles/edit.ejs', {errors: err})
         var doc = files.ARTICLEDOC.size !== 0 ? nomFichier : fields.ARTICLEDOCNAME;
-        Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDATE, fields.ARTICLEDESC, doc, function () {
+        Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDESC, doc, function () {
             req.flash('success', "Article modifié avec succès !")
             res.redirect('/articles')
         })
