@@ -159,7 +159,7 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
 });
 
 // mon Profile
-router.get('/monProfile/:id', function(req, res){
+router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     if (req.params.id) {
         User.getOne(req.params.id, function(user){
             Role.getOne(user[0].ROLEID,function (role) {
