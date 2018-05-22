@@ -1,0 +1,89 @@
+<% include ../layout/header.ejs  %>
+<div class="container">
+<%- messages('message', locals) %>
+   <% if(locals.errors){  for(error of locals.errors) {  %>
+
+   <div class="alert alert-danger" >
+   <%= error.msg %>
+   </div>
+  <% }} %>
+    <% if(locals.msg_err){ %>
+    <div class="alert alert-danger" >
+        <%= msg_err %>
+    </div>
+    <% } %>
+			<div class="row main">
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Modification de mon rapport de stage</h1>
+	               		<hr />
+	               	</div>
+	            </div>
+				<div class="main-login main-center">
+					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/rapports/doEdit">
+                        <input type="hidden" class="form-control" value="<% if(rapport){for(elem of rapport){ %><%= elem.USERID %><%}} %>" name="USERID" id="user"/>
+                        <input type="hidden" class="form-control" value="<% if(rapport){for(elem of rapport){ %><%= elem.RAPPORTID %><%}} %>" name="RAPPORTID" id="idart"/>
+                        <div class="form-group">
+                            <label for="titre" class="cols-sm-2 control-label">Votre Adresse Email(doit être differente de vore email UHA. Peut etre yahoo, gmail etc..)</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="text" value="<% if(rapport){ for(elem of rapport){%><%= elem.USEREMAIL %><% }} %>" class="form-control" name="USEREMAIL" id="titre" required  placeholder="adresse e-mail"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+							<label for="titre" class="cols-sm-2 control-label">Titre</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+									<input type="text" value="<% if(rapport){ for(elem of rapport){%><%= elem.RAPPORTNAME %><% }} %>" class="form-control" name="RAPPORTNAME" id="titre"  placeholder="Nom de l'rapport"/>
+								</div>
+							</div>
+						</div>
+
+                        <div class="form-group">
+                            <label for="content" class="cols-sm-2 control-label">Description</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <textarea class="form-control" name="RAPPORTDESC" id="content"  rows="15" cols="50"><% if(rapport){for(elem of rapport){ %><%= elem.RAPPORTDESC %><% }} %></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doc" class="cols-sm-2 control-label">Document du rapport de stage</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="file" class="form-control" name="RAPPORTDOC" id="doc" />
+                                     <input type="hidden" class="form-control" value="<% if(rapport){for(elem of rapport){ %><%= elem.RAPPORTDOC %><%}} %>" name="RAPPORTDOCNAME" id="idart"/>
+                                </div>
+                            </div>
+                        </div>
+                        <% if(rapport){for(elem of rapport){
+                          var y=new Date(elem.RAPPORTDATE).getFullYear();
+                          var m=new Date(elem.RAPPORTDATE).getMonth()<10 ?'0'+ (new Date(elem.RAPPORTDATE).getMonth()+1):new Date(elem.RAPPORTDATE).getMonth()+1;
+                          var d=new Date(elem.RAPPORTDATE).getDate()<10 ?'0'+(new Date(elem.RAPPORTDATE).getDate()):new Date(elem.RAPPORTDATE).getDate();
+                           }} %>
+                        <div class="form-group">
+                            <label for="titre" class="cols-sm-2 control-label">Date</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input type="date" value="<%= y+'-'+m+'-'+d %>" class="form-control" name="RAPPORTDATE" id="titre"  placeholder="Date de publication"/>
+                                </div>
+                            </div>
+                        </div>
+						<div class="form-group ">
+							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Modifier</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    </div>
+<% include ../layout/footer  %>

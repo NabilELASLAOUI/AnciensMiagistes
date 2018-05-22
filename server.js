@@ -65,6 +65,7 @@ app.use(function (req,res,next) {
         res.locals.idUser = req.user.user.USERID;
         Role.getOne(req.user.user.ROLEID,function (role) {
             res.locals.role = role[0].ROLENAME
+
         })
     }
     next();
@@ -93,5 +94,8 @@ app.use('/category', category);
 
 let company = require('./controllers/company');
 app.use('/company', company);
+
+let rapport = require('./controllers/rapport');
+app.use('/rapports', rapport);
 
 app.listen(8080)
