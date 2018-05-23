@@ -1,69 +1,72 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Anciens Miagistes</title>
-<!-- Bootstrap -->
-<meta charset="utf-8">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Anciens Miagistes</title>
+    <!-- Bootstrap -->
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!-- <script src="js/jquery-3.2.1.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-		<script src="js/dataTables.bootstrap.js" type="text/javascript"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="js/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
 
-		<script type="text/javascript">
-		$(document).ready(function(){
-			$("#mytable #checkall").click(function () {
-						if ($("#mytable #checkall").is(':checked')) {
-								$("#mytable input[type=checkbox]").each(function () {
-										$(this).prop("checked", true);
-								});
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#mytable #checkall").click(function () {
+                if ($("#mytable #checkall").is(':checked')) {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", true);
+                    });
 
-						} else {
-								$("#mytable input[type=checkbox]").each(function () {
-										$(this).prop("checked", false);
-								});
-						}
-				});
+                } else {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
 
-				$("[data-toggle=tooltip]").tooltip();
-			});
-		</script>
+            $("[data-toggle=tooltip]").tooltip();
+        });
+    </script>
 
 </head>
- <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
 
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="">Accueil</a></li>
-       <% if (isAuthenticated){ %>
-       <% if(role === 'ADMIN'){ %>
-       <li><a href="/articles">Articles</a></li>
-      <li><a href="/roles   ">Roles</a></li>
-      <li><a href="/category">Categorie</a></li>
-      <li><a href="/company">Entreprise</a></li>
-        <li><a href="/rapports">Rapport de stage</a></li>
-        <% } %>
-        <li><a href="/users">Utilisateurs</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Bonjour <%= nom  %></a></li>
-      <li><a href="/users/monProfile/<%= idUser  %>">Mon Profile <span class="glyphicon glyphicon-user"></span> </a></li>
-      <li><a href="/users/logout">
-      <span class="glyphicon glyphicon-log-in"></span> Déconnexion
-      <% } %>
-      </a>
-      </li>
-    </ul>
-  </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="">Accueil</a></li>
+            <% if (isAuthenticated){ %>
+            <% if(role === 'ADMIN'){ %>
+            <% if(cats){ for(categ of cats){%>
+                <li><a href="/articles/<%= categ.CATEGORYID%>"><%= categ.CATEGORYNAME %></a></li>
+            <%}}%>
+            <li><a href="/roles   ">Roles</a></li>
+            <li><a href="/category">Categorie</a></li>
+            <li><a href="/company">Entreprise</a></li>
+            <li><a href="/rapports">Rapport de stage</a></li>
+            <% } %>
+            <li><a href="/users">Utilisateurs</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Bonjour <%= nom %></a></li>
+            <li><a href="/users/monProfile/<%= idUser %>">Mon Profile <span class="glyphicon glyphicon-user"></span>
+                </a></li>
+            <li><a href="/users/logout">
+                    <span class="glyphicon glyphicon-log-in"></span> Déconnexion
+                    <% } %>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <body>

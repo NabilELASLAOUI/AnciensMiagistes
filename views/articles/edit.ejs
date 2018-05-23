@@ -18,6 +18,7 @@
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/articles/doEdit">
                         <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.USERID %><%}} %>" name="USERID" id="user"/>
                         <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.ARTICLEID %><%}} %>" name="ARTICLEID" id="idart"/>
+                        <input type="hidden" class="form-control" value="<% if(article){for(elem of article){ %><%= elem.CATEGORYID %><%}} %>" name="CATEGORYID" id="cat"/>
 						<div class="form-group">
 							<label for="titre" class="cols-sm-2 control-label">Titre</label>
 							<div class="cols-sm-10">
@@ -27,23 +28,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-                            <label for="cat" class="cols-sm-2 control-label">Categorie</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <select name="CATEGORYID" id="cat" required >
-                                     <option value="" >Choisir</option>
-                                      <% if(article){for(elem of article){ %>
-                                        <%  if(cat){for(c of cat) { %>
-
-                                         <option value="<%= c.CATEGORYID %>" <% if(elem.CATEGORYID ===c.CATEGORYID ){%> <%= 'selected' %> <% } %>  ><%= c.CATEGORYNAME %></option>
-
-                                        <%  }}}} %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="content" class="cols-sm-2 control-label">Contenu</label>

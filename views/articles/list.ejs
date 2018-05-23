@@ -1,15 +1,18 @@
 <% include ../layout/header.ejs  %>
 <div class="container">
 <%- messages('message', locals) %>
-    <div class="form-group col-md-offset-4 ajouter">
-            <form action="/articles/add" method="get">
-                <input class='btn btn-success' style="width:30%; margin-top:5%; margin-left:12%;" type="submit" value="Ajouter un article" data-toggle="modal">
 
-            </form>
+<div class="row">
+    <div class="col-md-12 text-center ajouter" style="color: #ffffff">
+        <button  class='btn btn-success btn-lg' style="width:30%; margin-top:5%; margin-left:12%;">
+            <a  style="color: #ffffff" href="/articles/add/<%= la_categorie[0].CATEGORYID%>"> Ajouter un article :   <%= la_categorie[0].CATEGORYNAME  %></a>
+        </button>
+
     </div>
+</div>
 <div class="row">
         <div class="col-md-12">
-        <h4>Liste des Articles</h4>
+        <h4><%= 'Liste des '+la_categorie[0].CATEGORYNAME%></h4>
         <div class="table-responsive">
               <table id="mytable" class="table table-bordred table-striped">
                   <thead>
@@ -27,7 +30,7 @@
                          <td><a href="/articles/edit/<%= article.ARTICLEID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
                       <td>
                           <% var doc=article.ARTICLEDOC.toString().length===0 ? 'sansFichier':article.ARTICLEDOC %>
-                        <a onclick="deleteArticle(<%= article.ARTICLEID %>,'<%= doc %>')" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a onclick="deleteArticle(<%= article.ARTICLEID %>,'<%= doc %>',<%= la_categorie[0].CATEGORYID %>)" href="#"><span class="glyphicon glyphicon-trash"></span></a>
                       </td>
                         </tr>
                      <%  } %>
@@ -102,11 +105,11 @@
     </div>
 
     <script type="text/javascript">
-        function deleteArticle(id,doc){
+        function deleteArticle(id,doc, catId){
             console.log("/articles/delete/"+id+"/"+doc);
             if(confirm('Voulez vous vraiment supprimer cet article ?')){
 
-               window.location.href="/articles/delete/"+id+"/"+doc;
+               window.location.href="/articles/delete/"+id+"/"+doc+"/"+catId;
 
             }
 

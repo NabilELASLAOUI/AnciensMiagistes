@@ -10,12 +10,13 @@
 			<div class="row main">
 				<div class="panel-heading">
 	               <div class="panel-title text-center">
-	               		<h1 class="title">Ajout d'un Article</h1>
+	               		<h1 class="title">Ajout d'un Article: <%= la_categorie[0].CATEGORYNAME  %></h1>
 	               		<hr />
 	               	</div>
 	            </div>
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="doAdd">
+					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/articles/doAdd">
+                    <input type="hidden" class="form-control" value="<%= la_categorie[0].CATEGORYID  %>" name="CATEGORYID" id="cat"/>
 					<% if(isAuthenticated){ %>
 					 <input type="hidden" class="form-control" value="<%= idUser  %>" name="USERID" id="user"/>
                     <% } %>
@@ -28,22 +29,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-                            <label for="cat" class="cols-sm-2 control-label">Categorie</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <select  class="form-control" name="CATEGORYID" id="cat" required >
-                                     <option value="" selected>Choisir</option>
-                                    <%  if(cat){for(c of cat) { %>
 
-                                         <option value="<%= c.CATEGORYID %>"><%= c.CATEGORYNAME %></option>
-
-                                    <%  }} %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="content" class="cols-sm-2 control-label">Contenu</label>
                             <div class="cols-sm-10">

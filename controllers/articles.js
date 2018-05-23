@@ -10,34 +10,24 @@ var fs = require('fs');
 let Article = require('../models/Article')
 let Category = require('../models/Category')
 
-router.get('/', ensureAuthenticated, function (req, res) {
+router.get('/:catId', ensureAuthenticated, function (req, res) {
 
-    Article.all(function (articles) {
+    Article.getByCateg(req.params.catId,function (articles) {
+        Category.getOne(req.params.catId,function (la_categorie) {
+            res.render('articles/list', {articles: articles,la_categorie:la_categorie});
+        })
 
-        res.render('articles/list', {articles: articles});
+    })
+
+});
+
+router.get('/add/:catId', ensureAuthenticated, function (req, res) {
+    Category.getOne(req.params.catId,function (la_categorie) {
+        res.render('articles/add', {la_categorie: la_categorie});
     })
 
 });
 
-router.get('/add', ensureAuthenticated, function (req, res) {
-    Category.all(function (cat) {
-
-        res.render('articles/add', {cat: cat});
-    });
-
-});
-
-
-router.get('/edit/:articleid', ensureAuthenticated, function (req, res) {
-    Article.getOne(req.params.articleid, function (elem) {
-        //console.log(elem);
-        Category.all(function (cat) {
-            res.render('articles/edit.ejs', {article: elem, cat: cat});
-
-        });
-
-    })
-});
 
 router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
@@ -62,10 +52,10 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
                 });
             }
         }
-        if (err) res.render('articles/add', {errors: err})
+        if (err) res.render('articles/add/'+fields.CATEGORYID, {errors: err})
         Article.create(fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, new Date(), fields.ARTICLEDESC, nomFichier, function () {
             req.flash('success', "Article ajouté avec succès !")
-            res.redirect('/articles')
+            res.redirect('/articles/'+fields.CATEGORYID)
         })
 
     })
@@ -78,7 +68,6 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
         } else {
             var name = 'fileTodelete';
             file.path = path.join(uploadDir, name);
-            console.log(file.path)
         }
 
     })
@@ -87,15 +76,10 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
 router.get('/edit/:articleid', ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.articleid, function (elem) {
-        //console.log(elem);
-        Category.all(function (cat) {
-            res.render('articles/edit', {article: elem, cat: cat});
-            //console.log(elem)
-        });
+            res.render('articles/edit', {article: elem})
 
     })
 });
-
 
 router.post('/doEdit', ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
@@ -133,7 +117,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
         var doc = files.ARTICLEDOC.size !== 0 ? nomFichier : fields.ARTICLEDOCNAME;
         Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDESC, doc, function () {
             req.flash('success', "Article modifié avec succès !")
-            res.redirect('/articles')
+            res.redirect('/articles/'+fields.CATEGORYID)
         })
 
     })
@@ -145,16 +129,14 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
         } else {
             var name = 'fileTodelete';
             file.path = path.join(uploadDir, name);
-            console.log(file.path)
         }
 
     })
 });
 
-router.get('/delete/:articleid/:docname', ensureAuthenticated, function (req, res) {
+router.get('/delete/:articleid/:docname/:catId', ensureAuthenticated, function (req, res) {
     Article.delete(req.params.articleid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
-            console.log(req.params.docname)
             fs.unlink('public/uploads/' + req.params.docname, function (err) {
                 if (err) {
                     console.error(err.toString());
@@ -164,7 +146,7 @@ router.get('/delete/:articleid/:docname', ensureAuthenticated, function (req, re
             });
         }
 
-        res.redirect('/articles');
+        res.redirect('/articles/'+req.params.catId);
     })
 });
 

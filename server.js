@@ -2,7 +2,7 @@ let express =  require('express')
 let app =express() // moteur de template
 const path = require('path');
 let Role = require('./models/Role')
-
+let Category = require('./models/Category')
 let bodyParse = require('body-parser')
 let session = require('express-session')
 let expressValidator = require('express-validator');
@@ -69,6 +69,11 @@ app.use(function (req,res,next) {
         Role.getOne(req.user.user.ROLEID,function (role) {
             app.locals.role= role[0].ROLENAME
         })
+
+        Category.all(function (cats) {
+            app.locals.cats= cats;
+        })
+
     }
     next();
 })
