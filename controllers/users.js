@@ -12,6 +12,7 @@ router.get('/',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
             User.Allu(function (users) {
+                
                 res.render('users/users',{users:users})
             })
         }else{
