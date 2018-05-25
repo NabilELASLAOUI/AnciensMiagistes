@@ -6,8 +6,9 @@ let Role = require('../models/Role')
 let passport = require('passport');
 const bcrypt = require('bcrypt');
 
-
-// Liste users
+	/**
+	* Liste les différents utilisateurs avec leurs roles
+	**/
 router.get('/',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){

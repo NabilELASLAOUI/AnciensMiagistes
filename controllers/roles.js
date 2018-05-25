@@ -4,17 +4,25 @@ const router = express.Router();
 let Role = require('../models/Role')
 
 
-
+	/**
+	* Liste les différents roles
+	**/
 router.get('/',ensureAuthenticated,(request,response)=>{
     Role.all(function (roles) {
         response.render('roles/roles',{roles:roles})
     })
 })
 
+    /**
+	* formulaire d'ajout d'un role
+	**/
 router.get('/create', ensureAuthenticated, (request, response) => {
         response.render('roles/create')
 })
 
+    /**
+	* Permet d'ajouter un role
+	**/
 router.post('/create', (request,response)=>{
 
     request.checkBody('ROLENAME','Saisissez un role').notEmpty();
@@ -32,7 +40,9 @@ router.post('/create', (request,response)=>{
         })
     }
 })
-
+    /**
+	* Permet de supprimer un role
+	**/
 router.get('/delete/:id', ensureAuthenticated, (request, response) => {
     if (request.params.id){
         Role.delete(request.params.id, function(){
@@ -42,6 +52,19 @@ router.get('/delete/:id', ensureAuthenticated, (request, response) => {
     response.redirect('/roles')
 })
 
+    /**
+	* formulaire de modification d'un role
+	**/
+router.get('/edit/:id', ensureAuthenticated, (request, response) => {
+    if (request.params.id) {
+        Role.getOne(request.params.id, function(role){
+            response.render('roles/edit.ejs', {role: role})
+        })
+    }
+})
+    /**
+	* Permet d'éditer un role
+	**/
 router.post('/update', (request, response) => {
     request.checkBody('ROLENAME', 'Saisissez un role').notEmpty();
     // Get Errors
@@ -59,16 +82,10 @@ router.post('/update', (request, response) => {
     }
 })
 
-router.get('/edit/:id', ensureAuthenticated, (request, response) => {
-    if (request.params.id) {
-        Role.getOne(request.params.id, function(role){
-            response.render('roles/edit.ejs', {role: role})
-        })
-    }
-})
-
-
-// Access Control
+    /**
+    * Permet de renvoyer l'utilisateur à la page d'authentification s'il n'est pas authentifié
+    * Cette methode est gérer par passport
+	**/
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();
@@ -78,4 +95,7 @@ function ensureAuthenticated(req, res, next){
     }
 }
 
+    /**
+	* Permet d'exporter router pour qu'il soit accessible  par d'autres classes
+	**/
 module.exports = router;

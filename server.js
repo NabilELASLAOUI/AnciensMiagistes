@@ -58,6 +58,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function (req,res,next) {
+    console.log(path)
     res.locals.isAuthenticated = req.isAuthenticated();
     if (req.user != undefined){
         res.locals.nom = req.user.user.USERNAME;
@@ -83,9 +84,18 @@ app.get('*', function(req, res, next){
     next();
 });
 
-// routes
+// page d'accueil
 app.get('/',(request,response)=>{
     response.render('index')
+})
+// routes
+app.get('/login',(request,response)=>{
+    response.render('login')
+})
+
+// routes
+app.get('/apropos',(request,response)=>{
+    response.render('front/about')
 })
 
 let users = require('./controllers/users');
