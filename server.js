@@ -3,6 +3,8 @@ let app =express() // moteur de template
 const path = require('path');
 let Role = require('./models/Role')
 let Category = require('./models/Category')
+let Article = require('./models/Article')
+
 let bodyParse = require('body-parser')
 let session = require('express-session')
 let expressValidator = require('express-validator');
@@ -108,6 +110,17 @@ app.get('/apropos',(request,response)=>{
 app.get('/contact',(request,response)=>{
     response.render('front/contact')
 })
+
+app.get('/actualites/:catId', function (req, res) {
+
+    Article.getByCateg(req.params.catId,function (actualites) {
+        Category.getOne(req.params.catId,function (la_categorie) {
+            res.render('front/actualites', {actualites: actualites,la_categorie:la_categorie});
+        })
+
+    })
+
+});
 
 let users = require('./controllers/users');
 app.use('/users', users);
