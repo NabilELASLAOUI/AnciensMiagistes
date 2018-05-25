@@ -15,7 +15,11 @@ body {
 	color:#656565;
 	font-size: 1.4em;
 }
-
+.conn a{color: #ef801a;text-transform: uppercase;}
+.act{
+    background-color: #ef801a;
+    color: white;
+}
 a:active {
 	outline:0;
 }

@@ -58,7 +58,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function (req,res,next) {
-    console.log(path)
+    Category.catMenu(function (cats) {
+        app.locals.catMenu= cats;
+
+    })
+
+    Category.catActu(function (actu) {
+        app.locals.actu= actu;
+
+    })
     res.locals.isAuthenticated = req.isAuthenticated();
     if (req.user != undefined){
         res.locals.nom = req.user.user.USERNAME;
@@ -70,7 +78,6 @@ app.use(function (req,res,next) {
         Role.getOne(req.user.user.ROLEID,function (role) {
             app.locals.role= role[0].ROLENAME
         })
-
         Category.all(function (cats) {
             app.locals.cats= cats;
         })
@@ -95,7 +102,11 @@ app.get('/login',(request,response)=>{
 
 // routes
 app.get('/apropos',(request,response)=>{
-    response.render('front/about')
+    response.render('front/apropos')
+})
+
+app.get('/contact',(request,response)=>{
+    response.render('front/contact')
 })
 
 let users = require('./controllers/users');
@@ -114,5 +125,8 @@ app.use('/company', company);
 
 let rapport = require('./controllers/rapport');
 app.use('/rapports', rapport);
+let offres = require('./controllers/offres');
+app.use('/offres', offres);
+
 
 app.listen(8080)

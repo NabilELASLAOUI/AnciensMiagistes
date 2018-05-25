@@ -26,9 +26,22 @@ class Category {
         connection.query('SELECT * FROM Category', (err, rows) => {
             if (err) throw err
             cb(rows.map((row) => new Category(row)))
+        //console.log(rows)
         })
     }
-
+    static catMenu(cb) {
+        connection.query("SELECT * FROM Category WHERE CATEGORYNAME !='Actualités'", (err, rows) => {
+            if (err) throw err
+            cb(rows.map((row) => new Category(row)))
+        //console.log(rows)
+    })
+    }
+    static catActu(cb) {
+        connection.query("SELECT * FROM Category WHERE CATEGORYNAME ='Actualités'", (err, rows) => {
+            if (err) throw err
+            cb(rows.map((row) => new Category(row)))
+    })
+    }
     static getOne(categoryid, cb) {
         connection.query('SELECT * FROM Category WHERE CATEGORYID = ?', [categoryid], (err, rows) => {
             if (err) throw err

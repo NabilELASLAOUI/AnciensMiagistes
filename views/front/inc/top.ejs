@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cambridge Best Education Free HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="http://webthemez.com"/>
+    <base href="/">
+    <!-- css -->
+    <link href="../front/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../front/css/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+    <link href="../front/css/jcarousel.css" rel="stylesheet" type="text/css"/>
+    <link href="../front/css/flexslider.css" rel="stylesheet" type="text/css"/>
+    <link href="../front/js/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css"/>
+    <link href="../front/css/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="wrapper" class="home-page">
+    <div class="topbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="pull-left hidden-xs">MIAGE MULHOUSE</p>
+                    <p class="pull-right conn"><a href="/login">Connexion</a> | <a href="/users/register">Inscription</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- start header -->
+    <header>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="../front/img/logo.png" alt="logo"/>ALUMNI</a>
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">Accueil</a></li>
+                        <li><a href="/apropos">Qui sommes nous</a></li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Offres <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <% if(catMenu){ for(categ of catMenu){%>
+                                <li><a href="/offres/<%= categ.CATEGORYID%>"><%= categ.CATEGORYNAME %></a></li>
+                                <%}}%>
+
+                            </ul>
+                        </li>
+                        <% if(actu){ for(actu of actu){%>
+                        <li><a href="/offres/<%= actu.CATEGORYID%>"><%= actu.CATEGORYNAME %></a></li>
+                        <%}}%>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Liens utiles <b
+                                        class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">MMA</a></li>
+                                <li><a href="#">e-services</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/contact">Contact</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->

@@ -35,7 +35,7 @@ router.get('/register', function(req, res){
 router.post('/login', function(req, res, next){
     passport.authenticate('local', {
         successRedirect:'/users',
-        failureRedirect:'/',
+        failureRedirect:'/login',
         failureFlash: 'adresse email ou mot de passe incorrect'
     })(req, res, next);
 });
@@ -44,7 +44,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
     req.logout();
     req.flash('success', 'Vous êtes déconnectés');
-    res.redirect('/');
+    res.redirect('/login');
 
 });
 
@@ -77,7 +77,7 @@ router.post('/register', function(req, res){
             bcrypt.hash(USERPWD,salt,function (err, hash) {
                 User.create(USERNAME,USERSURNAME,USERPHONE,USERADDRESS,USERLOGIN, hash,ROLEID, function () {
                     req.flash('success',"user bien ajouté !")
-                    res.redirect('/')
+                    res.redirect('/login')
                     let MonUser = [
                         {
                             username: USERNAME,
@@ -179,7 +179,7 @@ function ensureAuthenticated(req, res, next){
         return next();
     } else {
         req.flash('danger', "vous n'etes pas connecter");
-        res.redirect('/');
+        res.redirect('/login');
     }
 }
 
