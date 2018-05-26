@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <p class="pull-left hidden-xs">MIAGE MULHOUSE</p>
                     <% if (isAuthenticated){ %>
-                        <p class="pull-right conn">Bonjour <%= nom %><a href="/users/logout"> | Déconnexion</a></p>
+                        <p class="pull-right conn">Bonjour <%= nom %> | <a href="/users/monProfile/<%= idUser %>"> mon Profile</a>| <a href="/users/logout"> Déconnexion</a></p>
                     <% }else{ %>
                     <p class="pull-right conn"><a href="/login">Connexion</a> | <a href="/users/register">Inscription</a></p>
                     <% } %>
