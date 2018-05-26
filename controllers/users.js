@@ -34,7 +34,7 @@ router.get('/register', function(req, res){
 // Login Process
 router.post('/login', function(req, res, next){
     passport.authenticate('local', {
-        successRedirect:'/users',
+        successRedirect:'/',
         failureRedirect:'/login',
         failureFlash: 'adresse email ou mot de passe incorrect'
     })(req, res, next);
@@ -44,7 +44,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
     req.logout();
     req.flash('success', 'Vous êtes déconnectés');
-    res.redirect('/login');
+    res.redirect('/');
 
 });
 
