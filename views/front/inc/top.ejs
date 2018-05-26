@@ -69,6 +69,9 @@
                             </ul>
                         </li>
                         <li><a href="/contact">Contact</a></li>
+                        <% if (isAuthenticated){ %>
+                            <li><a href="/users">Espace Admin</a></li>
+                            <% } %>
 
                     </ul>
                 </div>

@@ -8,8 +8,14 @@ let Role = require('../models/Role')
 	* Liste les différents roles
 	**/
 router.get('/',ensureAuthenticated,(request,response)=>{
-    Role.all(function (roles) {
-        response.render('roles/roles',{roles:roles})
+    Role.getOne(request.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN'){
+            Role.all(function (roles) {
+                response.render('roles/roles',{roles:roles})
+            })
+        }else{
+            response.redirect('/')
+        }
     })
 })
 
@@ -17,7 +23,15 @@ router.get('/',ensureAuthenticated,(request,response)=>{
 	* formulaire d'ajout d'un role
 	**/
 router.get('/create', ensureAuthenticated, (request, response) => {
-        response.render('roles/create')
+    Role.getOne(request.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN'){
+            Role.all(function (roles) {
+                response.render('roles/create')
+            })
+        }else{
+            response.redirect('/')
+        }
+    })
 })
 
     /**
@@ -44,23 +58,37 @@ router.post('/create', (request,response)=>{
 	* Permet de supprimer un role
 	**/
 router.get('/delete/:id', ensureAuthenticated, (request, response) => {
-    if (request.params.id){
-        Role.delete(request.params.id, function(){
-            request.flash('success', "Role supprimée")
-        })
-    }
-    response.redirect('/roles')
+
+    Role.getOne(request.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN'){
+            if (request.params.id){
+                Role.delete(request.params.id, function(){
+                    request.flash('success', "Role supprimée")
+                })
+            }
+            response.redirect('/roles')
+        }else{
+            response.redirect('/')
+        }
+    })
 })
 
     /**
 	* formulaire de modification d'un role
 	**/
 router.get('/edit/:id', ensureAuthenticated, (request, response) => {
-    if (request.params.id) {
-        Role.getOne(request.params.id, function(role){
-            response.render('roles/edit.ejs', {role: role})
-        })
-    }
+
+    Role.getOne(request.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN'){
+            if (request.params.id) {
+                Role.getOne(request.params.id, function(role){
+                    response.render('roles/edit.ejs', {role: role})
+                })
+            }
+        }else{
+            response.redirect('/')
+        }
+    })
 })
     /**
 	* Permet d'éditer un role
