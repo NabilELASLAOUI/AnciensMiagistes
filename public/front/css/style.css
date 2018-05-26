@@ -16,6 +16,16 @@ body {
 	font-size: 1.4em;
 }
 .conn a{color: #ef801a;text-transform: uppercase;}
+.lireplus {
+    text-align: center;
+    color: #FFFFFF;
+    padding: 5px 8px;
+    border-radius: 0;
+    background: #ef801a;
+    border-color: #ef801a;
+}
+.info-blocks-in h3{font-size: 28px !important; font-family: 'Oxygen', sans-serif; color: #000000 !important;margin-bottom: 10px !important;}
+.info-blocks-in p{font-size: 18px !important; font-family: 'Oxygen', sans-serif; color: #000000 !important;line-height: 30px;}
 .act{
     background-color: #ef801a;
     color: white;

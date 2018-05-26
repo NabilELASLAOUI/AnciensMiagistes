@@ -58,7 +58,7 @@ class  Article {
     }
 
     static getByCateg(id,cb){
-        connection.query('SELECT * FROM article WHERE CATEGORYID='+id,(err,rows)=>{
+        connection.query("SELECT * FROM article WHERE CATEGORYID='"+id+"' ORDER BY ARTICLEID DESC",(err,rows)=>{
             if (err) throw err
             cb(rows.map((row) => new Article(row)))
 

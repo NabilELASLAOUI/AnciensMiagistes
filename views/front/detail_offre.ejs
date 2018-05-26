@@ -1,0 +1,36 @@
+<% include inc/top.ejs %>
+<section id="inner-headline">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="pageTitle">Offres :
+                    <% if(la_categorie){ %>
+                    <a href="/offres/<%= la_categorie[0].CATEGORYID%>" style="color: #ffffff" title="Liste des offres : <%= la_categorie[0].CATEGORYNAME %> "> <%= la_categorie[0].CATEGORYNAME %></a>
+                    <% } %>
+                </h2>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container content" style="min-height: 432px;">
+         <div class="row">
+            <div class="col-sm-12 info-blocks">
+                <div class="info-blocks-in">
+                    <% if(article){%>
+                    <h3><%= article[0].ARTICLENAME%>
+                        <% if(article[0].ARTICLEDOC.length>0){%>
+                        <a href="../uploads/<%= article[0].ARTICLEDOC%>" target="_blank" class="btn-default btn">Telecharger la piece jointe</a>
+                        <%}%>
+                    </h3>
+
+                    <p><%= article[0].ARTICLEDESC%></p>
+                    <%}%>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<% include inc/bottom.ejs %>

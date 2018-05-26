@@ -21,6 +21,14 @@ router.get('/:catId', function (req, res) {
 
 });
 
+router.get('/detail/:articleId/:catId', function (req, res) {
+    Article.getOne(req.params.articleId,function (article) {
+        Category.getOne(req.params.catId,function (la_categorie) {
+        res.render('front/detail_offre', {article: article,la_categorie:la_categorie});
+        })
+    })
+
+});
 
 router.get('/add/:catId', function (req, res) {
     Category.getOne(req.params.catId,function (la_categorie) {
