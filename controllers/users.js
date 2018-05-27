@@ -18,10 +18,7 @@ router.get('/',ensureAuthenticated, function(req, res){
             })
         }else{
             res.redirect('/')
-        }
-
-    })
-
+        }})
 });
 
 // Register Form
@@ -137,18 +134,12 @@ if (errors) {
 })
 
 router.get('/edit/:id',ensureAuthenticated, (request, response) => {
-    Role.getOne(request.user.user.ROLEID,function (role) {
-        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
-            if (request.params.id) {
-                User.getOne(request.params.id, function(user){
-                    Role.all(function (roles) {
-                        response.render('users/edit', { user: user,roles : roles })
-                    })
-                })}
-        }else{
-            response.redirect('/')
-        }
-    })
+    if (request.params.id) {
+        User.getOne(request.params.id, function(user){
+            Role.all(function (roles) {
+                response.render('users/edit', { user: user,roles : roles })
+            })
+        })}
 })
 
 // valide une inscription
@@ -179,14 +170,27 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
 
 // mon Profile
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
-    if (req.params.id) {
-        User.getOne(req.params.id, function(user){
-            if (user[0].ROLEID != undefined) {
-                Role.getOne(user[0].ROLEID,function (role) {
-                    res.render('users/monProfile', { user: user,role : role[0].ROLENAME })
-                })
-            }
-        })}
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
+            if (req.params.id) {
+                User.getOne(req.params.id, function(user){
+                    if (user[0].ROLEID != undefined) {
+                        Role.getOne(user[0].ROLEID,function (role) {
+                            res.render('users/monProfile', { user: user,role : role[0].ROLENAME })
+                        })
+                    }
+                })}
+        }else{
+            if (req.params.id) {
+                User.getOne(req.params.id, function(user){
+                    if (user[0].ROLEID != undefined) {
+                        Role.getOne(user[0].ROLEID,function (role) {
+                            res.render('users/monProfileFront', { user: user,role : role[0].ROLENAME })
+                        })
+                    }
+                })}
+        }
+    })    
 });
 
 
