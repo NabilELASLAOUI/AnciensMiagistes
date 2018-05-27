@@ -17,11 +17,8 @@ router.get('/',ensureAuthenticated, function(req, res){
                 res.render('users/users',{users:users})
             })
         }else{
-            res.redirect('/roles')
-        }
-
-    })
-
+            res.redirect('/')
+        }})
 });
 
 // Register Form
@@ -34,7 +31,7 @@ router.get('/register', function(req, res){
 // Login Process
 router.post('/login', function(req, res, next){
     passport.authenticate('local', {
-        successRedirect:'/users',
+        successRedirect:'/',
         failureRedirect:'/login',
         failureFlash: 'adresse email ou mot de passe incorrect'
     })(req, res, next);
@@ -44,7 +41,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
     req.logout();
     req.flash('success', 'Vous êtes déconnectés');
-    res.redirect('/login');
+    res.redirect('/');
 
 });
 
@@ -94,12 +91,17 @@ router.post('/register', function(req, res){
 
 
 router.get('/delete/:id',ensureAuthenticated,(request, response) => {
-    if (request.params.id){
-
-    User.delete(request.params.id, function(){
-        request.flash('success', "User supprimé")
+    Role.getOne(request.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
+            if (request.params.id){
+                User.delete(request.params.id, function(){
+                    request.flash('success', "User supprimé")
+                })
+                }
+        }else{
+            response.redirect('/')
+        }
     })
-}
 response.redirect('/users')
 });
 
@@ -133,43 +135,62 @@ if (errors) {
 
 router.get('/edit/:id',ensureAuthenticated, (request, response) => {
     if (request.params.id) {
-    User.getOne(request.params.id, function(user){
-        Role.all(function (roles) {
-            response.render('users/edit', { user: user,roles : roles })
-        })
-    })}
+        User.getOne(request.params.id, function(user){
+            Role.all(function (roles) {
+                response.render('users/edit', { user: user,roles : roles })
+            })
+        })}
 })
 
 // valide une inscription
 router.get('/valide/:id',ensureAuthenticated, function(req, res){
-    User.Valide(req.params.id,function (users) {
-        User.Allu(function (users) {
-            res.render('users/users',{users:users})
-        })
-    })
-    User.getOne(req.params.id, function(users) {
-        for(user of users);
-        let MonUser = [
-            {
-                username: user.USERNAME,
-                usersurname: user.USERSURNAME,
-                email: user.USERLOGIN,
-            },
-        ]
-        require('../config/emailing')('validation', MonUser);
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
+            User.Valide(req.params.id,function (users) {
+                User.Allu(function (users) {
+                    res.render('users/users',{users:users})
+                })
+            })
+            User.getOne(req.params.id, function(users) {
+                for(user of users);
+                let MonUser = [
+                    {
+                        username: user.USERNAME,
+                        usersurname: user.USERSURNAME,
+                        email: user.USERLOGIN,
+                    },
+                ]
+                require('../config/emailing')('validation', MonUser);
+            })
+        }else{
+            response.redirect('/')
+        }
     })
 });
 
 // mon Profile
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
-    if (req.params.id) {
-        User.getOne(req.params.id, function(user){
-            if (user[0].ROLEID != undefined) {
-                Role.getOne(user[0].ROLEID,function (role) {
-                    res.render('users/monProfile', { user: user,role : role[0].ROLENAME })
-                })
-            }
-        })}
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
+            if (req.params.id) {
+                User.getOne(req.params.id, function(user){
+                    if (user[0].ROLEID != undefined) {
+                        Role.getOne(user[0].ROLEID,function (role) {
+                            res.render('users/monProfile', { user: user,role : role[0].ROLENAME })
+                        })
+                    }
+                })}
+        }else{
+            if (req.params.id) {
+                User.getOne(req.params.id, function(user){
+                    if (user[0].ROLEID != undefined) {
+                        Role.getOne(user[0].ROLEID,function (role) {
+                            res.render('users/monProfileFront', { user: user,role : role[0].ROLENAME })
+                        })
+                    }
+                })}
+        }
+    })    
 });
 
 

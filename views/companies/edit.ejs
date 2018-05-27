@@ -25,7 +25,7 @@
                                         <label for="name" class="cols-sm-2 control-label">Nom de la compagnie</label></br>
 										<input type="text" class="form-control" name="COMPANYNAME" id="name" value="<%= comp.COMPANYNAME%>" />
 										<label for="desc" class="cols-sm-2 control-label">Description de la compagnie</label>
-										<input type="text" class="form-control" name="COMPANYDESC" id="desc" value="<%= comp.COMPANYDESC%>" />
+										<textarea class="form-control" name="COMPANYDESC" id="desc" required rows="10" cols="50"><%= comp.COMPANYDESC%></textarea>
 										<input type="hidden" class="form-control" name="USERID" id="id" value="<%= comp.USERID%>" />
                                         
                                     </div>

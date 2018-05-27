@@ -1,30 +1,38 @@
-<!doctype html>
-<html >
-    <head>
-        <meta charset="UTF-8">
-        <title>Serivce Central d'Authentification de l'Université de Haute-Alsace</title>
-        <link rel="stylesheet" href="css/style_index.css">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-    <%- messages('message', locals) %>
-        <form class="login" method="post" action="users/login">
-            <div class="login-screen">
-                    <div class="login-logo">
-                        <img src="images/UHA.png" alt="logo">
-                    </div>
-                <div class="login-form">
-                    <div class="control-group">
-                        <input type="text" name="USERLOGIN" class="login-field" placeholder="Nom d'utilisateur" id="login-name">
-                    </div>
-                    <div class="control-group">
-                        <input type="password" name="USERPWD" class="login-field" placeholder="Mot de passe" id="login-pass">
-                    </div>
-                    <input class="btn btn-primary btn-large btn-block" type="submit" name="submit" value="Connexion">
-                </div>
+<% include ./front/inc/top.ejs%>
+<div class="container">
+    <div class="panel-heading">
+            <%- messages('message', locals) %>
+            <div class="panel-title text-center">
+                    <h1 class="title">Connexion</h1>
+                    <hr />
             </div>
-        </form>
-        <!-- JAVASCRIPTS -->
-        <script src="js/bootstrap.min.js"></script>
-    </body>
-</html>
+    </div>
+    <div class="row vertical-offset-100">
+    	<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title">Connexion</h3>
+			 	</div>
+			  	<div class="panel-body">
+			    	<form accept-charset="UTF-8" role="form" method="POST" action="users/login">
+                    <fieldset>
+			    	  	<div class="form-group">
+			    		    <input class="form-control" placeholder="E-mail" name="USERLOGIN" type="text">
+			    		</div>
+			    		<div class="form-group">
+			    			<input class="form-control" placeholder="Password" name="USERPWD" type="password" value="">
+			    		</div>
+			    		<div class="checkbox">
+			    	    	<label>
+			    	    		<a>mot de passe oublié ?</a>
+			    	    	</label>
+			    	    </div>
+			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Connexion">
+			    	</fieldset>
+			      	</form>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+    <% include front/inc/bottom.ejs  %>
