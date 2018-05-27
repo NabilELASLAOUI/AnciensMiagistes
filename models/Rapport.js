@@ -21,21 +21,18 @@ class  Rapport {
         return this._row.RAPPORTNAME
     }
 
-    get RAPPORTDESC(){
-        return this._row.RAPPORTDESC
-    }
     get RAPPORTDOC(){
         return this._row.RAPPORTDOC
     }
-    static create(userid,useremail,rapportname,rapportdate,rapportdesc,rapportdoc,cb){
+    static create(userid,useremail,rapportname,rapportdate,rapportdoc,cb){
 
-        connection.query('INSERT INTO rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?, RAPPORTDATE=? ,RAPPORTDESC=?,RAPPORTDOC=?',[userid,useremail,rapportname,rapportdate,rapportdesc,rapportdoc],(err,result)=>{
+        connection.query('INSERT INTO rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?, RAPPORTDATE=? ,RAPPORTDOC=?',[userid,useremail,rapportname,rapportdate,rapportdoc],(err,result)=>{
             if (err) throw err
             cb(result)
         })
     }
-    static update(rapportid,userid,useremail,rapportname,rapportdesc,rapportdoc,cb){
-        connection.query('UPDATE rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?, RAPPORTDESC=?,RAPPORTDOC=? WHERE RAPPORTID=?',[userid,useremail,rapportname,rapportdesc,rapportdoc,rapportid],(err,result)=>{
+    static update(rapportid,userid,useremail,rapportname,rapportdoc,cb){
+        connection.query('UPDATE rapport SET USERID=?, USEREMAIL=?, RAPPORTNAME=?,RAPPORTDOC=? WHERE RAPPORTID=?',[userid,useremail,rapportname,rapportdoc,rapportid],(err,result)=>{
             if (err) throw err
             cb(result)
         })

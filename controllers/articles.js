@@ -156,7 +156,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     } else {
         req.flash('danger', 'Vous devez vous authentifier pour acceder a votre compte');
-        res.redirect('/');
+        res.redirect('/login');
     }
 }
 

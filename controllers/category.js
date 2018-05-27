@@ -72,7 +72,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     } else {
         req.flash('danger', "vous n'etes pas connecter");
-        res.redirect('/');
+        res.redirect('/login');
     }
 }
 

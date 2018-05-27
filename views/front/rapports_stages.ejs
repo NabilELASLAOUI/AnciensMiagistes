@@ -1,0 +1,60 @@
+<% include inc/top.ejs %>
+<section id="inner-headline">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="pageTitle">Rapports de stage de fin d'études
+                </h2>
+            </div>
+            <div class="col-lg-4">
+                <h2 class="pageTitle"><a href="/rapportStages/add" style="color: #ffffff">Ajouter mon rapport</a></h2>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container content" style="min-height: 432px;">
+        <%- messages('message', locals) %>
+        <% if(locals.msg_err){ %>
+        <div class="alert alert-danger" >
+            <%= msg_err %>
+        </div>
+        <% } %>
+        <!-- Info Blcoks -->
+        <div class="row">
+            <div class="col-sm-12 info-blocks">
+
+                <div class="info-blocks-in">
+                    <table id="mytable" class="table table-bordred table-striped table-hover table-responsive">
+                        <thead>
+                        <th>Titre</th>
+                        <th>Document</th>
+                        <th>Propriétaire</th>
+                        <th>E-mail du Propriétaire</th>
+                        </thead>
+                        <tbody>
+
+                        <%  for(rapport of rapports) { %>
+                        <tr>
+                            <td><%= rapport.RAPPORTNAME %></td>
+                            <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
+                            <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
+                            <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
+                            <%}} %>
+                            <td><%= rapport.USEREMAIL %></td>
+                            <td><a href="/rapportStages/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
+
+                        </tr>
+                        <%  } %>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<% include inc/bottom.ejs %>

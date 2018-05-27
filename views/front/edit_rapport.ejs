@@ -1,0 +1,74 @@
+<% include inc/top.ejs %>
+<section id="inner-headline">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="pageTitle">Rapports de stage de fin d'études
+                </h2>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container content" style="min-height: 432px;">
+
+        <!-- Info Blcoks -->
+        <div class="row">
+            <div class="col-sm-12 info-blocks">
+                <div class="info-blocks-in">
+
+                    <form name="sentMessage" id="contactForm" enctype="multipart/form-data" method="post"
+                          action="/rapportStages/doEdit">
+                        <h2 class="pageTitle" style="color: #ef801a !important; margin-bottom: 15px;">Modification de
+                            mon rapport de stage</h3>
+                            <input type="hidden" class="form-control"
+                                   value="<% if(rapport){for(elem of rapport){ %> <%= elem.USERID %> <% }} %>"
+                                   name="USERID" id="user"/>
+                            <input type="hidden" class="form-control"
+                                   value="<% if(rapport){for(elem of rapport){ %> <%= elem.RAPPORTID %> <% }} %>"
+                                   name="RAPPORTID" id="idart"/>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label for="email" class="cols-sm-2 control-label">Votre Adresse Email(doit être
+                                        differente de vore email UHA. Peut etre yahoo, gmail etc..)</label>
+                                    <input type="email" class="form-control" name="USEREMAIL" value="<% if(rapport){ for(elem of rapport){%><%= elem.USEREMAIL %><% }} %>"
+                                           placeholder="adresse e-mail" id="eamil" required="required"/>
+
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label for="titre" class="cols-sm-2 control-label">Titre</label>
+                                    <input type="text" class="form-control" name="RAPPORTNAME"
+                                           value="<% if(rapport){ for(elem of rapport){ %> <%= elem.RAPPORTNAME %> <% }} %>"
+                                           placeholder="titre de l'rapport" id="titre" required
+                                           data-validation-required-message="Entrer le titre de l'rapport svp!"/>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label for="doc" class="cols-sm-2 control-label">Fichier</label>
+                                    <input type="file" class="form-control" id="doc" name="RAPPORTDOC"/>
+                                    <input type="hidden" class="form-control"
+                                           value="<% if(rapport){for(elem of rapport){ %> <%= elem.RAPPORTDOC %> <% }} %>"
+                                           name="RAPPORTDOCNAME" id="idart"/>
+                                    
+                                </div>
+                            </div>
+                            <div id="success"></div> <!-- For success/fail messages -->
+                            <button type="submit" class="btn btn-primary pull-right">Modifier</button>
+                            <br/>
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<% include inc/bottom.ejs %>

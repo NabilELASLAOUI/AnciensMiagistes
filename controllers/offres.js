@@ -32,7 +32,7 @@ router.get('/detail/:articleId/:catId', function (req, res) {
 
 router.get('/add/:catId', function (req, res) {
     Category.getOne(req.params.catId,function (la_categorie) {
-       res.render('front/offres/add', {la_categorie: la_categorie});
+       res.render('front/ajout_offre', {la_categorie: la_categorie});
     })
 
 });
@@ -61,7 +61,7 @@ router.post('/doAdd', function (req, res) {
                 });
             }
         }
-        if (err)res.render('front/offres/add/'+fields.CATEGORYID, {errors: err})
+        if (err)res.render('front/ajout_offre/'+fields.CATEGORYID, {errors: err})
         Article.create(fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, new Date(), fields.ARTICLEDESC, nomFichier, function () {
             req.flash('success', "Article ajouté avec succès !")
             res.redirect('/offres/'+fields.CATEGORYID)
@@ -83,9 +83,12 @@ router.post('/doAdd', function (req, res) {
 
 });
 
-router.get('/edit/:offreid', function (req, res) {
+router.get('/edit/:offreid/:catID', function (req, res) {
     Article.getOne(req.params.offreid, function (elem) {
-       res.render('front/offres/edit', {offre: elem})
+        Category.getOne(req.params.catID, function (la_categorie) {
+            res.render('front/edit_offre', {offre: elem, la_categorie:la_categorie})
+        })
+
 
     })
 });
@@ -122,7 +125,7 @@ router.post('/doEdit', function (req, res) {
                 });
             }
         }
-        if (err)res.render('front/offres/edit.ejs', {errors: err})
+        if (err)res.render('front/edit_offre', {errors: err})
         var doc = files.ARTICLEDOC.size !== 0 ? nomFichier : fields.ARTICLEDOCNAME;
         Article.update(fields.ARTICLEID, fields.USERID, fields.CATEGORYID, fields.ARTICLENAME, fields.ARTICLEDESC, doc, function () {
             req.flash('success', "Article modifié avec succès !")
@@ -165,7 +168,7 @@ function ensureAuthenticated(req, res, next) {
         return next();
     } else {
         req.flash('danger', 'Vous devez vous authentifier pour acceder a votre compte');
-        res.redirect('/');
+        res.redirect('/login');
     }
 }
 

@@ -138,6 +138,9 @@ app.use('/company', company);
 
 let rapport = require('./controllers/rapport');
 app.use('/rapports', rapport);
+let rapportStage = require('./controllers/rapport_stage');
+app.use('/rapportStages', rapportStage);
+
 let offres = require('./controllers/offres');
 app.use('/offres', offres);
 

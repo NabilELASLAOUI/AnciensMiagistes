@@ -9,33 +9,25 @@ var fs = require('fs');
 
 let Rapport = require('../models/Rapport')
 let User = require('../models/User')
-router.get('/', ensureAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
 
     Rapport.all(function (rapports) {
         User.allUsers(function (users) {
-            res.render('rapports/list', {rapports: rapports, users: users});
+            res.render('front/rapports_stages', {rapports: rapports, users: users});
         });
 
     })
 
 });
 
-router.get('/add', ensureAuthenticated, function (req, res) {
+router.get('/add', function (req, res) {
 
-    res.render('rapports/add');
+    res.render('front/ajout_rapport');
 
 });
 
 
-router.get('/edit/:rapportid', ensureAuthenticated, function (req, res) {
-    Rapport.getOne(req.params.rapportid, function (elem) {
-
-        res.render('rapports/edit', {rapport: elem});
-
-    })
-});
-
-router.post('/doAdd', ensureAuthenticated, function (req, res) {
+router.post('/doAdd', function (req, res) {
 
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -56,7 +48,7 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
                     }
                 });
 
-                res.render('rapports/add', {msg_err: msg})
+                res.render('front/ajout_rapport', {msg_err: msg})
             } else {
                 var nomFichier = '';
                 if (files.RAPPORTDOC.size !== 0) {
@@ -75,10 +67,10 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
                         });
                     }
                 }
-                if (err) res.render('rapports/add', {errors: err})
+                if (err) res.render('front/ajout_rapport', {errors: err})
                 Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), nomFichier, function () {
                     req.flash('success', "Rapport ajouté avec succès !")
-                    res.redirect('/rapports')
+                    res.redirect('/rapportStages')
                 })
             }
 
@@ -102,14 +94,14 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
 });
 
-router.get('/edit/:rapportid', ensureAuthenticated, function (req, res) {
+router.get('/edit/:rapportid', function (req, res) {
     Rapport.getOne(req.params.rapportid, function (elem) {
-        res.render('rapports/edit', {rapport: elem});
+        res.render('front/edit_rapport', {rapport: elem});
     });
 });
 
 
-router.post('/doEdit', ensureAuthenticated, function (req, res) {
+router.post('/doEdit', function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
     form.keepExtensions = true
@@ -119,7 +111,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
         if (email[1].toLocaleLowerCase() === 'uha.fr') {
             var msg = "l\'adresse email ne doit pas être une adresse UHA";
             Rapport.getOne(fields.RAPPORTID, function (elem) {
-                res.render('rapports/edit', {msg_err: msg, rapport: elem})
+                res.render('front/edit', {msg_err: msg, rapport: elem})
             });
 
         } else {
@@ -150,11 +142,11 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
                     });
                 }
             }
-            if (err) res.render('rapports/edit.ejs', {errors: err})
+            if (err) res.render('front/edit_rapport', {errors: err})
             var doc = files.RAPPORTDOC.size !== 0 ? nomFichier : fields.RAPPORTDOCNAME;
             Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, doc, function () {
                 req.flash('success', "Rapport modifié avec succès !")
-                res.redirect('/rapports')
+                res.redirect('/rapportStages')
             })
         }
     })
@@ -172,7 +164,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
     })
 });
 
-router.get('/delete/:rapportid/:docname', ensureAuthenticated, function (req, res) {
+router.get('/delete/:rapportid/:docname', function (req, res) {
     Rapport.delete(req.params.rapportid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
             console.log(req.params.docname)
@@ -185,7 +177,7 @@ router.get('/delete/:rapportid/:docname', ensureAuthenticated, function (req, re
             });
         }
 
-        res.redirect('/rapports');
+        res.redirect('/rapportStages');
     })
 });
 

@@ -24,7 +24,6 @@
                   <thead>
                       <th><input type="checkbox" id="checkall" /></th>
                       <th>Titre</th>
-                      <th>Description</th>
                       <th>Document</th>
                       <th>Propriétaire</th>
                       <th>E-mail du Propriétaire</th>
@@ -35,7 +34,6 @@
                         <tr>
                         <td></td>
                         <td><%= rapport.RAPPORTNAME %></td>
-                        <td><%= rapport.RAPPORTDESC %></td>
                         <td><a href="/uploads/<%= rapport.RAPPORTDOC %>">Télécharger</a></td>
                         <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
                         <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>

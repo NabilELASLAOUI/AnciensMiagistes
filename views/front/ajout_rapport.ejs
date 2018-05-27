@@ -1,0 +1,96 @@
+<% include inc/top.ejs %>
+<section id="inner-headline">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="pageTitle">Rapports de stage de fin d'études
+                </h2>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container content" style="min-height: 432px;">
+
+        <!-- Info Blcoks -->
+        <div class="row">
+            <div class="col-sm-12 info-blocks">
+                <div class="info-blocks-in">
+                    <%- messages('message', locals) %>
+                    <% if(locals.errors){  for(error of locals.errors) {  %>
+
+                    <div class="alert alert-danger" >
+                        <%= error.msg %>
+
+                    </div>
+                    <% }} %>
+                    <% if(locals.msg_err){ %>
+                    <div class="alert alert-danger" id="msg" >
+                        <%= msg_err %>
+                    </div>
+                    <% } %>
+                    <div class="alert alert-danger" id="msg" style="display: none" >
+
+                    </div>
+                    <form name="sentMessage" id="contactForm" enctype="multipart/form-data" method="post"
+                          action="/rapportStages/doAdd">
+                        <h2 class="pageTitle" style="color: #ef801a !important; margin-bottom: 15px;">Ajouter mon
+                            rapport de stage</h3>
+                            <% //if(isAuthenticated){  %>
+                            <input type="hidden" class="form-control" value="9" name="USERID" id="user"/>
+                            <% // }  %>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label for="email" class="cols-sm-2 control-label">Votre Adresse Email(doit être
+                                        differente de vore email UHA. Peut etre yahoo, gmail etc..)</label>
+                                    <input type="email" class="form-control" name="USEREMAIL"
+                                           placeholder="adresse e-mail" id="eamil" required="required"/>
+                                    
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label for="titre" class="cols-sm-2 control-label">Titre du rapport</label>
+                                    <input type="text" value="" class="form-control" name="RAPPORTNAME" id="titre"
+                                           required="required" placeholder="Nom du rapport"/>
+                                    </di>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label for="doc" class="cols-sm-2 control-label">Document du rapport de stage</label>
+                                        <input type="file" class="form-control" required="required" id="doc" name="RAPPORTDOC"/>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary pull-right">Ajouter</button>
+                                <br/>
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<script type="text/javascript">
+    function emailCheck(){
+        var id=document.getElementById("idEmail");
+        var email=id.value.split("@");
+        document.getElementById("addForm").addEventListener("submit", function(event){
+            if(email[email.length-1]==="uha.fr"){
+                event.preventDefault();
+                var div=document.getElementById("msg");
+                div.style.display="block";
+                div.textContent="!!  l'adresse email ne doit pas être une adresse UHA";
+            }
+
+        });
+
+
+
+    }
+</script>
+<% include inc/bottom.ejs %>
