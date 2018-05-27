@@ -18,10 +18,7 @@ router.get('/',ensureAuthenticated, function(req, res){
             })
         }else{
             res.redirect('/')
-        }
-
-    })
-
+        }})
 });
 
 // Register Form

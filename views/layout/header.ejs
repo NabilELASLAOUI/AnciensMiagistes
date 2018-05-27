@@ -37,24 +37,23 @@
             $("[data-toggle=tooltip]").tooltip();
         });
     </script>
-
 </head>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
         <ul class="nav navbar-nav">
-            <li class="active"><a href="">Accueil</a></li>
+            <li><a href="/">Accueil</a></li>
             <% if (isAuthenticated){ %>
             <% if(role === 'ADMIN'){ %>
             <% if(cats){ for(categ of cats){%>
-                <li><a href="/articles/<%= categ.CATEGORYID%>"><%= categ.CATEGORYNAME %></a></li>
+                <li  <% if(pageCourante === '/articles/'+categ.CATEGORYID){ %> class="active" <% } %> ><a href="/articles/<%= categ.CATEGORYID%>"><%= categ.CATEGORYNAME %></a></li>
             <%}}%>
-            <li><a href="/roles   ">Roles</a></li>
-            <li><a href="/category">Categorie</a></li>
-            <li><a href="/company">Entreprise</a></li>
-            <li><a href="/rapports">Rapport de stage</a></li>
+            <li <% if(pageCourante === '/roles'){ %> class="active" <% } %> ><a href="/roles   ">Roles</a></li>
+            <li <% if(pageCourante === '/category'){ %> class="active" <% } %> ><a href="/category">Categorie</a></li>
+            <li  <% if(pageCourante === '/company'){ %> class="active" <% } %> ><a href="/company">Entreprise</a></li>
+            <li  <% if(pageCourante === '/rapports'){ %> class="active" <% } %> ><a href="/rapports">Rapport de stage</a></li>
             <% } %>
-            <li><a href="/users">Utilisateurs</a></li>
+            <li  <% if(pageCourante === '/users'){ %> class="active" <% } %> ><a href="/users">Utilisateurs</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Bonjour <%= nom %></a></li>

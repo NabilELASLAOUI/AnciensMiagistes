@@ -69,7 +69,9 @@ app.use(function (req,res,next) {
         app.locals.actu= actu;
 
     })
+    
     res.locals.isAuthenticated = req.isAuthenticated();
+    app.locals.pageCourante = req.path
     if (req.user != undefined){
         res.locals.nom = req.user.user.USERNAME;
         res.locals.prenom = req.user.user.USERSURNAME;
