@@ -5,7 +5,8 @@ let User = require('../models/User')
 let Role = require('../models/Role')
 let Alumni = require('../models/Alumni')
 let passport = require('passport');
-const bcrypt = require('bcrypt');
+let bcrypt = require('bcrypt');
+let dateFormat = require('dateformat');
 
 /**
  * Liste les différents utilisateurs avec leurs roles
@@ -253,9 +254,15 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
-                console.log(new Date().getDate())
+                
                 Alumni.getOne(req.params.id, function(alumni){
-                    res.render('users/monEntreprise', { alumni: alumni[0] })
+                    var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
+                    var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
+                    var USERHIRINGYEAR = dateFormat(alumni[0].USERHIRINGYEAR,"yyyy-mm-dd")
+                    res.render('users/monEntreprise', { alumni: alumni[0], 
+                        USERGRADYEAR : USERGRADYEAR,
+                        USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
+                        USERHIRINGYEAR : USERHIRINGYEAR })
                 })}
         }
     })    

@@ -98,7 +98,6 @@ app.get('*', function(req, res, next){
 app.get('/',(request,response)=>{
     Article.getAllArticles(function (articles) {
         for (article of articles){
-            console.log(article)
         }
         response.render('index', { articles: articles })
     })
