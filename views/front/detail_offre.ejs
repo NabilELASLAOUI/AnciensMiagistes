@@ -19,6 +19,11 @@
     <div class="container content" style="min-height: 432px;">
          <div class="row">
             <div class="col-sm-12 info-blocks">
+                <% if(article[0].ARTICLEDOC.length>0 && la_categorie[0].CATEGORYNAME=='Actualités'){%>
+                    <div class="col-md-12">
+                        <img src="../uploads/<%= article[0].ARTICLEDOC%>" height="300" width="auto">
+                    </div>
+                    <%}%>
                 <div class="info-blocks-in">
                     <% if(article){%>
                     <h3><%= article[0].ARTICLENAME %>
@@ -31,7 +36,7 @@
                     <%}%>
                 </div>
             </div>
-
+            
         </div>
 
     </div>
