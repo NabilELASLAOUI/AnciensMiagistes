@@ -1,6 +1,22 @@
 <% include ../front/inc/top.ejs%>
-	<body>
-		<div class="container">
+<section id="inner-headline">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<h2 class="pageTitle">
+					Inscription
+				</h2>
+			</div>
+
+		</div>
+	</div>
+</section>
+<section id="content">
+	<div class="container content" style="min-height: 432px;">
+
+		<!-- Info Blcoks -->
+		<div class="row">
+
 		<%- messages('message', locals) %>
            <% if(locals.errors){  for(error of locals.errors) {  %>
 
@@ -8,13 +24,12 @@
            <%= error.msg %>
            </div>
           <% }} %>
+			<% if(locals.error){ %>
+			<div class="alert alert-danger" >
+				<%= error %>
+			</div>
+			<% }%>
 			<div class="row main">
-				<div class="panel-heading">
-	               <div class="panel-title text-center">
-	               		<h1 class="title">Inscription</h1>
-	               		<hr />
-	               	</div>
-	            </div>
 				<div class="main-login main-center">
 					<form class="form-horizontal" method="post" action="/users/register">
 
@@ -99,12 +114,13 @@
                         </div>
 
 						<div class="form-group ">
-							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Inscription</button>
+							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">S'inscrire</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
+	</div>
+</section>
 		<script type="text/javascript" src="assets/js/bootstrap.js"></script>
 	    <% include ../front/inc/bottom.ejs  %>

@@ -61,12 +61,12 @@ app.use(passport.session());
 
 app.use(function (req,res,next) {
     Category.catMenu(function (cats) {
-        app.locals.catMenu= cats;
+        global.catMenu= cats;
 
     })
 
     Category.catActu(function (actu) {
-        app.locals.actu= actu;
+        global.actu= actu;
 
     })
     res.locals.isAuthenticated = req.isAuthenticated();

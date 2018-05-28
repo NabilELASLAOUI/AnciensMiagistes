@@ -74,6 +74,12 @@ class  User {
             cb(rows.map((row) => new User(row)))
         })
     }
+    static findByLogin(log,cb){
+        connection.query("SELECT * FROM user WHERE USERLOGIN='"+log+"'",(err,rows)=>{
+            if (err) throw err
+            cb(rows.map((row) => new User(row)))
+    })
+    }
 
     static update(username, usersurname, userphone, useraddress, userlogin, roleid, userid, cb) {
         connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=?, ROLEID=? WHERE USERID = ?', [username, usersurname, userphone, useraddress, userlogin, roleid, userid], (err, result) => {
@@ -82,6 +88,12 @@ class  User {
     })
     }
 
+    static update_pwd(userpwd, userid, cb) {
+        connection.query('UPDATE user SET  USERPWD=? WHERE USERID = ?', [userpwd, userid], (err, result) => {
+            if(err) throw err
+            cb(result);
+    })
+    }
     static Valide(id, cb) {
         connection.query('UPDATE user SET USERSTATUS=1 WHERE USERID = ?', [id], (err, result) => {
             if(err) throw err
