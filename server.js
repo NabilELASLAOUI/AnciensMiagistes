@@ -61,12 +61,12 @@ app.use(passport.session());
 
 app.use(function (req,res,next) {
     Category.catMenu(function (cats) {
-        app.locals.catMenu= cats;
+        global.catMenu= cats;
 
     })
 
     Category.catActu(function (actu) {
-        app.locals.actu= actu;
+        global.actu= actu;
 
     })
     res.locals.isAuthenticated = req.isAuthenticated();
@@ -96,7 +96,12 @@ app.get('*', function(req, res, next){
 
 // page d'accueil
 app.get('/',(request,response)=>{
-    response.render('index')
+    Article.getAllArticles(function (articles) {
+        for (article of articles){
+            console.log(article)
+        }
+        response.render('index', { articles: articles })
+    })
 })
 // routes
 app.get('/login',(request,response)=>{
