@@ -112,6 +112,37 @@ app.get('/contact',(request,response)=>{
     response.render('front/contact')
 })
 
+app.post('/contact', (request, response) => {
+    request.checkBody('name', 'Entrer un nom!').notEmpty();
+    request.checkBody('email', 'Entrer un email!').notEmpty();
+    request.checkBody('message', 'Entrer un message!').notEmpty();
+    // Get Errors
+    let errors = request.validationErrors();
+
+    if (errors) {
+        Category.all(function (cat) {
+            response.render('front/contact', {errors: errors })
+        })
+    }else{
+        let MonUser = [
+        {
+            username: request.body.name,
+            useremail: request.body.email,
+            usermessage: request.body.message,
+            email: 'miagemulhousetest@gmail.com',
+        }
+        ]
+        require('./config/emailing')('contact', MonUser);
+        response.render('front/contact')
+    }
+    
+})
+
+app.get('/mma', (request, response) => {
+    response.render('front/mma')
+})
+
+
 app.get('/actualites/:catId', function (req, res) {
 
     Article.getByCateg(req.params.catId,function (actualites) {
