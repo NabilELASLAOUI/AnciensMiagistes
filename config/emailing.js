@@ -1,7 +1,12 @@
+/*
+Ce module permet de configuer les paramètres nécessaires à l'envoie d'email.
+Le module qui gère l'envoie des mails est node nodemailer@ 
+*/
 module.exports = function(template_Name,users) {
 
     const nodemailer = require('nodemailer'),
         //creds = require('./creds'),
+        //creation de l'objet transporter
         transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
@@ -11,7 +16,7 @@ module.exports = function(template_Name,users) {
                 pass: 'miagemulhousetest123',
             },
             tls:{
-                rejectUnauthorized: false
+                rejectUnauthorized: false // false dans un environement de developpement
             },
         }),
         EmailTemplate = require('email-templates').EmailTemplate,
@@ -22,6 +27,9 @@ module.exports = function(template_Name,users) {
         return transporter.sendMail(obj);
     }
 
+    /*
+    Cette fonction permet de charger les différents templates d'email
+    */
     function loadTemplate(templateName, contexts) {
         let template = new EmailTemplate(path.join('./', 'templates', templateName));
         return Promise.all(contexts.map((context) => {
