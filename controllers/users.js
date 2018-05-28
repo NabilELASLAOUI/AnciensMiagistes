@@ -3,6 +3,7 @@ let router = express.Router();
 let config = require('../config/db');
 let User = require('../models/User')
 let Role = require('../models/Role')
+let Alumni = require('../models/Alumni')
 let passport = require('passport');
 const bcrypt = require('bcrypt');
 
@@ -171,6 +172,7 @@ router.get('/valide/:id',ensureAuthenticated, function(req, res){
 // mon Profile
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
+        // si admin ou moderateur on va le rediriger vers mon profile dans template admin
         if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
             if (req.params.id) {
                 User.getOne(req.params.id, function(user){
@@ -181,6 +183,7 @@ router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
                     }
                 })}
         }else{
+            // sinon on va le rediriger vers mon profile dans template front
             if (req.params.id) {
                 User.getOne(req.params.id, function(user){
                     if (user[0].ROLEID != undefined) {
@@ -188,6 +191,18 @@ router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
                             res.render('users/monProfileFront', { user: user,role : role[0].ROLENAME })
                         })
                     }
+                })}
+        }
+    })    
+});
+
+// mon entreprise
+router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ALUMNI'){
+            if (req.params.id) {
+                Alumni.getOne(req.params.id, function(alumni){
+                    res.render('users/monEntreprise', { alumni: alumni[0] })
                 })}
         }
     })    

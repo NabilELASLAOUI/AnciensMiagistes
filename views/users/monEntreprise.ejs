@@ -10,7 +10,6 @@
       <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
         <div class="panel panel-info">
           <div class="panel-heading">
-          <% if (isAuthenticated){ %>
             <h3 class="panel-title"><%=  nom+"  "+prenom %></h3>
           </div>
           <div class="panel-body">
@@ -20,36 +19,34 @@
                 <table class="table table-user-information">
                   <tbody>
                     <tr>
-                      <td>Nom:</td>
-                      <td><%= nom %></td>
+                      <td>entreprise :</td>
+                      <td><%= alumni.USERCOMPANY %></td>
                     </tr>
                     <tr>
-                      <td>Prénom</td>
-                      <td><%= prenom %></td>
+                      <td>Fonction :</td>
+                      <td><%= alumni.USERFUNCTION %></td>
                     </tr>
                     <tr>
-                      <td>Adresse</td>
-                      <td><%= adresse %></td>
+                      <td>Date d'embauche :</td>
+                      <td><%= alumni.USERHIRINGYEAR %></td>
                     </tr>
 
-                       <tr>
-                           <tr>
-                      <td>Numéro Téléphone</td>
-                      <td><%= phone %></td>
+                    <tr>
+                    <tr>
+                      <td>Salaire :</td>
+                      <td><%= alumni.USERSALARY %></td>
                     </tr>
                     <tr>
-                      <td>Email</td>
-                      <td><a href="#"><%= email %></a></td>
+                      <td>Promotion :</td>
+                      <td><%= alumni.USERGRADYEAR %></td>
                     </tr>
-                      <td>Role</td>
-                      <td><%= role %></td>
-
+                      <td>Date de Premier embauche :</td>
+                      <td><%= alumni.USERFIRSTHIRINGYEAR %></td>
                     </tr>
-
                   </tbody>
                 </table>
-                <a href="/users/edit/<%= idUser %>" class="btn btn-primary">Modifier mon profile</a>
-                <a href="/users/monEntreprise/<%= idUser %>" class="btn btn-primary">Infos d'entreprise </a>
+                <a href="/users/edit/" class="btn btn-primary">Modifier mon profile</a>
+                <a href="/users/monEntreprise/" class="btn btn-primary">Infos d'entreprise </a>
               </div>
             </div>
           </div>
@@ -57,7 +54,6 @@
                       <span class="pull-right">
                       </span>
                   </div>
-            <% }  %>
         </div>
       </div>
     </div>
