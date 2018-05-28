@@ -69,7 +69,11 @@ app.use(function (req,res,next) {
         app.locals.actu= actu;
 
     })
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 0c681ddf590e68f42010f3f4e3cbfbcbd12de105
     res.locals.isAuthenticated = req.isAuthenticated();
     app.locals.pageCourante = req.path
     if (req.user != undefined){
