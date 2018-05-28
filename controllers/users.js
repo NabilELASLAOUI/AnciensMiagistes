@@ -201,6 +201,7 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
+                console.log(new Date().getDate())
                 Alumni.getOne(req.params.id, function(alumni){
                     res.render('users/monEntreprise', { alumni: alumni[0] })
                 })}

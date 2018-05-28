@@ -28,20 +28,20 @@
                     </tr>
                     <tr>
                       <td>Date d'embauche :</td>
-                      <td><%= alumni.USERHIRINGYEAR %></td>
+                      <td><%= alumni.USERHIRINGYEAR.getFullYear()+' - '+alumni.USERHIRINGYEAR.getUTCMonth() +' - '+ alumni.USERHIRINGYEAR.getDay() %></td>
                     </tr>
 
                     <tr>
                     <tr>
                       <td>Salaire :</td>
-                      <td><%= alumni.USERSALARY %></td>
+                      <td><%= alumni.USERSALARY %> €</td>
                     </tr>
                     <tr>
                       <td>Promotion :</td>
-                      <td><%= alumni.USERGRADYEAR %></td>
+                      <td><%= alumni.USERGRADYEAR.getDate() %></td>
                     </tr>
                       <td>Date de Premier embauche :</td>
-                      <td><%= alumni.USERFIRSTHIRINGYEAR %></td>
+                      <td><%= alumni.USERFIRSTHIRINGYEAR.getFullYear()+' - '+alumni.USERHIRINGYEAR.getUTCMonth() +' - '+ alumni.USERHIRINGYEAR.getDay() %></td>
                     </tr>
                   </tbody>
                 </table>
