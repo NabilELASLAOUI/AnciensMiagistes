@@ -9,7 +9,7 @@ var fs = require('fs');
 
 let Rapport = require('../models/Rapport')
 let User = require('../models/User')
-router.get('/', function (req, res) {
+router.get('/',ensureAuthenticated, function (req, res) {
 
     Rapport.all(function (rapports) {
         User.allUsers(function (users) {
@@ -27,7 +27,7 @@ router.get('/add', function (req, res) {
 });
 
 
-router.post('/doAdd', function (req, res) {
+router.post('/doAdd',ensureAuthenticated, function (req, res) {
 
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -94,14 +94,14 @@ router.post('/doAdd', function (req, res) {
 
 });
 
-router.get('/edit/:rapportid', function (req, res) {
+router.get('/edit/:rapportid',ensureAuthenticated, function (req, res) {
     Rapport.getOne(req.params.rapportid, function (elem) {
         res.render('front/edit_rapport', {rapport: elem});
     });
 });
 
 
-router.post('/doEdit', function (req, res) {
+router.post('/doEdit',ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
     form.keepExtensions = true
@@ -164,7 +164,7 @@ router.post('/doEdit', function (req, res) {
     })
 });
 
-router.get('/delete/:rapportid/:docname', function (req, res) {
+router.get('/delete/:rapportid/:docname',ensureAuthenticated, function (req, res) {
     Rapport.delete(req.params.rapportid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
             console.log(req.params.docname)

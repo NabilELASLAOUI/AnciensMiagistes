@@ -48,7 +48,7 @@ router.post('/create', (request,response)=>{
             response.render('roles/create',{roles:roles,errors:errors})
         })
     } else {
-        Role.create(request.body.ROLENAME, function () {
+        Role.create(request.body.ROLENAME.toUpperCase(), function () {
             request.flash('success',"role bien ajouté !")
             response.redirect('/roles')
         })
@@ -103,7 +103,7 @@ router.post('/update', (request, response) => {
             response.render('roles/edit.ejs', {role: role, errors: errors})
         })
     } else {
-        Role.update(request.body.ROLENAME,request.body.ROLEID, function () {
+        Role.update(request.body.ROLENAME.toUpperCase(),request.body.ROLEID, function () {
             request.flash('success', "role modifiée !")
             response.redirect('/roles')
         })

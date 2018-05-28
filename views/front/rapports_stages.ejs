@@ -42,7 +42,11 @@
                             <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
                             <%}} %>
                             <td><%= rapport.USEREMAIL %></td>
-                            <td><a href="/rapportStages/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
+                            <td>
+                                <% if(rapport.USERID===idUser){%>
+                                <a href="/rapportStages/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a>
+                                <%}%>
+                            </td>
 
                         </tr>
                         <%  } %>

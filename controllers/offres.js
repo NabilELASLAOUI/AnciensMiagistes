@@ -10,7 +10,7 @@ var fs = require('fs');
 let Article = require('../models/Article')
 let Category = require('../models/Category')
 
-router.get('/:catId', function (req, res) {
+router.get('/:catId',ensureAuthenticated, function (req, res) {
 
     Article.getByCateg(req.params.catId,function (offres) {
         Category.getOne(req.params.catId,function (la_categorie) {
@@ -21,7 +21,7 @@ router.get('/:catId', function (req, res) {
 
 });
 
-router.get('/detail/:articleId/:catId', function (req, res) {
+router.get('/detail/:articleId/:catId',ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.articleId,function (article) {
         Category.getOne(req.params.catId,function (la_categorie) {
         res.render('front/detail_offre', {article: article,la_categorie:la_categorie});
@@ -30,7 +30,7 @@ router.get('/detail/:articleId/:catId', function (req, res) {
 
 });
 
-router.get('/add/:catId', function (req, res) {
+router.get('/add/:catId',ensureAuthenticated, function (req, res) {
     Category.getOne(req.params.catId,function (la_categorie) {
        res.render('front/ajout_offre', {la_categorie: la_categorie});
     })
@@ -38,7 +38,7 @@ router.get('/add/:catId', function (req, res) {
 });
 
 
-router.post('/doAdd', function (req, res) {
+router.post('/doAdd',ensureAuthenticated, function (req, res) {
 
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -83,7 +83,7 @@ router.post('/doAdd', function (req, res) {
 
 });
 
-router.get('/edit/:offreid/:catID', function (req, res) {
+router.get('/edit/:offreid/:catID',ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.offreid, function (elem) {
         Category.getOne(req.params.catID, function (la_categorie) {
             res.render('front/edit_offre', {offre: elem, la_categorie:la_categorie})
@@ -93,7 +93,7 @@ router.get('/edit/:offreid/:catID', function (req, res) {
     })
 });
 
-router.post('/doEdit', function (req, res) {
+router.post('/doEdit',ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
     form.keepExtensions = true
@@ -146,7 +146,7 @@ router.post('/doEdit', function (req, res) {
     })
 });
 
-router.get('/delete/:offreid/:docname/:catId', function (req, res) {
+router.get('/delete/:offreid/:docname/:catId',ensureAuthenticated, function (req, res) {
     Article.delete(req.params.offreid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
             fs.unlink('public/uploads/' + req.params.docname, function (err) {
@@ -167,7 +167,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        req.flash('danger', 'Vous devez vous authentifier pour acceder a votre compte');
+        req.flash('danger', 'Vous devez vous authentifier pour acceder à votre compte');
         res.redirect('/login');
     }
 }

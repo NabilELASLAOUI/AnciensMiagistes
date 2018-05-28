@@ -23,7 +23,10 @@
             <% if(offres){for(offre of offres){%>
             <div class="col-sm-12 info-blocks">
                 <div class="info-blocks-in">
-                    <h3><%= offre.ARTICLENAME %> <a href="/offres/edit/<%= offre.ARTICLEID %>/<%= offre.CATEGORYID %>"><span class="glyphicon glyphicon-pencil"></span></span></a> </h3>
+                    <h3><%= offre.ARTICLENAME %>
+                        <% if(offre.USERID===idUser){%>
+                        <a href="/offres/edit/<%= offre.ARTICLEID %>/<%= offre.CATEGORYID %>"><span class="glyphicon glyphicon-pencil"></span></span></a> </h3>
+                    <%}%>
                     <p>
                         <%= offre.ARTICLEDESC.substring(0,200) %>
                     </p>

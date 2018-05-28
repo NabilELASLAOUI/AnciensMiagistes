@@ -25,7 +25,7 @@
                         <h2 class="pageTitle" style="color: #ef801a !important; margin-bottom: 15px;">Ajouter Une Offre</h3>
                         <input type="hidden" class="form-control" value="<%= la_categorie[0].CATEGORYID  %>" name="CATEGORYID" id="cat"/>
                         <% //if(isAuthenticated){ %>
-                        <input type="hidden" class="form-control" value="9" name="USERID" id="user"/>
+                        <input type="hidden" class="form-control" value="<%=idUser%>" name="USERID" id="user"/>
                         <%// } %>
                         <div class="control-group">
                             <div class="controls">

@@ -37,16 +37,16 @@
                         <td>
                             <% if(user.USERSTATUS === 0){ %>
                             <a onclick="return confirm('Voulez-vous vraiment valider cette inscription ?');"
-                               href="users/valide/<%= user.USERID %>"><span
+                               href="/users/valide/<%= user.USERID %>"><span
                                         class="glyphicon glyphicon-remove"></span></a>
                             <% }else{ %>
                             <span class="glyphicon glyphicon-ok"></span>
                             <% } %>
                         </td>
-                        <td><a href="users/edit/<%= user.USERID %>"><span
+                        <td><a href="/users/edit/<%= user.USERID %>"><span
                                         class="glyphicon glyphicon-pencil"></span></span></a></td>
                         <td>
-                            <a href="users/delete/<%= user.USERID %>"
+                            <a href="/users/delete/<%= user.USERID %>"
                                onclick="return confirm('Voulez vous vraiment supprimer ?');"><span
                                         class="glyphicon glyphicon-trash"></span></a>
                         </td>
