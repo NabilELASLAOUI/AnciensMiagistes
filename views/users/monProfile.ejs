@@ -1,10 +1,19 @@
-<% include ../layout/header.ejs  %>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<% include ../front/inc/top.ejs %>
+<section id="inner-headline">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="pageTitle">
+                    Mon profile
+                </h2>
+            </div>
 
-<div class="container">
+        </div>
+    </div>
+</section>
+<section id="content">
+    <div class="container content" style="min-height: 432px;">
+
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
 
@@ -52,19 +61,23 @@
                     </tbody>
                   </table>
 
-                  <a href="/users/edit/<%= idUser %>" class="btn btn-primary">Modifier mon profile</a>
+
+
                 </div>
               </div>
-            </div>
-                 <div class="panel-footer">
-                    <a href="/users/edit/<%= idUser %>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                        <span class="pull-right">
-                            <a href="/accueil" data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-                        </span>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="/users/edit/<%= idUser %>" class="btn btn-primary">Modifier mon profile</a>
                     </div>
+                    <div class="col-lg-6">
+                        <a href="/users/edit_pwd/<%= idUser %>" class="btn btn-primary">Modifier mon mot de passe</a>
+                    </div>
+                </div>
+            </div>
               <% }  %>
           </div>
         </div>
       </div>
     </div>
-    <% include ../layout/footer  %>
+</section>
+    <% include ../front/inc/bottom %>
