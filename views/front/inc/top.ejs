@@ -46,12 +46,8 @@
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
-                        <li<% if(pageCourante === '/'){ %> class="active" <% } %> ><a href="/">Accueil</a></li>
-<<<<<<< HEAD
-                        <li <% if(pageCourante === '/apropos'){ %> class="active" <% } %> ><a href="/apropos">Qui sommes nous ?</a></li>
-=======
-                        <li <% if(pageCourante === '/apropos'){ %> class="active" <% } %> ><a href="/apropos">À propos</a></li>
->>>>>>> f1add6e42a6aab3158792796e2afa3c38b74e6d7
+                        <li<% if(pageCourante === '/'){ %> class="actve" <% } %> ><a href="/">Accueil</a></li>
+                        <li <% if(pageCourante === '/apropos'){ %> class="acive" <% } %> ><a href="/apropos">Qui sommes nous ?</a></li>
                         <li <% if(pageCourante === '/offres/1' || pageCourante === '/offres/2' ){ %> class="active" <% } %> class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Offres <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -63,7 +59,7 @@
                         </li>
                         <li><a href="/rapportStages">Rapports de stage</a></li>
                         <% if(actu){ for(actu of actu){%>
-                        <li  <% if(pageCourante === '/actualites/'+actu.CATEGORYID){ %> class="active" <% } %> ><a href="/actualites/<%= actu.CATEGORYID%>"><%= actu.CATEGORYNAME %></a></li>
+                        <li  <% if(pageCourante === '/actualites/'+actu.CATEGORYID){ %> class="actie" <% } %> ><a href="/actualites/<%= actu.CATEGORYID%>"><%= actu.CATEGORYNAME %></a></li>
                         <%}}%>
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Liens utiles <b
@@ -73,7 +69,7 @@
                                 <li><a href="#">e-services</a></li>
                             </ul>
                         </li>
-                        <li <% if(pageCourante === '/contact'){ %> class="active" <% } %>><a href="/contact">Contact</a></li>
+                        <li <% if(pageCourante === '/contact'){ %> class="acive" <% } %>><a href="/contact">Contact</a></li>
                         <% if (isAuthenticated){ %>
                         <% if (role==='ADMIN'){ %>
                             <li><a href="/users">Espace Admin</a></li>
