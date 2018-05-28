@@ -64,6 +64,13 @@ class  Article {
 
     })
     }
+    static getAllArticles(cb) {
+        connection.query("SELECT * FROM article WHERE CATEGORYID=(SELECT CATEGORYID FROM CATEGORY WHERE CATEGORYNAME='Actualités') ORDER BY ARTICLEID DESC LIMIT 5", (err, rows) => {
+            if (err) throw err
+            cb(rows.map((row) => new Article(row)))
+
+        })
+    }
     static delete(id,cb){
         connection.query('DELETE FROM article WHERE ARTICLEID='+id,(err,result)=>{
             if (err) throw err

@@ -96,7 +96,12 @@ app.get('*', function(req, res, next){
 
 // page d'accueil
 app.get('/',(request,response)=>{
-    response.render('index')
+    Article.getAllArticles(function (articles) {
+        for (article of articles){
+            console.log(article)
+        }
+        response.render('index', { articles: articles })
+    })
 })
 // routes
 app.get('/login',(request,response)=>{
