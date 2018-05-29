@@ -174,9 +174,7 @@ if (errors) {
 })
 
 router.get('/edit/:id', ensureAuthenticated, (request, response) => {
-    if(request.params.id
-)
-{
+    if(request.params.id){
     User.getOne(request.params.id, function (user) {
         Role.all(function (roles) {
             response.render('users/edit', {user: user, roles: roles})
@@ -185,9 +183,7 @@ router.get('/edit/:id', ensureAuthenticated, (request, response) => {
 }
 })
 router.get('/edit_pwd/:id', ensureAuthenticated, (request, response) => {
-    if(request.params.id
-)
-{
+    if(request.params.id){
     User.getOne(request.params.id, function (user) {
         response.render('users/edit_pwd', {user: user})
     })
@@ -268,6 +264,38 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
     })    
 });
 
+// mon entreprise edit
+router.get('/monEntreprise/edit/:id',ensureAuthenticated, function(req, res){
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ALUMNI'){
+            if (req.params.id) {
+                
+                Alumni.getOne(req.params.id, function(alumni){
+                    var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
+                    var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
+                    var USERHIRINGYEAR = dateFormat(alumni[0].USERHIRINGYEAR,"yyyy-mm-dd")
+                    res.render('users/editMonEntreprise', { alumni: alumni[0], 
+                        USERGRADYEAR : USERGRADYEAR,
+                        USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
+                        USERHIRINGYEAR : USERHIRINGYEAR })
+                })}
+        }
+    })    
+});
+
+router.post('/updateEntreprise', (req, res) => {
+    const USERID = req.body.USERID;
+    const USERCOMPANY = req.body.USERCOMPANY;
+    const USERFUNCTION = req.body.USERFUNCTION;
+    const USERHIRINGYEAR = req.body.USERHIRINGYEAR;
+    const USERSALARY = req.body.USERSALARY;
+    const USERGRADYEAR = req.body.USERGRADYEAR;
+
+    Alumni.update(USERCOMPANY, USERFUNCTION, USERHIRINGYEAR, USERSALARY, USERGRADYEAR, USERID, function () {
+        req.flash('success', "infos modifiées !")
+        res.redirect('monEntreprise/'+USERID)
+    })
+})
 
 // Access Control
 function ensureAuthenticated(req, res, next) {

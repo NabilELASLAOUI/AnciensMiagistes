@@ -1,6 +1,12 @@
 <% include front/inc/top.ejs%>
     <section id="banner">
+        <%- messages('message', locals) %>
+        <% if(locals.errors){  for(error of locals.errors) { %>
 
+        <div class="alert alert-danger">
+            <%= error.msg %>
+        </div>
+        <% }} %>
         <!-- Slider -->
         <div id="main-slider" class="flexslider">
             <ul class="slides">

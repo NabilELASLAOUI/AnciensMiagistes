@@ -37,6 +37,12 @@ class  Alumni {
             cb(rows.map((row) => new Alumni(row)))
         })
     }
+    static update(entreprise, fonction, dateEmbauche, salaire, promotion, userid, cb) {
+        connection.query('UPDATE alumni SET USERCOMPANY= ?, USERFUNCTION= ?,USERHIRINGYEAR= ?,USERSALARY=?, USERGRADYEAR=? WHERE USERID = ?', [entreprise, fonction, dateEmbauche, salaire, promotion, userid], (err, result) => {
+            if(err) throw err
+            cb(result);
+    })
+    }
 }
 
 module.exports = Alumni
