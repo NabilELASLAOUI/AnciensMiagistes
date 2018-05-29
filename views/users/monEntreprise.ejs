@@ -18,8 +18,9 @@
               <div class=" col-md-9 col-lg-9 ">
                 <table class="table table-user-information">
                   <tbody>
+                    <% if(role === 'ALUMNI'){ %>
                     <tr>
-                      <td>entreprise :</td>
+                      <td>entreprise :<%= role  %></td>
                       <td><%= alumni.USERCOMPANY %></td>
                     </tr>
                     <tr>
@@ -43,6 +44,17 @@
                       <td>Date de Premier embauche :</td>
                       <td><%= USERFIRSTHIRINGYEAR %></td>
                     </tr>
+
+                    <% }else if(role === 'ENTREPRISE'){ %>
+                      <tr>
+                          <td>Nom d'entreprise :</td>
+                          <td><%= company.COMPANYNAME %></td>
+                      </tr>
+                      <tr>
+                          <td>Description :<textarea class="form-control" rows="5" name="COMPANYDESC" id="desc"><%= company.COMPANYDESC %></textarea></td>
+                      </tr>
+                      
+                      <% } %>
                   </tbody>
                 </table>
                 <a href="/users/monEntreprise/edit/<%= idUser  %>" class="btn btn-primary">Modifier mes informations</a>

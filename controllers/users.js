@@ -4,6 +4,7 @@ let config = require('../config/db');
 let User = require('../models/User')
 let Role = require('../models/Role')
 let Alumni = require('../models/Alumni')
+let Company = require('../models/Company')
 let passport = require('passport');
 let bcrypt = require('bcrypt');
 let dateFormat = require('dateformat');
@@ -15,7 +16,6 @@ router.get('/', ensureAuthenticated, function (req, res) {
     Role.getOne(req.user.user.ROLEID, function (role) {
         if (role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR') {
             User.Allu(function (users) {
-
                 res.render('users/users', {users: users})
             })
         } else {
@@ -250,7 +250,6 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
-                
                 Alumni.getOne(req.params.id, function(alumni){
                     var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
                     var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
@@ -258,7 +257,13 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
                     res.render('users/monEntreprise', { alumni: alumni[0], 
                         USERGRADYEAR : USERGRADYEAR,
                         USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
-                        USERHIRINGYEAR : USERHIRINGYEAR })
+                        USERHIRINGYEAR : USERHIRINGYEAR,
+                        role : role[0].ROLENAME })
+                })}
+        }else if(role[0].ROLENAME === 'ENTREPRISE'){
+            if (req.params.id) {
+                Company.getOne(req.params.id, function(company){
+                    res.render('users/monEntreprise', { company: company[0],role : role[0].ROLENAME})
                 })}
         }
     })    
