@@ -274,7 +274,6 @@ router.get('/monEntreprise/edit/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
-                
                 Alumni.getOne(req.params.id, function(alumni){
                     var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
                     var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
@@ -284,22 +283,40 @@ router.get('/monEntreprise/edit/:id',ensureAuthenticated, function(req, res){
                         USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
                         USERHIRINGYEAR : USERHIRINGYEAR })
                 })}
+        }else if (role[0].ROLENAME === 'ENTREPRISE'){
+            Company.getOne(req.params.id, function(company){
+                res.render('users/editMonEntreprise', { company: company[0]})
+            })
         }
     })    
 });
 
 router.post('/updateEntreprise', (req, res) => {
-    const USERID = req.body.USERID;
-    const USERCOMPANY = req.body.USERCOMPANY;
-    const USERFUNCTION = req.body.USERFUNCTION;
-    const USERHIRINGYEAR = req.body.USERHIRINGYEAR;
-    const USERSALARY = req.body.USERSALARY;
-    const USERGRADYEAR = req.body.USERGRADYEAR;
+    Role.getOne(req.user.user.ROLEID,function (role) {
+        if(role[0].ROLENAME === 'ALUMNI'){
+            const USERID = req.body.USERID;
+            const USERCOMPANY = req.body.USERCOMPANY;
+            const USERFUNCTION = req.body.USERFUNCTION;
+            const USERHIRINGYEAR = req.body.USERHIRINGYEAR;
+            const USERSALARY = req.body.USERSALARY;
+            const USERGRADYEAR = req.body.USERGRADYEAR;
+        
+            Alumni.update(USERCOMPANY, USERFUNCTION, USERHIRINGYEAR, USERSALARY, USERGRADYEAR, USERID, function () {
+                req.flash('success', "infos modifiées !")
+                res.redirect('monEntreprise/'+USERID)
+            })
+        }else if(role[0].ROLENAME === 'ENTREPRISE'){
+            const USERID = req.body.USERID;
+            const COMPANYNAME = req.body.COMPANYNAME;
+            const COMPANYDESC = req.body.COMPANYDESC;
 
-    Alumni.update(USERCOMPANY, USERFUNCTION, USERHIRINGYEAR, USERSALARY, USERGRADYEAR, USERID, function () {
-        req.flash('success', "infos modifiées !")
-        res.redirect('monEntreprise/'+USERID)
-    })
+            Company.update(COMPANYNAME, COMPANYDESC, USERID, function () {
+                req.flash('success', "infos modifiées !")
+                res.redirect('monEntreprise/'+USERID)
+            })
+        }
+    });
+   
 })
 
 // Access Control
