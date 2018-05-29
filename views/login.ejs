@@ -13,6 +13,13 @@
 </section>
 <section id="content">
 	<div class="container content" style="min-height: 432px;">
+		<%- messages('message', locals) %>
+			<% if(locals.errors){  for(error of locals.errors) { %>
+		
+				<div class="alert alert-danger">
+					<%= error.msg %>
+				</div>
+				<% }} %>
 		<div class="panel-body">
 			<form accept-charset="UTF-8" role="form" method="POST" action="users/login">
 			<fieldset>
@@ -24,7 +31,7 @@
 				</div>
 				<div class="checkbox">
 					<label>
-						<a>mot de passe oublié ?</a>
+						<a type="submit" href="/users/forgot-pwd">mot de passe oublié ?</a>
 					</label>
 				</div>
 				<input class="btn btn-lg btn-success btn-block" type="submit" value="Se connecter">

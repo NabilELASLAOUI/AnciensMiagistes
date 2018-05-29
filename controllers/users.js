@@ -8,6 +8,7 @@ let Company = require('../models/Company')
 let passport = require('passport');
 let bcrypt = require('bcrypt');
 let dateFormat = require('dateformat');
+let generator = require('generate-password');
 
 /**
  * Liste les différents utilisateurs avec leurs roles
@@ -171,6 +172,52 @@ if (errors) {
     });
 
 }
+})
+
+router.post('/update_forgot_pwd', (req, res) => {
+    const USERLOGIN = req.body.USERLOGIN;
+    req.checkBody('USERLOGIN', 'Entrez une addresse valide').notEmpty();
+    let errors = req.validationErrors();
+
+    if (errors) {
+        
+    } else {
+        User.findByLogin(USERLOGIN, function (users) {
+            let user
+            for(user of users);
+            if(user){
+                let password = generator.generate({
+                    length: 10,
+                    numbers: true
+                });
+                let MonUser = [
+                    {
+                        username: user.USERNAME,
+                        usersurname: user.USERSURNAME,
+                        userpwd: password,
+                        email: user.USERLOGIN,
+                    }
+                ]
+                bcrypt.genSalt(10, function (err, salt) {
+                    bcrypt.hash(password, salt, function (err, hash) {
+                        User.update_pwd(hash, user.USERID, function () {
+                            req.flash('success', "Un mail vous a été envoyé!")
+                            res.redirect('/login')
+                        })
+                    })
+                })
+                require('../config/emailing')('pwd_modification', MonUser);
+            }else{
+                req.flash('alert', "Entrez un email valide!")
+                res.render('users/edit_forgot_pwd')
+            }
+        })
+
+    }
+})
+
+router.get('/forgot-pwd', (request, response) => {
+    response.render('users/edit_forgot_pwd')
 })
 
 router.get('/edit/:id', ensureAuthenticated, (request, response) => {

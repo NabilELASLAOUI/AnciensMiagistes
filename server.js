@@ -146,6 +146,10 @@ app.get('/mma', (request, response) => {
     response.render('front/mma')
 })
 
+app.get('/miagemulhouse', (request, response) => {
+    response.render('front/miagemulhouse')
+})
+
 
 app.get('/actualites/:catId', function (req, res) {
 
