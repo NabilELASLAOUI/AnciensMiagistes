@@ -88,6 +88,13 @@ class  User {
     })
     }
 
+    static updateRole(roleid, userid, cb) {
+        connection.query('UPDATE user SET ROLEID=? WHERE USERID = ?', [roleid, userid], (err, result) => {
+            if(err) throw err
+            cb(result);
+    })
+    }
+
     static update_pwd(userpwd, userid, cb) {
         connection.query('UPDATE user SET  USERPWD=? WHERE USERID = ?', [userpwd, userid], (err, result) => {
             if(err) throw err

@@ -9,11 +9,14 @@ var fs = require('fs');
 
 let Rapport = require('../models/Rapport')
 let User = require('../models/User')
+let Role = require('../models/Role')
 router.get('/',ensureAuthenticated, function (req, res) {
 
     Rapport.all(function (rapports) {
-        User.allUsers(function (users) {
-            res.render('front/rapports_stages', {rapports: rapports, users: users});
+        Rapport.getOneByUser(res.locals.idUser, function (mon_rapport) {
+            User.allUsers(function (users) {
+                res.render('front/rapports_stages', {rapports: rapports, users: users,mon_rapport:mon_rapport});
+            })
         });
 
     })
@@ -69,8 +72,9 @@ router.post('/doAdd',ensureAuthenticated, function (req, res) {
                 }
                 if (err) res.render('front/ajout_rapport', {errors: err})
                 Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), nomFichier, function () {
-                    req.flash('success', "Rapport ajouté avec succès !")
+                    req.flash('success', "Votre Rapport de Stage a été ajouté avec succès !. ")
                     res.redirect('/rapportStages')
+
                 })
             }
 

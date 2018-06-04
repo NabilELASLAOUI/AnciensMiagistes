@@ -6,9 +6,12 @@
                 <h2 class="pageTitle">Rapports de stage de fin d'études
                 </h2>
             </div>
+
+            <%if(role==='ETUDIANT' && mon_rapport.length===0){%>
             <div class="col-lg-4">
                 <h2 class="pageTitle"><a href="/rapportStages/add" style="color: #ffffff">Ajouter mon rapport</a></h2>
             </div>
+            <%}%>
         </div>
     </div>
 </section>
@@ -35,6 +38,17 @@
                         <tbody>
 
                         <%  for(rapport of rapports) { %>
+                        <% if(role==='PROFESSEUR'){%>
+                        <tr>
+                            <td><%= rapport.RAPPORTNAME %></td>
+                            <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
+                            <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
+                            <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
+                            <%}} %>
+                            <td><%= rapport.USEREMAIL %></td>
+
+                        </tr>
+                        <%  }else if(role==='ETUDIANT' && rapport.USERID===idUser){%>
                         <tr>
                             <td><%= rapport.RAPPORTNAME %></td>
                             <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
@@ -43,13 +57,11 @@
                             <%}} %>
                             <td><%= rapport.USEREMAIL %></td>
                             <td>
-                                <% if(rapport.USERID===idUser){%>
                                 <a href="/rapportStages/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a>
-                                <%}%>
                             </td>
 
                         </tr>
-                        <%  } %>
+                        <%}} %>
                         </tbody>
 
                     </table>

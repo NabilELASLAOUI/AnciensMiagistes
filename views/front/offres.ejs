@@ -9,9 +9,11 @@
                     <% } %>
                 </h2>
             </div>
+            <% if(role!=='ETUDIANT'){ %>
             <div class="col-lg-4">
                 <h2 class="pageTitle"><a href="/offres/add/<%= la_categorie[0].CATEGORYID%>" style="color: #ffffff">Ajouter une Offre</a></h2>
             </div>
+            <% } %>
         </div>
     </div>
 </section>
