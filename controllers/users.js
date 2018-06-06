@@ -154,9 +154,9 @@ if (errors) {
         res.render('users/edit', {roles: roles, errors: errors})
     })
 } else {
-    User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, ROLEID, USERID, function () {
+    User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, USERID, function () {
         req.flash('success', "Vos information on été modifiées avec succès !")
-        res.redirect('/users/logout')
+        res.redirect('/');
     })
 }
 })

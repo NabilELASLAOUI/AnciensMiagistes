@@ -72,7 +72,7 @@
                         </li>
                         <li <% if(pageCourante === '/contact'){ %> class="acive" <% } %>><a href="/contact">Contact</a></li>
                         <% if (isAuthenticated){ %>
-                        <% if (role==='ADMIN'){ %>
+                        <% if (role==='ADMIN' || role==='MODERATEUR'){ %>
                             <li><a href="/users">Espace Admin</a></li>
                             <% }} %>
 

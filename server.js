@@ -150,16 +150,13 @@ app.get('/miagemulhouse', (request, response) => {
     response.render('front/miagemulhouse')
 })
 
-
 app.get('/actualites/:catId', function (req, res) {
 
     Article.getByCateg(req.params.catId,function (actualites) {
         Category.getOne(req.params.catId,function (la_categorie) {
             res.render('front/actualites', {actualites: actualites,la_categorie:la_categorie});
         })
-
     })
-
 });
 
 let users = require('./controllers/users');
@@ -184,6 +181,5 @@ app.use('/rapportStages', rapportStage);
 
 let offres = require('./controllers/offres');
 app.use('/offres', offres);
-
 
 app.listen(8080)
