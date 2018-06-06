@@ -58,7 +58,7 @@
                                     <label for="doc" class="cols-sm-2 control-label">Fichier</label>
                                     <input type="file" class="form-control" id="doc" name="RAPPORTDOC"/>
                                     <input type="hidden" class="form-control"
-                                           value="<% if(rapport){for(elem of rapport){ %> <%= elem.RAPPORTDOC %> <% }} %>"
+                                           value="<%if(rapport){for(elem of rapport){%><%=elem.RAPPORTDOC%><%}}%>"
                                            name="RAPPORTDOCNAME" id="idart"/>
                                     
                                 </div>
