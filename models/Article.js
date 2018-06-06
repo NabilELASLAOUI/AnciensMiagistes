@@ -21,6 +21,7 @@ class  Article {
     get ARTICLEDESC(){
         return this._row.ARTICLEDESC
     }
+
     get CATEGORYID(){
         return this._row.CATEGORYID
     }

@@ -39,7 +39,7 @@ class  Rapport {
     }
 
     static all(cb){
-        connection.query('SELECT * FROM rapport',(err,rows)=>{
+        connection.query('SELECT * FROM rapport ORDER BY RAPPORTID DESC',(err,rows)=>{
             if (err) throw err
             cb(rows.map((row) => new Rapport(row)))
 

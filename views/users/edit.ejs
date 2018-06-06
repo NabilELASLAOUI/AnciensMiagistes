@@ -76,14 +76,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Role</label>
+                        <label for="name" class="cols-sm-2 control-label">Profile</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                 <select class="form-control" name="ROLEID">
-                                    <% for(role of roles){ %>
-                                    <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
-                                    <% } %>
+                                    <% for(r of roles){  if(r.ROLENAME !=='ADMIN' && r.ROLENAME !=='MODERATEUR'){%>
+                                    <option value="<%= r.ROLEID %>" <% if(r.ROLEID ===user[0].ROLEID ){%><%='selected'%><%}%>><%= r.ROLENAME %></option>
+                                    <% }} %>
+                                    <% if(role==='ADMIN'){for(r of roles){if(r.ROLENAME ==='ADMIN' || r.ROLENAME ==='MODERATEUR' ){%>
+                                    <option value="<%= r.ROLEID %>"  <% if(r.ROLEID ===user[0].ROLEID ){%><%='selected'%><%}%>>
+                                        <%= r.ROLENAME %></option>
+                                    <% }}} %>
                                 </select>
                             </div>
                         </div>

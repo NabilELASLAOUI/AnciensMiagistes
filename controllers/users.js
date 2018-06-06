@@ -44,8 +44,7 @@ router.post('/login', function (req, res, next) {
 // logout
 router.get('/logout', function (req, res) {
     req.logout();
-    req.flash('success', 'Vous êtes déconnectés');
-    res.redirect('/');
+    res.redirect('/login');
 
 });
 
@@ -85,7 +84,7 @@ router.post('/register', function (req, res) {
                 bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(USERPWD, salt, function (err, hash) {
                         User.create(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, hash, ROLEID, function () {
-                            req.flash('success', "user bien ajouté !")
+                            req.flash('success', "Votre compte a bien été crée. Le modérateur du site doit le valider avant que vous puissiez vous connecter !")
                             res.redirect('/login')
                             let MonUser = [
                                 {
@@ -122,6 +121,18 @@ response.redirect('/users')
 })
 ;
 
+router.get('/deleteProfile/:idUser', ensureAuthenticated, (request, response) => {
+            if (request.params.idUser) {
+            User.delete(request.params.idUser, function () {
+                request.logout();
+                request.flash('success', "Votre profile a été supprimé");
+                response.redirect('/login');
+            })
+        }
+
+})
+;
+
 router.post('/update', (req, res) => {
     const USERNAME = req.body.USERNAME;
 const USERSURNAME = req.body.USERSURNAME;
@@ -144,8 +155,8 @@ if (errors) {
     })
 } else {
     User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, ROLEID, USERID, function () {
-        req.flash('success', "user modifiée !")
-        res.redirect('/users')
+        req.flash('success', "Vos information on été modifiées avec succès !")
+        res.redirect('/users/logout')
     })
 }
 })

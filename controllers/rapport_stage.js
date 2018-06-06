@@ -10,12 +10,12 @@ var fs = require('fs');
 let Rapport = require('../models/Rapport')
 let User = require('../models/User')
 let Role = require('../models/Role')
-router.get('/',ensureAuthenticated, function (req, res) {
+router.get('/', ensureAuthenticated, function (req, res) {
 
     Rapport.all(function (rapports) {
         Rapport.getOneByUser(res.locals.idUser, function (mon_rapport) {
             User.allUsers(function (users) {
-                res.render('front/rapports_stages', {rapports: rapports, users: users,mon_rapport:mon_rapport});
+                res.render('front/rapports_stages', {rapports: rapports, users: users, mon_rapport: mon_rapport});
             })
         });
 
@@ -30,7 +30,7 @@ router.get('/add', function (req, res) {
 });
 
 
-router.post('/doAdd',ensureAuthenticated, function (req, res) {
+router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -56,7 +56,25 @@ router.post('/doAdd',ensureAuthenticated, function (req, res) {
                 var nomFichier = '';
                 if (files.RAPPORTDOC.size !== 0) {
                     var cheminFichier = files.RAPPORTDOC.path.split('\\');
-                    nomFichier = cheminFichier[cheminFichier.length - 1];
+                    if (cheminFichier[cheminFichier.length - 1].match(/\.(docx|pdf)$/i)) {
+                        nomFichier = cheminFichier[cheminFichier.length - 1];
+                        if (err) res.render('front/ajout_offre', {errors: err})
+                        Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), nomFichier, function () {
+                            res.redirect('/rapportStages')
+
+                        })
+                    } else {
+                        fs.unlink('public/uploads/' + cheminFichier[cheminFichier.length - 1], function (err) {
+                            if (err) {
+                                console.error(err.toString());
+                            } else {
+                                console.warn('le fichier ' + cheminFichier[cheminFichier.length - 1] + ' a été supprimé');
+                            }
+                        });
+                        res.render('front/ajout_rapport', {
+                            msg_err: 'Le fichier doit être dans l\'un des format suivant: docx|pdf '
+                        });
+                    }
 
                 } else {
                     var cheminFichier = files.RAPPORTDOC.path.split('\\');
@@ -69,13 +87,12 @@ router.post('/doAdd',ensureAuthenticated, function (req, res) {
                             }
                         });
                     }
-                }
-                if (err) res.render('front/ajout_rapport', {errors: err})
-                Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), nomFichier, function () {
-                    req.flash('success', "Votre Rapport de Stage a été ajouté avec succès !. ")
-                    res.redirect('/rapportStages')
+                    Rapport.create(fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, new Date(), nomFichier, function () {
+                        res.redirect('/rapportStages')
 
-                })
+                    })
+                }
+
             }
 
         })
@@ -98,19 +115,20 @@ router.post('/doAdd',ensureAuthenticated, function (req, res) {
 
 });
 
-router.get('/edit/:rapportid',ensureAuthenticated, function (req, res) {
+router.get('/edit/:rapportid', ensureAuthenticated, function (req, res) {
     Rapport.getOne(req.params.rapportid, function (elem) {
         res.render('front/edit_rapport', {rapport: elem});
     });
 });
 
 
-router.post('/doEdit',ensureAuthenticated, function (req, res) {
+router.post('/doEdit', ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
     form.keepExtensions = true
     form.uploadDir = uploadDir
     form.parse(req, function (err, fields, files) {
+        if (err) res.render('front/ajout_offre', {errors: err})
         var email = fields.USEREMAIL.toString().split('@');
         if (email[1].toLocaleLowerCase() === 'uha.fr') {
             var msg = "l\'adresse email ne doit pas être une adresse UHA";
@@ -122,7 +140,6 @@ router.post('/doEdit',ensureAuthenticated, function (req, res) {
             var nomFichier = '';
             if (files.RAPPORTDOC.size !== 0) {
                 var cheminFichier = files.RAPPORTDOC.path.split('\\');
-                nomFichier = cheminFichier[cheminFichier.length - 1];
                 if (fields.RAPPORTDOCNAME.toString().length !== 0) {
                     fs.unlink('public/uploads/' + fields.RAPPORTDOCNAME, function (err) {
                         if (err) {
@@ -131,6 +148,27 @@ router.post('/doEdit',ensureAuthenticated, function (req, res) {
                             console.warn('le fichier ' + fields.RAPPORTDOCNAME + ' a été supprimé');
                         }
                     });
+                }
+                if (cheminFichier[cheminFichier.length - 1].match(/\.(docx|pdf)$/i)) {
+                    nomFichier = cheminFichier[cheminFichier.length - 1];
+                    Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, nomFichier, function () {
+                        res.redirect('/rapportStages')
+                    })
+                } else {
+                    fs.unlink('public/uploads/' + cheminFichier[cheminFichier.length - 1], function (err) {
+                        if (err) {
+                            console.error(err.toString());
+                        } else {
+                            console.warn('le fichier ' + cheminFichier[cheminFichier.length - 1] + ' a été supprimé');
+                        }
+                    });
+                    Rapport.getOne(fields.RAPPORTID,function(rapport){
+                        res.render('front/edit_rapport', {
+                            msg_err: 'Le fichier doit être dans l\'un des format suivant: docx|pdf ',
+                            rapport:rapport
+                        });
+                    })
+
                 }
 
             } else {
@@ -145,13 +183,11 @@ router.post('/doEdit',ensureAuthenticated, function (req, res) {
                         }
                     });
                 }
+                Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, fields.RAPPORTDOCNAME, function () {
+                    res.redirect('/rapportStages')
+                })
             }
-            if (err) res.render('front/edit_rapport', {errors: err})
-            var doc = files.RAPPORTDOC.size !== 0 ? nomFichier : fields.RAPPORTDOCNAME;
-            Rapport.update(fields.RAPPORTID, fields.USERID, fields.USEREMAIL, fields.RAPPORTNAME, doc, function () {
-                req.flash('success', "Rapport modifié avec succès !")
-                res.redirect('/rapportStages')
-            })
+
         }
     })
     form.on('fileBegin', function (name, file) {
@@ -168,7 +204,7 @@ router.post('/doEdit',ensureAuthenticated, function (req, res) {
     })
 });
 
-router.get('/delete/:rapportid/:docname',ensureAuthenticated, function (req, res) {
+router.get('/delete/:rapportid/:docname', ensureAuthenticated, function (req, res) {
     Rapport.delete(req.params.rapportid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
             console.log(req.params.docname)

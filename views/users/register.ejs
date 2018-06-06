@@ -101,13 +101,13 @@
 						</div>
 
 						<div class="form-group">
-                            <label for="confirm" class="cols-sm-2 control-label">Role</label>
+                            <label for="confirm" class="cols-sm-2 control-label">Profile</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                 <select class="form-control" name="ROLEID">
-                                 <%  for(role of roles) { %>
+                                 <%  for(role of roles) { if(role.ROLENAME !='ADMIN' && role.ROLENAME !='MODERATEUR' ){ %>
                                   <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
-                                   <%  } %>
+                                   <%  }} %>
                                 </select>
                                 </div>
                             </div>

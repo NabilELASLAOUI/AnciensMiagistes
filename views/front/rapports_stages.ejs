@@ -7,11 +7,6 @@
                 </h2>
             </div>
 
-            <%if(role==='ETUDIANT' && mon_rapport.length===0){%>
-            <div class="col-lg-4">
-                <h2 class="pageTitle"><a href="/rapportStages/add" style="color: #ffffff">Ajouter mon rapport</a></h2>
-            </div>
-            <%}%>
         </div>
     </div>
 </section>
@@ -19,7 +14,7 @@
     <div class="container content" style="min-height: 432px;">
         <%- messages('message', locals) %>
         <% if(locals.msg_err){ %>
-        <div class="alert alert-danger" >
+        <div class="alert alert-danger">
             <%= msg_err %>
         </div>
         <% } %>
@@ -28,6 +23,8 @@
             <div class="col-sm-12 info-blocks">
 
                 <div class="info-blocks-in">
+                    <% if(role === 'PROFESSEUR' || role === 'ETUDIANT'){ %>
+                    <% if(role === 'PROFESSEUR'){ %>
                     <table id="mytable" class="table table-bordred table-striped table-hover table-responsive">
                         <thead>
                         <th>Titre</th>
@@ -36,36 +33,44 @@
                         <th>E-mail du Propriétaire</th>
                         </thead>
                         <tbody>
-
-                        <%  for(rapport of rapports) { %>
-                        <% if(role==='PROFESSEUR'){%>
+                        <% for(rapport of rapports) { %>
                         <tr>
                             <td><%= rapport.RAPPORTNAME %></td>
                             <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
-                            <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
-                            <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
-                            <%}} %>
+                            <% for(usr of users) { if(usr.USERID === rapport.USERID) { %>
+                            <td><%= usr.USERSURNAME + ' ' + usr.USERNAME %></td>
+                            <% }} %>
                             <td><%= rapport.USEREMAIL %></td>
 
                         </tr>
-                        <%  }else if(role==='ETUDIANT' && rapport.USERID===idUser){%>
-                        <tr>
-                            <td><%= rapport.RAPPORTNAME %></td>
-                            <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
-                            <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
-                            <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
-                            <%}} %>
-                            <td><%= rapport.USEREMAIL %></td>
-                            <td>
-                                <a href="/rapportStages/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a>
-                            </td>
-
-                        </tr>
-                        <%}} %>
+                        <% } %>
                         </tbody>
 
                     </table>
+                    <% } %>
+                    <% if(role === 'ETUDIANT' && mon_rapport.length !== 0){ %>
+                    <h4>MON RAPPORT DE STAGE DE FIN D'ETUDES</h4>
+                    <div class="row">
+                        <div class="col-lg-6"><%= mon_rapport[0].RAPPORTNAME %></div>
+                        <div class="col-lg-3">
+                            <a href="/rapportStages/edit/<%= mon_rapport[0].RAPPORTID %>"><span
+                                        class="glyphicon glyphicon-pencil"></span></span></a>
+                        </div>
+                        <div class="col-lg-3"><a href="/uploads/<%= mon_rapport[0].RAPPORTDOC %>" target="_blank">Télécharger</a></div>
 
+
+                    </div>
+                    <% }else if(role === 'ETUDIANT' && mon_rapport.length === 0) {%>
+                       <div row>
+                           <div class="col-lg-12">
+                                   <p>Vous n'avez pas encore déposer votre rapport de stage de fin d'études.
+                                       Pour deposer votre rapport cliquer <i class="fa fa-hand-o-right"></i><a href="/rapportStages/add" class="btn" style="color: #ffffff"> Ajouter mon rapport</a></p>
+
+                           </div>
+                       </div>
+                    <%}}else{ %>
+                    Vous devez être un étudiant ou un professeur pour acceder à ce contenu
+                    <% } %>
                 </div>
             </div>
 

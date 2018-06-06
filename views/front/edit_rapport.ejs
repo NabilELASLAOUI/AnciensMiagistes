@@ -17,7 +17,12 @@
         <div class="row">
             <div class="col-sm-12 info-blocks">
                 <div class="info-blocks-in">
-
+                    <%- messages('message', locals) %>
+                    <% if(locals.msg_err){ %>
+                    <div class="alert alert-danger">
+                        <%= msg_err %>
+                    </div>
+                    <% } %>
                     <form name="sentMessage" id="contactForm" enctype="multipart/form-data" method="post"
                           action="/rapportStages/doEdit">
                         <h2 class="pageTitle" style="color: #ef801a !important; margin-bottom: 15px;">Modification de

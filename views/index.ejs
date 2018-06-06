@@ -8,7 +8,7 @@
                     <img src="../uploads/<%= article.ARTICLEDOC%>" height="500" width="auto" alt=""/>
                     <div class="flex-caption">
                         <h3><%= article.ARTICLENAME%></h3>
-                        <p><%= article.ARTICLEDESC%></p>
+                        <p><%= article.ARTICLEDESC.substring(0,100)%></p>
 
                     </div>
                 </li>
