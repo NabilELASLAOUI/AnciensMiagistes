@@ -32,7 +32,18 @@
 			<div class="row main">
 				<div class="main-login main-center">
 					<form class="form-horizontal" method="post" action="/users/register">
-
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Profile</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<select class="form-control" name="ROLEID">
+										<%  for(role of roles) { if(role.ROLENAME !='ADMIN' && role.ROLENAME !='MODERATEUR' ){ %>
+										<option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
+										<%  }} %>
+									</select>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="name" class="cols-sm-2 control-label">Nom</label>
 							<div class="cols-sm-10">
@@ -100,18 +111,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-                            <label for="confirm" class="cols-sm-2 control-label">Profile</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                <select class="form-control" name="ROLEID">
-                                 <%  for(role of roles) { if(role.ROLENAME !='ADMIN' && role.ROLENAME !='MODERATEUR' ){ %>
-                                  <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
-                                   <%  }} %>
-                                </select>
-                                </div>
-                            </div>
-                        </div>
+
 
 						<div class="form-group ">
 							<button type="submit" class="btn btn-primary btn-lg btn-block login-button">S'inscrire</button>

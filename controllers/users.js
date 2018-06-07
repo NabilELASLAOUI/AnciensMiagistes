@@ -156,7 +156,14 @@ if (errors) {
 } else {
     User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, ROLEID, USERID, function () {
         req.flash('success', "Vos information on été modifiées avec succès !")
-        res.redirect('/users/logout')
+        Role.getOne(req.user.user.ROLEID, function (role) {
+            if (role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR') {
+                res.redirect('/users')
+            }
+            else {
+                res.redirect('/users/logout')
+            }
+        })
     })
 }
 })
@@ -277,7 +284,7 @@ router.get('/valide/:id', ensureAuthenticated, function (req, res) {
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         // si admin ou moderateur on va le rediriger vers mon profile dans template admin
-        if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
+       /* if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
             if (req.params.id) {
                 User.getOne(req.params.id, function (user) {
                     if (user[0].ROLEID != undefined) {
@@ -288,7 +295,7 @@ router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
                 })
             }
 
-        }else{
+        }else{*/
             // sinon on va le rediriger vers mon profile dans template front
             if (req.params.id) {
                 User.getOne(req.params.id, function (user) {
@@ -299,7 +306,7 @@ router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
                     }
                 })
             }
-        }
+        //}
     })
 });
 
@@ -308,23 +315,35 @@ router.get('/monEntreprise/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
-                Alumni.getOne(req.params.id, function(alumni){
-                    var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
-                    var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
-                    var USERHIRINGYEAR = dateFormat(alumni[0].USERHIRINGYEAR,"yyyy-mm-dd")
-                    res.render('users/monEntreprise', { alumni: alumni[0], 
+                Alumni.getOne(req.params.id, function(alu){
+                    var USERID = alu.length>0 ? alu[0].USERID:req.params.id
+                    var USERGRADYEAR = alu.length>0 ? dateFormat(alu[0].USERGRADYEAR,"yyyy-mm-dd"):''
+                    var USERFIRSTHIRINGYEAR = alu.length>0 ?dateFormat(alu[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd"):''
+                    var USERHIRINGYEAR = alu.length>0 ? dateFormat(alu[0].USERHIRINGYEAR,"yyyy-mm-dd"):''
+                    var USERCOMPANY = alu.length>0 ?alu[0].USERCOMPANY:''
+                    var USERFUNCTION= alu.length>0 ?alu[0].USERFUNCTION:''
+                    var USERSALARY = alu.length>0 ?alu[0].USERSALARY:''
+                    var alumni={
+                        USERID:USERID,
                         USERGRADYEAR : USERGRADYEAR,
                         USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
                         USERHIRINGYEAR : USERHIRINGYEAR,
-                        role : role[0].ROLENAME })
+                        USERCOMPANY:USERCOMPANY,
+                        USERFUNCTION:USERFUNCTION,
+                        USERSALARY:USERSALARY
+                    }
+                    res.render('users/monEntreprise', { alumni: alumni,role : role[0].ROLENAME })
                 })}
         }else if(role[0].ROLENAME === 'ENTREPRISE'){
             if (req.params.id) {
-                Company.getOne(req.params.id, function(company){
-                    res.render('users/monEntreprise', { company: company[0],role : role[0].ROLENAME})
+                Company.getOne(req.params.id, function(comp){
+                    var COMPANYNAME = comp.length>0 ?comp[0].COMPANYNAME:''
+                    var COMPANYDESC= comp.length>0 ?comp[0].COMPANYDESC:''
+                    var company={COMPANYNAME:COMPANYNAME,COMPANYDESC:COMPANYDESC}
+                    res.render('users/monEntreprise', { company: company,role : role[0].ROLENAME})
                 })}
         }
-    })    
+    })
 });
 
 // mon entreprise edit
@@ -332,51 +351,79 @@ router.get('/monEntreprise/edit/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
         if(role[0].ROLENAME === 'ALUMNI'){
             if (req.params.id) {
-                Alumni.getOne(req.params.id, function(alumni){
-                    var USERGRADYEAR = dateFormat(alumni[0].USERGRADYEAR,"yyyy-mm-dd")
-                    var USERFIRSTHIRINGYEAR = dateFormat(alumni[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd")
-                    var USERHIRINGYEAR = dateFormat(alumni[0].USERHIRINGYEAR,"yyyy-mm-dd")
-                    res.render('users/editMonEntreprise', { alumni: alumni[0], 
+                Alumni.getOne(req.params.id, function(alu){
+                    var USERID = alu.length>0 ? alu[0].USERID:req.params.id
+                    var USERGRADYEAR = alu.length>0 ? dateFormat(alu[0].USERGRADYEAR,"yyyy-mm-dd"):''
+                    var USERFIRSTHIRINGYEAR = alu.length>0 ?dateFormat(alu[0].USERFIRSTHIRINGYEAR,"yyyy-mm-dd"):''
+                    var USERHIRINGYEAR = alu.length>0 ? dateFormat(alu[0].USERHIRINGYEAR,"yyyy-mm-dd"):''
+                    var USERCOMPANY = alu.length>0 ?alu[0].USERCOMPANY:''
+                    var USERFUNCTION= alu.length>0 ?alu[0].USERFUNCTION:''
+                    var USERSALARY = alu.length>0 ?alu[0].USERSALARY:''
+                    var alumni={
+                        USERID:USERID,
                         USERGRADYEAR : USERGRADYEAR,
                         USERFIRSTHIRINGYEAR:USERFIRSTHIRINGYEAR,
-                        USERHIRINGYEAR : USERHIRINGYEAR })
+                        USERHIRINGYEAR : USERHIRINGYEAR,
+                        USERCOMPANY:USERCOMPANY,
+                        USERFUNCTION:USERFUNCTION,
+                        USERSALARY:USERSALARY
+                    }
+                    res.render('users/editMonEntreprise', { alumni: alumni})
                 })}
         }else if (role[0].ROLENAME === 'ENTREPRISE'){
-            Company.getOne(req.params.id, function(company){
-                res.render('users/editMonEntreprise', { company: company[0]})
+            Company.getOne(req.params.id, function(comp){
+                var COMPANYNAME = comp.length>0 ?comp[0].COMPANYNAME:''
+                var COMPANYDESC= comp.length>0 ?comp[0].COMPANYDESC:''
+                var company={COMPANYNAME:COMPANYNAME,COMPANYDESC:COMPANYDESC}
+                res.render('users/editMonEntreprise', { company: company,role : role[0].ROLENAME})
             })
         }
-    })    
+    })
 });
 
 router.post('/updateEntreprise', (req, res) => {
     Role.getOne(req.user.user.ROLEID,function (role) {
-        if(role[0].ROLENAME === 'ALUMNI'){
-            const USERID = req.body.USERID;
-            const USERCOMPANY = req.body.USERCOMPANY;
-            const USERFUNCTION = req.body.USERFUNCTION;
-            const USERHIRINGYEAR = req.body.USERHIRINGYEAR;
-            const USERSALARY = req.body.USERSALARY;
-            const USERGRADYEAR = req.body.USERGRADYEAR;
-        
-            Alumni.update(USERCOMPANY, USERFUNCTION, USERHIRINGYEAR, USERSALARY, USERGRADYEAR, USERID, function () {
-                req.flash('success', "infos modifiées !")
-                res.redirect('monEntreprise/'+USERID)
-            })
-        }else if(role[0].ROLENAME === 'ENTREPRISE'){
-            const USERID = req.body.USERID;
-            const COMPANYNAME = req.body.COMPANYNAME;
-            const COMPANYDESC = req.body.COMPANYDESC;
+    if(role[0].ROLENAME === 'ALUMNI'){
+        const USERID = req.body.USERID;
+        const USERCOMPANY = req.body.USERCOMPANY;
+        const USERFUNCTION = req.body.USERFUNCTION;
+        const USERFIRSTHIRINGYEAR = req.body.USERFIRSTHIRINGYEAR;
+        const USERHIRINGYEAR = req.body.USERHIRINGYEAR;
+        const USERSALARY = req.body.USERSALARY;
+        const USERGRADYEAR = req.body.USERGRADYEAR;
+        Alumni.getOne(USERID,function (alumni) {
+            if(alumni.length>0){
+                Alumni.update(USERGRADYEAR,USERCOMPANY, USERFUNCTION,USERSALARY, USERFIRSTHIRINGYEAR,USERHIRINGYEAR, USERID, function () {
+                    res.redirect('monEntreprise/'+USERID)
+                })
+            }else{
+                Alumni.create(USERID,USERGRADYEAR,USERCOMPANY, USERFUNCTION,USERSALARY, USERFIRSTHIRINGYEAR,USERHIRINGYEAR, function () {
+                    res.redirect('monEntreprise/'+USERID)
+                })
+            }
 
-            Company.update(COMPANYNAME, COMPANYDESC, USERID, function () {
-                req.flash('success', "infos modifiées !")
-                res.redirect('monEntreprise/'+USERID)
-            })
-        }
-    });
-   
+        })
+
+    }else if(role[0].ROLENAME === 'ENTREPRISE'){
+        const USERID = req.body.USERID;
+        const COMPANYNAME = req.body.COMPANYNAME;
+        const COMPANYDESC = req.body.COMPANYDESC;
+        Company.getOne(USERID,function (comp) {
+            if(comp.length>0){
+                Company.update(COMPANYNAME, COMPANYDESC, USERID, function () {
+                    res.redirect('monEntreprise/'+USERID)
+                })
+            }else{
+                Company.create(USERID,COMPANYNAME, COMPANYDESC, function () {
+                    res.redirect('monEntreprise/'+USERID)
+                })
+            }
+        })
+
+    }
+});
+
 })
-
 // Access Control
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

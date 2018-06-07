@@ -18,56 +18,67 @@
                 <form class="form-horizontal" method="post" action="/users/updateEntreprise">
                     <% if(role === 'ALUMNI'){ %>
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Entreprise</label>
+                        <label for="name" class="cols-sm-2 control-label">Promotion</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="USERCOMPANY" id="name"
+                                <input type="date" class="form-control" name="USERGRADYEAR" id="name"
+                                       value="<%=  alumni.USERGRADYEAR %>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="USERFIRSTHIRINGYEAR" class="cols-sm-2 control-label">Date de première embauche</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="date" class="form-control" name="USERFIRSTHIRINGYEAR" id="USERFIRSTHIRINGYEAR"
+                                       value="<%=  alumni.USERFIRSTHIRINGYEAR %>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="USERID" class="cols-sm-2 control-label">Entreprise Actuel</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="USERCOMPANY" id="USERID"
                                        value="<%= alumni.USERCOMPANY %>"/>
                                 <input type="hidden" name="USERID" id="id" value="<%= alumni.USERID %>"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Fonction</label>
+                        <label for="USERFUNCTION" class="cols-sm-2 control-label">Fonction</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="USERFUNCTION" id="name"
+                                <input type="text" class="form-control" name="USERFUNCTION" id="USERFUNCTION"
                                        value="<%= alumni.USERFUNCTION %>"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Date d'embauche</label>
+                        <label for="USERHIRINGYEAR" class="cols-sm-2 control-label">Date d'embauche</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="date" class="form-control" name="USERHIRINGYEAR" id="name"
-                                       value="<%= USERHIRINGYEAR %>"/>
+                                <input type="date" class="form-control" name="USERHIRINGYEAR" id="USERHIRINGYEAR"
+                                       value="<%=  alumni.USERHIRINGYEAR %>"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Salaire</label>
+                        <label for="USERSALARY" class="cols-sm-2 control-label">Salaire</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="USERSALARY" id="name"
+                                <input type="text" class="form-control" name="USERSALARY" id="USERSALARY"
                                        value="<%= alumni.USERSALARY %>"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="name" class="cols-sm-2 control-label">Promotion</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="date" class="form-control" name="USERGRADYEAR" id="name"
-                                       value="<%= USERGRADYEAR %>"/>
-                            </div>
-                        </div>
-                    </div>
+
                   <% }else if(role === 'ENTREPRISE'){ %>
                     <div class="form-group">
                             <label for="name" class="cols-sm-2 control-label">Entreprise</label>

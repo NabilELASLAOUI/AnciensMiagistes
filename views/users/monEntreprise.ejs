@@ -1,5 +1,16 @@
 <% include ../front/inc/top.ejs%>
+<section id="inner-headline">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="pageTitle">
+          Modifier mes informations
+        </h2>
+      </div>
 
+    </div>
+  </div>
+</section>
 
 <div class="container">
     <div class="row">
@@ -7,20 +18,28 @@
 
 <p class=" text-info"></p>
     </div>
-      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+      <div class="col-md-12 toppad" >
         <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title"><%=  nom+"  "+prenom %></h3>
           </div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic" src="/images/profile.png" class="img-circle img-responsive"> </div>
-              <div class=" col-md-9 col-lg-9 ">
+              <div class="col-md-3" align="center"><img alt="User Pic" src="/images/profile.png" class="img-circle img-responsive"> </div>
+              <div class=" col-md-9 ">
                 <table class="table table-user-information">
                   <tbody>
                     <% if(role === 'ALUMNI'){ %>
                     <tr>
-                      <td>entreprise :<%= role  %></td>
+                      <td>Promotion :</td>
+                      <td><%= alumni.USERGRADYEAR %></td>
+                    </tr>
+                    <tr>
+                      <td>Date de Premier embauche :</td>
+                      <td><%= alumni.USERFIRSTHIRINGYEAR %></td>
+                    </tr>
+                    <tr>
+                      <td>Entreprise :</td>
                       <td><%= alumni.USERCOMPANY %></td>
                     </tr>
                     <tr>
@@ -29,7 +48,7 @@
                     </tr>
                     <tr>
                       <td>Date d'embauche :</td>
-                      <td><%= USERHIRINGYEAR %></td>
+                      <td><%= alumni.USERHIRINGYEAR %></td>
                     </tr>
 
                     <tr>
@@ -37,27 +56,24 @@
                       <td>Salaire :</td>
                       <td><%= alumni.USERSALARY %> €</td>
                     </tr>
-                    <tr>
-                      <td>Promotion :</td>
-                      <td><%= USERGRADYEAR %></td>
-                    </tr>
-                      <td>Date de Premier embauche :</td>
-                      <td><%= USERFIRSTHIRINGYEAR %></td>
-                    </tr>
 
                     <% }else if(role === 'ENTREPRISE'){ %>
                       <tr>
-                          <td>Nom d'entreprise :</td>
+                          <td style="width: 160px!important;">Nom de l'entreprise :</td>
                           <td><%= company.COMPANYNAME %></td>
                       </tr>
                       <tr>
-                          <td>Description :<textarea class="form-control" rows="5" name="COMPANYDESC" id="desc"><%= company.COMPANYDESC %></textarea></td>
+                        <td>Description :</td>
+                        <td ><%= company.COMPANYDESC %></td>
                       </tr>
                       
                       <% } %>
+                  <tr>
+                    <td></td><td><a href="/users/monEntreprise/edit/<%= idUser  %>" class="btn btn-primary">Modifier mes informations</a></td>
+                  </tr>
                   </tbody>
                 </table>
-                <a href="/users/monEntreprise/edit/<%= idUser  %>" class="btn btn-primary">Modifier mes informations</a>
+
               </div>
             </div>
           </div>

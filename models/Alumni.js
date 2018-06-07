@@ -31,14 +31,21 @@ class  Alumni {
         return this.row.USERHIRINGYEAR
     }
 
+    static create(userid,usergradyear,usercompany,userfunction,usersalary,userfirsthiringyear,userhiringyear,cb){
+
+        connection.query('INSERT INTO alumni SET USERID=?, USERGRADYEAR=?, USERCOMPANY=?, USERFUNCTION=? ,USERSALARY=?,USERFIRSTHIRINGYEAR=?, USERHIRINGYEAR=?',[userid,usergradyear,usercompany,userfunction,usersalary,userfirsthiringyear,userhiringyear],(err,result)=>{
+            if (err) throw err
+            cb(result)
+        })
+    }
     static getOne(idUser, cb) {
         connection.query('SELECT * FROM alumni WHERE USERID = ?', [idUser], (err, rows) => {
             if (err) throw err
             cb(rows.map((row) => new Alumni(row)))
         })
     }
-    static update(entreprise, fonction, dateEmbauche, salaire, promotion, userid, cb) {
-        connection.query('UPDATE alumni SET USERCOMPANY= ?, USERFUNCTION= ?,USERHIRINGYEAR= ?,USERSALARY=?, USERGRADYEAR=? WHERE USERID = ?', [entreprise, fonction, dateEmbauche, salaire, promotion, userid], (err, result) => {
+    static update(usergradyear,usercompany,userfunction,usersalary,userfirsthiringyear,userhiringyear, userid, cb) {
+        connection.query('UPDATE alumni SET USERGRADYEAR=?, USERCOMPANY=?, USERFUNCTION=? ,USERSALARY=?,USERFIRSTHIRINGYEAR=?, USERHIRINGYEAR=? WHERE USERID = ?', [usergradyear,usercompany,userfunction,usersalary,userfirsthiringyear,userhiringyear, userid], (err, result) => {
             if(err) throw err
             cb(result);
     })

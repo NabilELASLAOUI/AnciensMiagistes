@@ -60,17 +60,18 @@
                   </tbody>
                 </table>
                 <div class="row">
+                    <% if(role==='ENTREPRISE' || role==='ALUMNI'){%>
+                    <div class="col-lg-12 marginbot10">
+                        <a href="/users/monEntreprise/<%= idUser %>" class="btn btn-block btn-primary">Infos d'entreprise </a>
+                    </div>
+                    <%}%>
                   <div class="col-lg-12 marginbot10 ">
                     <a href="/users/edit/<%= idUser %>" class="btn btn-block btn-primary">Modifier mon profile</a>
                   </div>
                   <div class="col-lg-12 marginbot10">
                     <a href="/users/edit_pwd/<%= idUser %>" class="btn btn-block btn-primary">Modifier mon mot de passe</a>
                   </div>
-                  <% if(role==='ENTREPRISE'){%>
-                  <div class="col-lg-12">
-                    <a href="/users/monEntreprise/<%= idUser %>" class="btn btn-block btn-primary">Infos d'entreprise </a>
-                  </div>
-                  <%}%>
+
                 <div class="col-lg-12">
                     <a  onclick="deleteProfile(<%= idUser %>)" class="btn btn-block btn-danger">Supprimer mon profile</a>
                 </div>
