@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+/**
+ * include du modele Role
+ */
 let Role = require('../models/Role')
-
 
 	/**
 	* Liste les différents roles

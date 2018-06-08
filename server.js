@@ -1,5 +1,5 @@
 let express =  require('express')
-let app =express() // moteur de template
+let app =express()
 const path = require('path');
 let Role = require('./models/Role')
 let Category = require('./models/Category')
@@ -61,16 +61,32 @@ app.use(passport.session());
 
 app.use(function (req,res,next) {
     Category.catMenu(function (cats) {
+        /**
+         * renvoyer à la vue la liste des catégories à mettre dans le menu
+         */
         global.catMenu= cats;
-
     })
 
+    /**
+     * renvoyer à la vue l'actualité
+     */
     Category.catActu(function (actu) {
         global.actu= actu;
 
     })
+
+    /**
+     * envoyer un boolean (isAuthenticated renvoyé par la fonction isAuthenticated()) à la vue 
+     * pour tester si un utilisateur est authentifié ou pas
+     */ 
     res.locals.isAuthenticated = req.isAuthenticated();
+    /**
+     * renvoyer pageCourante à la vue qui sert à activer la rubrique courante class="active"
+     */
     app.locals.pageCourante = req.path
+    /**
+     * renvoyer à la vue les informations de l'utilisateur authentifié
+     */
     if (req.user != undefined){
         res.locals.nom = req.user.user.USERNAME;
         res.locals.prenom = req.user.user.USERSURNAME;
@@ -78,9 +94,15 @@ app.use(function (req,res,next) {
         res.locals.adresse = req.user.user.USERADDRESS;
         res.locals.phone = req.user.user.USERPHONE;
         res.locals.email = req.user.user.USERLOGIN;
+        /**
+         * récupérer le role de l'utilisateur authentifié et le renvoyer à la vue
+         */
         Role.getOne(req.user.user.ROLEID,function (role) {
             app.locals.role= role[0].ROLENAME
         })
+        /**
+         * renvoyer à la vue la liste des catégories
+         */
         Category.all(function (cats) {
             app.locals.cats= cats;
         })
@@ -102,16 +124,17 @@ app.get('/',(request,response)=>{
         response.render('index', { articles: articles })
     })
 })
-// routes
+// route vers page d'authentification
 app.get('/login',(request,response)=>{
     response.render('login')
 })
 
-// routes
+// route vers page à propos
 app.get('/apropos',(request,response)=>{
     response.render('front/apropos')
 })
 
+// route vers page contact
 app.get('/contact',(request,response)=>{
     response.render('front/contact')
 })
