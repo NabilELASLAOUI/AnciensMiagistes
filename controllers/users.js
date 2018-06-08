@@ -255,6 +255,7 @@ router.get('/edit_pwd/:id', ensureAuthenticated, (request, response) => {
 }
 })
 
+
 // valide une inscription
 router.get('/valide/:id', ensureAuthenticated, function (req, res) {
     Role.getOne(req.user.user.ROLEID, function (role) {
