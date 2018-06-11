@@ -31,6 +31,9 @@
                                 <input type="text" class="form-control" name="USERNAME" id="name"
                                        value="<%= user[0].USERNAME %>"/>
                                 <input type="hidden" name="USERID" id="id" value="<%= user[0].USERID %>"/>
+                                <% if(role !== 'ADMIN'){ %>
+                                <input type="hidden" name="ROLEID" id="id" value="<%= user[0].ROLEID %>"/>
+                                <% }  %>
                             </div>
                         </div>
                     </div>

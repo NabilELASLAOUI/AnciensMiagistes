@@ -30,6 +30,7 @@ router.get('/detail/:articleId/:catId', ensureAuthenticated, function (req, res)
 
 });
 
+
 router.get('/add/:catId', ensureAuthenticated, function (req, res) {
     Category.getOne(req.params.catId, function (la_categorie) {
         res.render('front/ajout_offre', {la_categorie: la_categorie});

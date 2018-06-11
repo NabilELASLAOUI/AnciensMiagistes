@@ -37,9 +37,10 @@
                         <tr>
                             <td><%= rapport.RAPPORTNAME %></td>
                             <td><a href="/uploads/<%= rapport.RAPPORTDOC %>" target="_blank">Télécharger</a></td>
-                            <% for(usr of users) { if(usr.USERID === rapport.USERID) { %>
-                            <td><%= usr.USERSURNAME + ' ' + usr.USERNAME %></td>
+                            <td> <% for(usr of users) { if(usr.USERID === rapport.USERID) { %>
+                           <%= usr.USERSURNAME + ' ' + usr.USERNAME %>
                             <% }} %>
+                        </td>
                             <td><%= rapport.USEREMAIL %></td>
 
                         </tr>
