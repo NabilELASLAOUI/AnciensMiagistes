@@ -74,6 +74,19 @@
                             </div>
                         </div>
                     </div>
+                    <% if (isAuthenticated){ %>
+                        <% if(role === 'ADMIN'){ %>
+                    <div class="form-group">
+                        <label for="name" class="cols-sm-2 control-label">Profile</label>
+                        <div class="cols-sm-10">
+                            <select name="ROLEID">
+                                <%  for(role of roles) { %>
+                                    <option value="<%= role.ROLEID %>"><%= role.ROLENAME %></option>
+                                <%  } %>
+                            </select>
+                        </div>
+                    </div>
+                    <% }} %>
                     <div class="form-group ">
                         <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Modifier</button>
                     </div>

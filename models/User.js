@@ -81,8 +81,8 @@ class  User {
     })
     }
 
-    static update(username, usersurname, userphone, useraddress, userlogin, userid, cb) {
-        connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=? WHERE USERID = ?', [username, usersurname, userphone, useraddress, userlogin, userid], (err, result) => {
+    static update(username, usersurname, userphone, useraddress, userlogin,roleid, userid, cb) {
+        connection.query('UPDATE user SET USERNAME= ?, USERSURNAME= ?,USERPHONE= ?,USERADDRESS=?, USERLOGIN=?,ROLEID=? WHERE USERID = ?', [username, usersurname, userphone, useraddress, userlogin,roleid, userid], (err, result) => {
             if(err) throw err
             cb(result);
     })

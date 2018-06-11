@@ -134,7 +134,7 @@ router.get('/deleteProfile/:idUser', ensureAuthenticated, (request, response) =>
 ;
 
 router.post('/update', (req, res) => {
-    const USERNAME = req.body.USERNAME;
+const USERNAME = req.body.USERNAME;
 const USERSURNAME = req.body.USERSURNAME;
 const USERPHONE = req.body.USERPHONE;
 const USERADDRESS = req.body.USERADDRESS;
@@ -154,7 +154,7 @@ if (errors) {
         res.render('users/edit', {roles: roles, errors: errors})
     })
 } else {
-    User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN, USERID, function () {
+    User.update(USERNAME, USERSURNAME, USERPHONE, USERADDRESS, USERLOGIN,ROLEID, USERID, function () {
         req.flash('success', "Vos information on été modifiées avec succès !")
         Role.getOne(req.user.user.ROLEID, function (role) {
             if (role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR') {
