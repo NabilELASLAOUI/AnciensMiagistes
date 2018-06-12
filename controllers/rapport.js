@@ -1,3 +1,7 @@
+/*
+ * Ce controlleur est utiliser pour la gestion des rapport
+ * de stage coté administrateur
+ */
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -9,6 +13,8 @@ var fs = require('fs');
 
 let Rapport = require('../models/Rapport')
 let User = require('../models/User')
+
+//Liste les rapport de stages
 router.get('/', ensureAuthenticated, function (req, res) {
 
     Rapport.all(function (rapports) {
@@ -20,21 +26,15 @@ router.get('/', ensureAuthenticated, function (req, res) {
 
 });
 
+
+//accès au formulaire d'ajout d'un rapport de stage
 router.get('/add', ensureAuthenticated, function (req, res) {
 
     res.render('rapports/add');
 
 });
 
-
-router.get('/edit/:rapportid', ensureAuthenticated, function (req, res) {
-    Rapport.getOne(req.params.rapportid, function (elem) {
-
-        res.render('rapports/edit', {rapport: elem});
-
-    })
-});
-
+// ajout d'un rapport de stage
 router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
     var form = new formidable.IncomingForm()
@@ -102,13 +102,14 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
 });
 
+// accès au formulaire de modification d'un rapport de stage
 router.get('/edit/:rapportid', ensureAuthenticated, function (req, res) {
     Rapport.getOne(req.params.rapportid, function (elem) {
         res.render('rapports/edit', {rapport: elem});
     });
 });
 
-
+// Modification d'un rapport de stage
 router.post('/doEdit', ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -172,6 +173,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
     })
 });
 
+// Suppression d'un rapport de stage
 router.get('/delete/:rapportid/:docname', ensureAuthenticated, function (req, res) {
     Rapport.delete(req.params.rapportid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
@@ -194,7 +196,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        req.flash('danger', 'Vous devez vous authentifier pour acceder a votre compte');
+        req.flash('danger', 'Vous devez vous authentifier pour acceder au contenu de cette page');
         res.redirect('/login');
     }
 }

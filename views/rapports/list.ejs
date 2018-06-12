@@ -35,9 +35,10 @@
                         <td></td>
                         <td><%= rapport.RAPPORTNAME %></td>
                         <td><a href="/uploads/<%= rapport.RAPPORTDOC %>">Télécharger</a></td>
-                        <%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
-                        <td><%= usr.USERSURNAME+' '+usr.USERNAME %></td>
+                            <td><%  for(usr of users) { if(usr.USERID===rapport.USERID) {%>
+                        <%= usr.USERSURNAME+' '+usr.USERNAME %>
                         <%}} %>
+                            </td>
                         <td><%= rapport.USEREMAIL %></td>
                         <td><a href="/rapports/edit/<%= rapport.RAPPORTID %>"><span class="glyphicon glyphicon-pencil"></span></span></a></td>
                       <td>
@@ -67,54 +68,6 @@
 	</div>
 </div>
 
-
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Modifier </h4>
-      </div>
-          <div class="modal-body">
-          <form action="<?php echo Router::url('personnels/edit/'.$id); ?>" method="post">
-                <div class="form-group">
-                <input class="form-control " name="ROLENAME" type="text" placeholder="nom du role">
-                </div>
-              </div>
-           <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
-      </div>
-           </form>
-      </div>
-
-        </div>
-    <!-- /.modal-content -->
-  </div>
-      <!-- /.modal-dialog -->
-    </div>
-
-
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-      <div class="modal-dialog">
-    <div class="modal-content">
-          <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Supprimer</h4>
-      </div>
-          <div class="modal-body">
-
-       <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Voulez-vous vraiment supprimer ?</div>
-
-      </div>
-        <div class="modal-footer ">
-        <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
-      </div>
-        </div>
-    <!-- /.modal-content -->
-  </div>
-      <!-- /.modal-dialog -->
-    </div>
 
     <script type="text/javascript">
         function deleteArticle(id,doc){

@@ -284,20 +284,7 @@ router.get('/valide/:id', ensureAuthenticated, function (req, res) {
 
 router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
     Role.getOne(req.user.user.ROLEID,function (role) {
-        // si admin ou moderateur on va le rediriger vers mon profile dans template admin
-       /* if(role[0].ROLENAME === 'ADMIN' || role[0].ROLENAME === 'MODERATEUR'){
-            if (req.params.id) {
-                User.getOne(req.params.id, function (user) {
-                    if (user[0].ROLEID != undefined) {
-                        Role.getOne(user[0].ROLEID, function (role) {
-                            res.render('users/monProfile', {user: user, role: role[0].ROLENAME})
-                        })
-                    }
-                })
-            }
 
-        }else{*/
-            // sinon on va le rediriger vers mon profile dans template front
             if (req.params.id) {
                 User.getOne(req.params.id, function (user) {
                     if (user[0].ROLEID != undefined) {
@@ -307,7 +294,6 @@ router.get('/monProfile/:id',ensureAuthenticated, function(req, res){
                     }
                 })
             }
-        //}
     })
 });
 
@@ -430,7 +416,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        req.flash('danger', "vous n'etes pas connecter");
+        req.flash('danger', "vous n'êtes pas connecté");
         res.redirect('/login');
     }
 }

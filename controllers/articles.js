@@ -1,3 +1,9 @@
+
+/*
+ * Ce controlleur est utiliser pour la gestion des articles
+ * (offres d'emploi, de stage, d'alternance et les actualites)
+ * coté administrateur
+ */
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -10,6 +16,7 @@ var fs = require('fs');
 let Article = require('../models/Article')
 let Category = require('../models/Category')
 
+//Liste les différents articles par catégorie
 router.get('/:catId', ensureAuthenticated, function (req, res) {
 
     Article.getByCateg(req.params.catId,function (articles) {
@@ -21,6 +28,7 @@ router.get('/:catId', ensureAuthenticated, function (req, res) {
 
 });
 
+//accès au formulaire d'ajout d'un article
 router.get('/add/:catId', ensureAuthenticated, function (req, res) {
     Category.getOne(req.params.catId,function (la_categorie) {
         res.render('articles/add', {la_categorie: la_categorie});
@@ -28,7 +36,7 @@ router.get('/add/:catId', ensureAuthenticated, function (req, res) {
 
 });
 
-
+// ajout d'un article
 router.post('/doAdd', ensureAuthenticated, function (req, res) {
 
     var form = new formidable.IncomingForm()
@@ -73,7 +81,7 @@ router.post('/doAdd', ensureAuthenticated, function (req, res) {
     })
 
 });
-
+// accès au formulaire de modification d'un article avec les infos de l'article à modifier
 router.get('/edit/:articleid', ensureAuthenticated, function (req, res) {
     Article.getOne(req.params.articleid, function (elem) {
             res.render('articles/edit', {article: elem})
@@ -81,6 +89,7 @@ router.get('/edit/:articleid', ensureAuthenticated, function (req, res) {
     })
 });
 
+// modification d'un article
 router.post('/doEdit', ensureAuthenticated, function (req, res) {
     var form = new formidable.IncomingForm()
     form.multiples = true
@@ -133,7 +142,7 @@ router.post('/doEdit', ensureAuthenticated, function (req, res) {
 
     })
 });
-
+//supression d'un article
 router.get('/delete/:articleid/:docname/:catId', ensureAuthenticated, function (req, res) {
     Article.delete(req.params.articleid, function (elem) {
         if (req.params.docname.toString() !== 'sansFichier') {
@@ -155,7 +164,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        req.flash('danger', 'Vous devez vous authentifier pour acceder a votre compte');
+        req.flash('danger', 'Vous devez vous authentifier pour acceder au contenu de cette page');
         res.redirect('/login');
     }
 }
